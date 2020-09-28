@@ -1,0 +1,3010 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"fanjingdan012.github.io","root":"/","scheme":"Mist","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+
+  <meta name="description" content="课程资源 DS Algorithm  Greedy Divide and Conque：适用于子问题独立 Dynamic Programming：子问题不独立，把子问题解决放入table，然后综合最优解   排序  内部排序 冒泡Bubble 选择Select 插入Insert 希尔Shell Quick sort Merge sort Heap sort Binary sort Bucket s">
+<meta property="og:type" content="website">
+<meta property="og:title" content="计算机知识树">
+<meta property="og:url" content="https://fanjingdan012.github.io/CSKT/index.html">
+<meta property="og:site_name" content="FJD">
+<meta property="og:description" content="课程资源 DS Algorithm  Greedy Divide and Conque：适用于子问题独立 Dynamic Programming：子问题不独立，把子问题解决放入table，然后综合最优解   排序  内部排序 冒泡Bubble 选择Select 插入Insert 希尔Shell Quick sort Merge sort Heap sort Binary sort Bucket s">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-05-13T06:42:09.000Z">
+<meta property="article:modified_time" content="2020-09-27T23:47:53.862Z">
+<meta property="article:author" content="FJD">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://fanjingdan012.github.io/CSKT/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>计算机知识树 | FJD
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">FJD</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-计算机知识树">
+
+    <a href="/CSKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>计算机知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-会计学知识树">
+
+    <a href="/AccountingKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>会计学知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DS"><span class="nav-number">1.</span> <span class="nav-text">DS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CS"><span class="nav-number">3.</span> <span class="nav-text">CS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#msa"><span class="nav-number">4.</span> <span class="nav-text">msa</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java"><span class="nav-number">5.</span> <span class="nav-text">Java</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C"><span class="nav-number">6.</span> <span class="nav-text">C</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Python"><span class="nav-number">7.</span> <span class="nav-text">Python</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring"><span class="nav-number">8.</span> <span class="nav-text">Spring</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B"><span class="nav-number">9.</span> <span class="nav-text">软件工程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AI"><span class="nav-number">10.</span> <span class="nav-text">AI</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%A7%E6%95%B0%E6%8D%AE"><span class="nav-number">11.</span> <span class="nav-text">大数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C"><span class="nav-number">12.</span> <span class="nav-text">网络</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B"><span class="nav-number">13.</span> <span class="nav-text">软件过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">14.</span> <span class="nav-text">中间件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Security%E5%AE%89%E5%85%A8"><span class="nav-number">15.</span> <span class="nav-text">Security安全</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux"><span class="nav-number">16.</span> <span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MAC"><span class="nav-number">17.</span> <span class="nav-text">MAC</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FJD</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner page posts-expand">
+      
+  
+  
+
+      
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">计算机知识树
+</h1>
+
+<div class="post-meta-container">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <p><a target="_blank" rel="noopener" href="https://github.com/Developer-Y/cs-video-courses">课程资源</a></p>
+<h1 id="DS"><a href="#DS" class="headerlink" title="DS"></a>DS</h1><ul>
+<li><p>Algorithm</p>
+<ul>
+<li>Greedy</li>
+<li>Divide and Conque：适用于子问题独立</li>
+<li>Dynamic Programming：子问题不独立，把子问题解决放入table，然后综合最优解</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/JavaDetails/tree/master/sort">排序</a></p>
+<ul>
+<li>内部排序<ul>
+<li>冒泡Bubble</li>
+<li>选择Select</li>
+<li>插入Insert</li>
+<li>希尔Shell</li>
+<li>Quick sort</li>
+<li>Merge sort</li>
+<li>Heap sort</li>
+<li>Binary sort<ul>
+<li>Bucket sort</li>
+</ul>
+</li>
+<li>Radix sort</li>
+</ul>
+</li>
+<li>外部排序<ul>
+<li>直接用virtual memory</li>
+<li>Merge sort：分成n个文件，再merge</li>
+<li>replacement selection:heap sort</li>
+<li>multi-way merge</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Pattern matching</p>
+<ul>
+<li>暴力</li>
+<li>Boyer-Moore</li>
+<li>KMP</li>
+</ul>
+</li>
+<li><p>数据结构</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://www.cs.usfca.edu/~galles/visualization/Algorithms.html">可视化</a></p>
+</li>
+<li><p>Vector</p>
+<ul>
+<li>Array Vector<ul>
+<li>Extendable Array Vector</li>
+</ul>
+</li>
+<li>Linked List Vector</li>
+</ul>
+</li>
+<li><p>List</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/ds/blob/master/data-structure/src/main/java/queue/Queue.java">Queue</a></p>
+<ul>
+<li><code>enqueue(Object element)</code></li>
+<li><code>dequeue()</code></li>
+<li><code>peekLast()</code></li>
+<li><code>size()</code></li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/ds/blob/master/data-structure/src/main/java/stack/Stack.java">Stack</a></p>
+<ul>
+<li><code>top()</code></li>
+<li><code>push(Object element)</code></li>
+<li><code>pop()</code></li>
+</ul>
+</li>
+<li><p>Tree</p>
+<ul>
+<li>二叉树<ul>
+<li>术语<ul>
+<li>Complete Binary Tree:变成Array无空白的</li>
+<li>Full Binary Tree：最后一层全满的</li>
+</ul>
+</li>
+<li>遍历(就是看Visit在中间叫中序，前面交前序，后面叫后序)见<a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/ds/blob/master/data-structure/src/main/java/tree/binary/search/BinarySeatchTreeImpl.java">BST code</a><ul>
+<li>深度优先（可以recursive，也可以弄个Stack）<ul>
+<li>Inorder traversal:LVR</li>
+<li>Preorder traversal:VLR</li>
+<li>Postorder traversal:LRV</li>
+<li>Euler Tour Traversal:VLVRV</li>
+</ul>
+</li>
+<li>广度优先（弄个queue）</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="http://homes.sice.indiana.edu/yye/lab/teaching/spring2014-C343/huffman.php">Huffman Tree</a><ul>
+<li>统计每个字母出现的频率，<ul>
+<li>次数少的编码长一点（靠近叶子），多的编码短一点（靠近根）</li>
+<li>实现压缩</li>
+</ul>
+</li>
+<li>左子树编码0，右子树编码1，保证没有prefix<ul>
+<li>可以解压缩</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/ds/blob/master/pj2-zip/src/main/java/zip/Zip.java">代码</a></li>
+</ul>
+</li>
+<li>Heap(Complete Binary Tree)<ul>
+<li>Max Tree：自己比左右孩子都大</li>
+<li>Min Tree：自己比左右孩子都小<ul>
+<li><a href="%5BHeap%5D(https://github.com/fanjingdan012/ds/blob/master/data-structure/src/main/java/tree/binary/BinaryMinHeapTree.java">code</a><ul>
+<li><code>findMin()</code></li>
+<li><code>insert(Comparable x)</code></li>
+<li><code>deleteMin()</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>可以做成 Priority queue<ul>
+<li>用来找到第k个大的element</li>
+<li>Priority queue的其他做法<ul>
+<li>array</li>
+<li>linked list</li>
+<li>ordered array</li>
+<li>ordered linked list</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>其他heap<ul>
+<li>d-heap</li>
+<li>leftist Heap</li>
+<li>Skew Heap</li>
+<li>Binominal Queue</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>BST(Binary Search Tree),左孩子&lt;自己，右孩子&gt;自己<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/ds/blob/master/data-structure/src/main/java/tree/binary/search/BinarySeatchTreeImpl.java">code</a></li>
+<li>C 先看是不是已经在树里，然后从根节点开始，大的往右塞，小的往左塞</li>
+<li>R 根节点开始，大的往右找，小的往左找 <code>find(Comparable x)</code></li>
+<li>D<ul>
+<li>删除没孩子和一个孩子的，不用说</li>
+<li>两个孩子的：把左子树最大的或者右子树最小的顶上来，再把顶包的删掉</li>
+</ul>
+</li>
+<li><a href="https://fanjingdan012.github.io/2019/05/21/Splay-Tree-and-AVL-Tree/">Splay Tree</a>：一套规则，用于提高BST的读效率，当node s 被读到，就进行splay，也就是说读得多的靠近根：<ul>
+<li>single rotation</li>
+<li>double rotation<ul>
+<li>zigzag</li>
+<li>zigzig(弄完还是不平衡的)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="https://fanjingdan012.github.io/2019/05/21/Splay-Tree-and-AVL-Tree/">AVL Tree</a>(Adelson-Velskii-Landis):平衡树<ul>
+<li>balance factor BF(node) = 左孩子高度-右孩子高度=-1,0,1</li>
+<li>rotation：就是看长出来的树是右孩子的右孩子就是RR，依次类推，<ul>
+<li>single rotation<ul>
+<li>RR rotation</li>
+<li>LL rotation</li>
+</ul>
+</li>
+<li>double rotation<ul>
+<li>LR rotation：zigzag</li>
+<li>RL rotation：zigzag</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>多路搜索树Multi-way Search Tree<ul>
+<li>d个孩子的树，内部Node有2到d−1个key-element对 (ki, oi)</li>
+<li>最左的孩子都&lt;最左的key，其他子树依次按区间来</li>
+<li>(2,4)Tree = 2-4 Tree = <a href="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/">2-3-4 Tree</a>（有1到3个key）<ul>
+<li>C 先插入，overflow再split，split就是把中间的数字提到parent上，剩下的变成兄弟</li>
+<li>D 把右边最小的key提上来删掉，<ul>
+<li>提太多了underflow，自己key空了<ul>
+<li>左隔壁兄弟也只有一个key，和隔壁兄弟合并，从parent降个key下去</li>
+<li>左隔壁兄弟&gt;=2个key，兄弟的key提上去给parent，parent的key降下来给自己</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>=<a href="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/">红黑树</a></li>
+</ul>
+</li>
+<li><a href="https://fanjingdan012.github.io/2019/05/21/B-Tree-B-plus-Tree-and-B-star-Tree/">B Tree</a>:为了适应做index的多路搜索树</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>图Graph</p>
+<ul>
+<li><p>术语</p>
+<ul>
+<li><code>有向图directed graph (digraph)</code>/<code>无向图Undirected graph</code>：Edge有没有→</li>
+<li><code>Labeled Graph</code>：Vertex有没有label</li>
+<li>vertexs are <code>adjacent</code></li>
+<li>An undirected graph is <code>connected</code></li>
+<li><code>Directed acyclic graph (DAG)</code>有向无圈图</li>
+<li><code>free tree</code>:无向，无圈，connected，就是一个tree</li>
+<li><code>Strongly connected directed graph G</code>:每个节点之间都是全双工</li>
+<li><code>Strongly connected component</code></li>
+<li><code>Degree( v ) </code>v节点上连的edge数，有向图还分<code>in-degree</code>,<code>out-degree</code></li>
+</ul>
+</li>
+<li><p>graph的表示</p>
+<ul>
+<li>Adjacency matrix:<code>array[v数][v数]</code></li>
+<li>adjacency list：<code>array[LinkedList]</code></li>
+</ul>
+</li>
+<li><p>遍历Traversal</p>
+<ul>
+<li>深度优先DFS</li>
+<li>广度优先BFS</li>
+<li>拓扑排序Topological Sort（哪些任务先做）<ul>
+<li>recursive</li>
+<li>用queue</li>
+<li>检测圈</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/ds/tree/master/data-structure/src/main/java/graph/Graph.java">代码</a></p>
+<ul>
+<li>Vertex and Edge CRUD</li>
+<li>shortest path</li>
+</ul>
+</li>
+<li><p>Minimum Spanning Trees（MST）：A minimum spanning tree of an undirected graph G is a tree formed from graph edges that connects all the vertices of G at lowest total cost</p>
+<ul>
+<li>Prims Algoritnm</li>
+</ul>
+</li>
+<li><p>Single Source Shortest Path 从一个点出发计算到其他所有点的最短路径</p>
+<ul>
+<li>weight=1： BFS即可</li>
+<li>有weight：dijkstra:从一个点出发计算到其他所有点的最短路径<ul>
+<li><code>dijkstra(Vertex start,Vertex end)</code> return shortest path length，这里代码就只返回一个目标点</li>
+<li>就是维护一张vertex，cost，path（从哪个点走）的表，从start开始，遍历其他每个点，把知道的cost填进去，再看从其他点出发所有可到达的点的cost有没有更低的，不断循环直到所有点遍历完。</li>
+<li><a target="_blank" rel="noopener" href="https://www.cs.usfca.edu/~galles/visualization/Dijkstra.html">动画</a></li>
+</ul>
+</li>
+<li>weight可以负的:不能求出最短路径:因为负权环可以无限制的降低总花费。<ul>
+<li>Bellman-Ford（动态规划）可以判断有无负权回路（若有，则不存在最短路），时效性较好，时间复杂度O（VE）<ul>
+<li>step1:初始化dist(i),除了初始点的值为0，其余都为infinit（表示无穷大，不可到达）,pred表示经过的前一个顶点</li>
+<li>step2:执行n-1（n等于图中点的个数）次松弛计算：dist(j)=min( dist(i)+weight(i,j),dist(j) )</li>
+<li>step3:再重复操作一次，如国dist(j) &gt; distdist(i)+weight(i,j)表示途中存在从源点可达的权为负的回路。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] dist=<span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line"><span class="keyword">int</span>[] pre=<span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Bellman_Ford</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="comment">//初始化</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n-<span class="number">1</span>;i++)&#123;</span><br><span class="line">    dist[i]=infinit; <span class="comment">//TODO</span></span><br><span class="line">  &#125;<span class="comment">//end for</span></span><br><span class="line"></span><br><span class="line">  dist[s]=<span class="number">0</span> <span class="comment">//起始点的值</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n-<span class="number">1</span>;i++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=edgenum; j++)&#123;</span><br><span class="line">      <span class="keyword">if</span>(dist(i)+weight(i,j) &lt;dist(j) )&#123;</span><br><span class="line">      dist(j)=dist(i)+weight(i,j);</span><br><span class="line">      pred(j)=i;</span><br><span class="line">    &#125;<span class="comment">//end if</span></span><br><span class="line">    &#125;<span class="comment">//end for</span></span><br><span class="line">  &#125;<span class="comment">//end for</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">//</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=edgenum;j++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(dist(i)+weight(i,j)&lt;dist()j )</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&quot;有负权回路，不存在最短路径&quot;</span>;</span><br><span class="line">  &#125;<span class="comment">//end for</span></span><br><span class="line"></span><br><span class="line">&#125;<span class="comment">//e</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>A星算法<ul>
+<li>作为启发式搜索算法中的一种，这是一种在图形平面上，有多个节点的路径，求出最低通过成本的算法。常用于游戏中的NPC的移动计算，或线上游戏的BOT的移动计算上。该算法像Dijkstra算法一样，可以找到一条最短路径；也像BFS一样，进行启发式的搜索。详细见<a target="_blank" rel="noopener" href="http://blog.csdn.net/v_JULY_v/article/details/6093380">blog</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>All pairs shortest path</p>
+<ul>
+<li>dijkstra 用n遍</li>
+<li>Floyd算法（动态规划）</li>
+</ul>
+</li>
+<li><p>次最短路径</p>
+<ul>
+<li>将最短路径中边在图中去掉，然后再求一次最小生成树</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h1><ul>
+<li><p>SQL</p>
+<ul>
+<li><p><a href="https://fanjingdan012.github.io/2019/05/21/B-Tree-B-plus-Tree-and-B-star-Tree/">index</a></p>
+<ul>
+<li>index种类<ul>
+<li>Hash 等值查询</li>
+<li>Linear index(memory or disk)就是一串key/pointer,key是顺序排列的，pointer指向具体记录</li>
+<li>tree<ul>
+<li>B(Balance) tree</li>
+<li>B+树</li>
+<li>B星树</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>分类<ul>
+<li>唯一索引</li>
+<li>主键索引</li>
+<li>聚集索引</li>
+<li>非聚集索引<ul>
+<li>多扫描一次 减少回表</li>
+</ul>
+</li>
+<li>联合索引：将多个列组合在一起创建索引，可以覆盖多个列。（也叫复合索引，组合索引）, 需遵循最左匹配原则</li>
+<li>外键索引：只有InnoDB类型的表才可以使用外键索引，保证数据的一致性、完整性、和实现级联操作（基本不用）。</li>
+<li>全文索引：MySQL自带的全文索引只能用于MyISAM，并且只能对英文进行全文检索 （基本不用）</li>
+<li>覆盖索引 包含主键索引值</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>truncate删除表中数据，再插入时自增长id又从1开始</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/">MySQL</a></p>
+<ul>
+<li>一张表最多16个索引</li>
+<li>show engines</li>
+<li>select CURRENT_DATE();</li>
+<li>set profiling = 1; show profiles; show profile for query 临时表ID</li>
+<li>show status</li>
+<li>show processlist</li>
+<li>explain select * from a;</li>
+<li>int(20)中20的含义，是指显示字符的长度，不影响内部存储，只是当定义了ZEROFILL时，前面补多少个 0</li>
+<li>触发器<ul>
+<li>Before/After intert</li>
+<li>Before/After update</li>
+<li>Before/After delete</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>事务</p>
+<ul>
+<li>isolation级别<ul>
+<li>read uncommitted（读取未提交数据）<ul>
+<li>没有view概念，都是读最新的</li>
+</ul>
+</li>
+<li>read committed（可以读取其他事务提交的数据）—大多数数据库默认的隔离级别<ul>
+<li>不同的read view，每次读取提前生成一个</li>
+<li>问题：不可重复读</li>
+</ul>
+</li>
+<li>repeatable read（可重读）—MySQL默认的隔离级别<ul>
+<li>同一个read view，第一次生成一个</li>
+<li>问题：幻读</li>
+</ul>
+</li>
+<li>serializable（串行化）<ul>
+<li>问题：其他线程会挂起</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>rollback log<ul>
+<li>没更早的read view删除<ul>
+<li>5.5之前回滚段删了文件也不会变小</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>特性：ACID</p>
+<ul>
+<li>Atomicity原子性</li>
+<li>Consistency一致性</li>
+<li>Isolation隔离层</li>
+<li>Durability持久性</li>
+</ul>
+</li>
+<li><p>引擎</p>
+<ul>
+<li>ISAM<ul>
+<li>读取快，不占内存</li>
+<li>不支持Transaction，不能容错（磁盘崩溃），要经常备份</li>
+<li>MySQL支持</li>
+</ul>
+</li>
+<li>MYISAM<ul>
+<li>ISAM+索引和字段管理。和Innodb不同，MyIASM中存储了表的行数，于是<code>SELECT COUNT(*) FROM TABLE</code>时只需要直接读取已经保存好的值而不需要进行全表扫描。<ul>
+<li>表格锁定的机制<ul>
+<li>优化并发读写</li>
+<li>需要经常运行OPTIMIZE TABLE命令，来恢复被更新机制所浪费的空间</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>不支持事务，也不支持行级锁和外键，因此当INSERT(插入)或UPDATE(更新)数据时即写操作需要锁定整个表，效率低。</li>
+<li>MySQL Default</li>
+<li>支持全文索引</li>
+<li>面向OLAP</li>
+<li>缓冲池只缓冲index，不缓冲data</li>
+<li>存储引擎表=MYD（data）+MYI（index），用myisampack压缩（用Huffman算法）</li>
+<li>单表大小：4GB（5.0以前），256TB（5.0以后）</li>
+</ul>
+</li>
+<li>HEAP<ul>
+<li>HEAP允许只驻留在内存里的临时表格。快，但不稳定，在数据行被删除的时候，HEAP也不会浪费大量的空间。HEAP表格在你需要使用SELECT表达式来选择和操控数据的时候非常有用。要记住，在用完表格之后就删除表格。</li>
+</ul>
+</li>
+<li>INNODB：MV-2PL锁+Delta version管理+Vacuum GC+Logical Index<ul>
+<li>默认:<ul>
+<li>隔离级别：可重复读</li>
+<li>innodb_locks_unsafe_for_binlog=OFF</li>
+<li>采用gap locking</li>
+</ul>
+</li>
+<li>支持事务处理和外来键</li>
+<li>行锁设计</li>
+<li>支持非锁定读（Oracle也支持），即读不会锁</li>
+<li>next-key locking策略来避免phantom（幻读）</li>
+<li>insert buffer</li>
+<li>double write</li>
+<li>adaptive hash index</li>
+<li>read ahead</li>
+<li>采用clustered方式，按pk顺序存放，缺省默认pk：6 byte的RowId</li>
+<li>面向OLTP</li>
+<li>可存储在ibdata星的共享表空间，也可以存放于独立的.ibd文件的独立表空间<ul>
+<li>共享表空间：某一个数据库的所有的表数据，索引文件全部放在一个文件中，默认这个共享表空间的文件路径在data目录下。 默认的文件名为:ibdata1 初始化为10M。可以将表空间分成多个文件存放到各个磁盘上（表空间文件大小不受表大小的限制，如一个表可以分布在不同的文件上）。数据和文件放在一起方便管理。但是删起来碎片不好清理。</li>
+<li>独立表空间：每一个表都将会生成以独立的文件方式来进行存储，每一个表都有一个.frm表描述文件，还有一个.ibd文件。 其中这个文件包括了单独一个表的数据内容以及索引内容，默认情况下它的存储位置也是在表的位置之中。表可能太大</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>BERKLEY<ul>
+<li>支持事务处理和外来键</li>
+</ul>
+</li>
+<li>NDB集群引擎（share nothing）<ul>
+<li>类似Oracle的RAC集群（share everything）</li>
+</ul>
+</li>
+<li>Memory存储引擎，以前叫HEAP<ul>
+<li>默认用Hash index</li>
+</ul>
+</li>
+<li>Archive</li>
+<li>Federated</li>
+<li>Maria<ul>
+<li>MyISAM的后续版</li>
+<li>行锁</li>
+<li>支持缓存数据和index文件</li>
+<li>提供MVCC</li>
+<li>支持事务</li>
+<li>BLOB优化</li>
+</ul>
+</li>
+<li>Merge CSV Sphinx Infobright</li>
+<li>HANA: MV-2PL锁+Time-travel version管理+Hybrid GC+Logical Index</li>
+<li>Oracle: 同Innodb</li>
+<li>MS sql server Hekaton: MV-OCC锁+Append-Only version管理+Cooperative GC+Physical Index</li>
+<li>Postgres: MV-2PL/TO锁+Append-Only version管理+Vacuum GC+Physical Index</li>
+<li>TUM Hyper</li>
+</ul>
+</li>
+<li><p>缓存</p>
+<ul>
+<li>缓存穿透<ul>
+<li>就是attacker一直查询不存在的数据导致cache miss，就要一直去DB拿，导致DB压力太大挂掉</li>
+<li>解决<ul>
+<li>布隆过滤器(所有数据hash到一个巨大的bitmap里，不存在就直接拦截)</li>
+<li>缓存该不存在的结果，设置很短的过期时间(5 min)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>缓存雪崩<ul>
+<li>cache设置了相同的过期时间，一瞬间一大波数据同时过期，就要一直去DB拿，导致DB压力太大挂掉</li>
+<li>解决<ul>
+<li>加锁或queue保证单线程写，就没有大的DB压力</li>
+<li>在原有expire时间加一个1-5min随机，分散压力</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>缓存击穿<ul>
+<li>某数据在某刻很热门，刚好这时候expire，导致DB压力太大挂掉</li>
+<li>解决<ul>
+<li>mutex（可以用redis的SETNX或Memcache的ADD设一个mutex key，成功了就算拿到锁，去load db，否则重试 get）<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">get</span><span class="params">(key)</span> </span>&#123;</span><br><span class="line">  String value = redis.get(key);</span><br><span class="line">  <span class="keyword">if</span> (value == <span class="keyword">null</span>) &#123; <span class="comment">//代表缓存值过期</span></span><br><span class="line">      <span class="comment">//设置3min的超时，防止del操作失败的时候，下次缓存过期一直不能load db</span></span><br><span class="line">      <span class="keyword">if</span> (redis.setnx(key_mutex, <span class="number">1</span>, <span class="number">3</span> * <span class="number">60</span>) == <span class="number">1</span>) &#123;  <span class="comment">//代表设置成功</span></span><br><span class="line">          value = db.get(key);</span><br><span class="line">          redis.set(key, value, expire_secs);</span><br><span class="line">          redis.del(key_mutex);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;  <span class="comment">//这个时候代表同时候的其他线程已经load db并回设到缓存了，这时候重试获取缓存值即可</span></span><br><span class="line">          sleep(<span class="number">50</span>);</span><br><span class="line">          get(key);  <span class="comment">//重试</span></span><br><span class="line">      &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>“提前”使用互斥锁(mutex key)<ul>
+<li>在value内部设置1个超时值(timeout1), timeout1比实际的memcache timeout(timeout2)小。当从cache读取到timeout1发现它已经过期时候，马上延长timeout1并重新设置到cache。然后再从数据库加载数据并设置到cache中。</li>
+</ul>
+</li>
+<li>“永远不过期”<ul>
+<li>就是自己写代码更新数据，可能老数据被访问到</li>
+</ul>
+</li>
+<li>资源保护<ul>
+<li>用hystrix</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>MVCC</p>
+<ul>
+<li>版本链<ul>
+<li>聚集索引中有两个隐藏列：trx_id roll_pointer</li>
+</ul>
+</li>
+<li>序列化<ul>
+<li>加锁</li>
+</ul>
+</li>
+<li>Concurrency Control Protocol<ul>
+<li>Timestamping Ordering(MV-TO)</li>
+<li>Optimistic Concurrency Control(MV-OCC)</li>
+<li>Two-Phase Locking(MV-2PL)</li>
+</ul>
+</li>
+<li>Version Storage<ul>
+<li>Append-Only Storage<ul>
+<li>只有主表</li>
+</ul>
+</li>
+<li>Time-Travel Storage<ul>
+<li>主表+time-travel table(全量)</li>
+</ul>
+</li>
+<li>Delta Storage<ul>
+<li>主表+Delta Storage Segment(只有Delta部分)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>GC<ul>
+<li>Tuple-level</li>
+<li>Transaction-level</li>
+</ul>
+</li>
+<li>Index</li>
+</ul>
+</li>
+<li><p>锁</p>
+<ul>
+<li>全局锁<ul>
+<li>全库逻辑备份</li>
+</ul>
+</li>
+<li>表锁<ul>
+<li>lock table read/write</li>
+</ul>
+</li>
+<li>行锁<ul>
+<li>死锁<ul>
+<li>超时时间<ul>
+<li>innodb_lock_wait_timeout</li>
+</ul>
+</li>
+<li>死锁机制 rollback<ul>
+<li>innodb_deadlock_detect</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>热点行<ul>
+<li>死锁消耗CPU<ul>
+<li>临时关闭</li>
+</ul>
+</li>
+<li>控制并发度</li>
+<li>分治</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>间隙锁</li>
+<li>读写锁<ul>
+<li>读<ul>
+<li>lock in share mode</li>
+<li>for update</li>
+<li>行锁</li>
+</ul>
+</li>
+<li>写</li>
+</ul>
+</li>
+<li>innodb如何加锁<ul>
+<li>Record lock： 对索引项加锁</li>
+<li>Gap lock：对索引项间隙加锁</li>
+<li>Next-Key：前两种组合，对记录和前面的间隙加锁</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>范式</p>
+<ul>
+<li>1NF：每column存一个值</li>
+<li>2NF：1NF+实体的属性完全依赖于主关键字（如果依赖一部分，就要分离开来）</li>
+<li>3NF：2NF+非键属性都只和候选键有相关性，也就是说非键属性之间应该是独立无关的</li>
+<li>BCNF：3NF+主属性不能被非主属性决定</li>
+</ul>
+</li>
+<li><p>ER Mapping</p>
+<ul>
+<li>Hibernate<ul>
+<li>N+1问题</li>
+<li>SqlQuery是 sql查询</li>
+<li>NativeQuery是hibernate 配置中方言的类型来查询</li>
+</ul>
+</li>
+<li>Mybatis</li>
+<li>JPA<ul>
+<li>CascadeType<ul>
+<li>ALL</li>
+<li>PERSIST，MERGE，REMOVE，REFRESH<ul>
+<li>CRUD连着一起做</li>
+</ul>
+</li>
+<li>DETACH<ul>
+<li>删自己的时候如果自己是别人的外键引用也脱离这个引用义无反顾的删掉</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>FetchType<ul>
+<li>LAZY</li>
+<li>EAGER</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Mybatis<ul>
+<li>四大对象<ul>
+<li>Executor</li>
+<li>StatementHandler</li>
+<li>ParameterHandler</li>
+<li>resultHandler</li>
+</ul>
+</li>
+<li>SqlSession顶层接口</li>
+<li>配置文件源码</li>
+<li>mycat</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>sql调优</p>
+<ul>
+<li>预发跑sql explain</li>
+<li>排除缓存 sql nocache</li>
+<li>看一下行数对不对，不对用analyze table t矫正</li>
+<li>添加索引，（索引也不一定是最优的） force index强制走索引，不推荐用</li>
+<li>存在回表的情况</li>
+<li>覆盖索引避免回表，不要*<ul>
+<li>主键索引</li>
+</ul>
+</li>
+<li>联合索引 不能无限建 高频场景</li>
+<li>最左前缀原则，按照索引定义的字段顺序写sql</li>
+<li>合理安排联合索引的顺序</li>
+<li>mysql 5.6之后索引下推 减少回表次数 不需要多个回表 一边遍历，一边判断</li>
+</ul>
+</li>
+<li><p>log</p>
+<ul>
+<li>undo log</li>
+<li>redo log</li>
+<li>binlog</li>
+<li>两段式提交redo准备binglog提交</li>
+</ul>
+</li>
+<li><p>count1星</p>
+<ul>
+<li>mvcc影响</li>
+</ul>
+</li>
+<li><p>主备延迟</p>
+<ul>
+<li>强制走主</li>
+<li>sleep</li>
+</ul>
+</li>
+<li><p>join</p>
+<ul>
+<li>驱动表</li>
+</ul>
+</li>
+<li><p>id用完</p>
+<ul>
+<li>bigint</li>
+<li>row_id没设置主键的时候</li>
+<li>thread_id</li>
+</ul>
+</li>
+<li><p>常见命令</p>
+<ul>
+<li>show processlist</li>
+<li>innodb_f</li>
+<li>sync_binlog x_commit</li>
+</ul>
+</li>
+</ul>
+<h1 id="CS"><a href="#CS" class="headerlink" title="CS"></a>CS</h1><ul>
+<li><p>架构</p>
+<ul>
+<li>SMP（对称多处理器）架构<ul>
+<li>register+L+ALU作为一个core，公用bus+memory</li>
+</ul>
+</li>
+<li>非对称多处理器（高端）<ul>
+<li>cpu有自己memory，没有bus</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a href="https://fanjingdan012.github.io/2018/04/11/Memory-Hierachy/">内存</a></p>
+</li>
+<li><p>线程</p>
+</li>
+<li><p>汇编指令</p>
+<ul>
+<li>CAS compare and swap</li>
+</ul>
+</li>
+<li><p>并发</p>
+<ul>
+<li><p>对象的共享</p>
+<ul>
+<li>可见性</li>
+<li>线程封闭<ul>
+<li>ad-hoc</li>
+</ul>
+</li>
+<li>ThreadLocal：其实就是个Map</li>
+</ul>
+</li>
+<li><p>对象的组合</p>
+</li>
+<li><p>基础构建模块</p>
+<ul>
+<li>同步容器类<ul>
+<li>ConcurrentModificationException</li>
+<li>隐藏迭代器</li>
+</ul>
+</li>
+<li>并发容器<ul>
+<li>ConcurrentHashMap</li>
+<li>CopyOnWriteArrayList</li>
+</ul>
+</li>
+<li>同步工具<ul>
+<li>latch<ul>
+<li>CountDownLatch</li>
+</ul>
+</li>
+<li>FutureTask</li>
+<li>Semaphore<ul>
+<li>Mutex=Semaphore（1）</li>
+</ul>
+</li>
+<li>Barrier<ul>
+<li>Exchanger</li>
+<li>CyclicBarrier</li>
+<li>BrokenBarrierException</li>
+<li>Volatile<ul>
+<li>MESI<ul>
+<li>M(Modified) 这行数据有效，数据被修改了，和内存中的数据不一致，数据只存在于本Cache中。</li>
+<li>E(Exclusive)  这行数据有效，数据和内存中的数据一致，数据只存在于本Cache中。</li>
+<li>S(Shared) 这行数据有效，数据和内存中的数据一致，数据存在于很多Cache中。</li>
+<li>I(Invalid)  这行数据无效</li>
+<li>Memory Barriers，汇编lock指令（缓存一致性机制）：一个处理器的缓存回写到内存会通过“Cache一致性流量”告诉别的cpu,导致其他处理器的缓存无效<ul>
+<li>一直嗅探cas导致总线风暴</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>可见性<ul>
+<li>嗅探机制（cpu嗅探总线） 强制失效</li>
+</ul>
+</li>
+<li>有序性<ul>
+<li>禁止指令重排序<ul>
+<li>lock前缀指令 Memory Barriers</li>
+</ul>
+</li>
+<li>happens-before 写before读</li>
+<li>as-if-serial</li>
+</ul>
+</li>
+<li>跳出死循环</li>
+<li>AtomicInteger</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Phaser（jdk7）</li>
+<li>阻塞队列和生产者消费者模型</li>
+</ul>
+</li>
+<li>任务执行<ul>
+<li>创建线程</li>
+<li>Executor框架（生产者消费者）<ul>
+<li>ThreadPool<ul>
+<li>interface<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="keyword">int</span> maximumPoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="keyword">long</span> keepAliveTime,</span></span></span><br><span class="line"><span class="function"><span class="params">                    TimeUnit unit,</span></span></span><br><span class="line"><span class="function"><span class="params">                    BlockingQueue&lt;Runnable&gt; workQueue, //AQS实现</span></span></span><br><span class="line"><span class="function"><span class="params">                    ThreadFactory threadFactory, //注意指定名称</span></span></span><br><span class="line"><span class="function"><span class="params">                    RejectedEcecutionHandler handler)</span></span></span><br></pre></td></tr></table></figure></li>
+<li>fixed: corePoolSize = maximumPoolSize</li>
+<li>workStealingPool</li>
+<li>singleThreadExecutor: = fixed(1)</li>
+<li>cached: corePoolSize = (0,Integer.MAX, 60,s)</li>
+<li>scheduled</li>
+<li>unconfigurableExecutorService</li>
+<li>缓冲队列<ul>
+<li>LinkedBlockingQueue（）或者（int i）<ul>
+<li>无界 当心内存溢出</li>
+<li>FIFO</li>
+</ul>
+</li>
+<li>ArrayBlockingQueue(int i)<ul>
+<li>有界</li>
+<li>加锁保证安全，一直死循环阻塞 队列不满就唤醒</li>
+<li>入队<ul>
+<li>阻塞调用方式put(e)或offer(e,timeout,unit)</li>
+<li>阻塞调用时，唤醒条件为超时或队列满，因此，要求出队时，要发起唤醒操作</li>
+<li>进队成功后，执行notEmpty.signal()唤起被阻塞的出队线程</li>
+<li>在执行存储操作时，建议offer添加，可以及时获取boolean判断，put要考虑阻塞情况（出队慢于入队），资源占用</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>SynchronizedQueue（）对其的操作必须是放和取交替完成。</li>
+<li>PriorityBlockingQueue（）或者（int i）, 类似于LinkedBlockingQueue，但是其所含对象的排序不是FIFO，而是依据对象的自然顺序或者构造函数的Comparator决定</li>
+</ul>
+</li>
+<li>工厂方法</li>
+<li>拒绝策略<ul>
+<li>抛异常 AbortPolicy</li>
+<li>丢弃 DiscardPolicy</li>
+<li>调用方来跑 CallerRunsPolicy</li>
+<li>丢弃最早提交的 DiscardOldestPolicy</li>
+</ul>
+</li>
+<li>使用hash表维护线程引用</li>
+<li>submit<ul>
+<li>使用future获取任务执行结果</li>
+</ul>
+</li>
+<li>应用<ul>
+<li>商品详情界面</li>
+<li>批处理</li>
+</ul>
+</li>
+<li>执行过程<ul>
+<li>核心线程-&gt;任务存入队列-&gt;最大线程没满，则创建线程执行任务-&gt;拒绝策略</li>
+</ul>
+</li>
+<li>运行状态<ul>
+<li>volatile 状态码<ul>
+<li>running</li>
+<li>shutdown</li>
+<li>stop</li>
+<li>terminated<ul>
+<li>所有线程销毁</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>corePoolSize maximumPoolSize largestPoolSize</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>分支主题</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>活跃性危险</p>
+<ul>
+<li>死锁</li>
+<li>饥饿</li>
+<li>丢失信号</li>
+<li>活锁</li>
+</ul>
+</li>
+<li><p>性能</p>
+<ul>
+<li>amdahl定律:processors数对speed up的影响关系</li>
+<li>开销<ul>
+<li>上下文切换</li>
+<li>内存同步</li>
+<li>阻塞</li>
+</ul>
+</li>
+<li>减少开销<ul>
+<li>缩小锁的范围</li>
+<li>减小锁的粒度<ul>
+<li>锁分解：一个锁要保护多个相互独立的变量，可以拆成多个，分别保护变量</li>
+<li>锁分段：ConcurrentHashMap的实现，使用了16个锁的数组，每人保护Map的1/16(n mod 16)<ul>
+<li>劣势：取得独占整个对象的锁更加麻烦</li>
+</ul>
+</li>
+<li>避免热点域（比如操作很频繁地用到某个变量）</li>
+<li>替代独占锁<ul>
+<li>readWriteLock（读取不加锁，写加锁）</li>
+</ul>
+</li>
+<li>不要用对象池<ul>
+<li>本来new Object（）不需要同步，用了对象池就要了</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>测试</p>
+</li>
+<li><p>锁</p>
+<ul>
+<li><p>公平锁/非公平锁:先申请的先拿到/!</p>
+</li>
+<li><p>可重入锁:外层拿到的锁内层自动拥有，每次拿锁，锁计数器+1</p>
+</li>
+<li><p>独享锁/共享锁：ReentrantLock、ReadWriteLock的Write/ReadWriteLock的Read</p>
+</li>
+<li><p>互斥锁/读写锁：ReentrantLock/ReadWriteLock</p>
+</li>
+<li><p>乐观锁/悲观锁：CAS/Lock</p>
+</li>
+<li><p>分段锁</p>
+</li>
+<li><p>锁膨胀</p>
+<ul>
+<li>无锁：monitor锁标志位=01</li>
+<li>偏向锁：是指一段同步代码一直被一个线程所访问，那么该线程会自动获取锁。降低获取锁的代价。<ul>
+<li>mark word中有线程信息cas比较。</li>
+</ul>
+</li>
+<li>轻量级锁：是指当锁是偏向锁的时候，被另一个线程所访问，偏向锁就会升级为轻量级锁，其他线程会通过自旋的形式尝试获取锁，不会阻塞，提高性能。<ul>
+<li>在stack里开辟叫Lock record 的地方，复制过来一份mark word，用cas尝试修改锁对象头的区域</li>
+</ul>
+</li>
+<li>自旋锁spinlock：循环，减少Context Switch，但是消耗CPU<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">while (抢锁(lock) &#x3D;&#x3D; 没抢到) &#123;&#125;</span><br></pre></td></tr></table></figure></li>
+<li>重量级锁：是指当锁为轻量级锁的时候，另一个线程虽然是自旋，但自旋不会一直持续下去，当自旋一定次数的时候，还没有获取到锁，就会进入阻塞，该锁膨胀为重量级锁。重量级锁会让其他申请的线程进入阻塞，性能降低。</li>
+</ul>
+</li>
+<li><p>记录锁（Record Locks）/Gap Locks：锁定某一个范围内的索引，但不包括记录本身/间隙锁定（Next-Key Locks）：锁定一个范围内的索引，并且锁定记录本身   Next-Key Locks = Record Locks + Gap Locks</p>
+</li>
+<li><p>条件Condition, <a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/JavaDetails/blob/master/concurrency/src/main/java/core/PrintABC10.java">sample code</a></p>
+</li>
+<li><p>重锁</p>
+<ul>
+<li>user/kernal切换</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>ReentrantLock</p>
+<ul>
+<li>NonfairSync<ul>
+<li>tryAcquire</li>
+<li>acquireQueued</li>
+<li>CAS</li>
+</ul>
+</li>
+<li>FairSync<ul>
+<li>hasQueuedPredecessors</li>
+<li>如果是当前持有锁的线程，可重入</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/97317561">AQS：AbstractQueuedSynchronizer</a><ul>
+<li>lock<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">lock</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (compareAndSetState(<span class="number">0</span>, <span class="number">1</span>))</span><br><span class="line">        setExclusiveOwnerThread(Thread.currentThread());</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        acquire(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">acquire</span><span class="params">(<span class="keyword">int</span> arg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!tryAcquire(arg) &amp;&amp;</span><br><span class="line">        acquireQueued(addWaiter(Node.EXCLUSIVE), arg))</span><br><span class="line">        selfInterrupt();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>先快速获取锁，当前没有线程执行的时候直接获取锁</li>
+<li>尝试获取锁，当没有线程执行或是当前线程占用锁，可以直接获取锁</li>
+<li>将当前线程包装为node放入同步队列，设置为尾节点</li>
+<li>前一个节点如果为头节点，再次尝试获取一次锁</li>
+<li>将前一个有效节点设置为SIGNAL</li>
+<li>然后阻塞直到被唤醒</li>
+</ul>
+</li>
+<li>unlock<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">release</span><span class="params">(<span class="keyword">int</span> arg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (tryRelease(arg)) &#123;</span><br><span class="line">        Node h = head;</span><br><span class="line">        <span class="keyword">if</span> (h != <span class="keyword">null</span> &amp;&amp; h.waitStatus != <span class="number">0</span>)</span><br><span class="line">            unparkSuccessor(h);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">unparkSuccessor</span><span class="params">(Node node)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ws = node.waitStatus;</span><br><span class="line">    <span class="keyword">if</span> (ws &lt; <span class="number">0</span>)</span><br><span class="line">        compareAndSetWaitStatus(node, ws, <span class="number">0</span>);</span><br><span class="line">    Node s = node.next;</span><br><span class="line">    <span class="comment">//看下一个</span></span><br><span class="line">    <span class="keyword">if</span> (s == <span class="keyword">null</span> || s.waitStatus &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        s = <span class="keyword">null</span>;</span><br><span class="line">        <span class="comment">//下一个没有或取消，就尾部往前找，∴不公平</span></span><br><span class="line">        <span class="comment">//公平锁中，在tryAcquire时会判断之前是否有等待的节点hasQueuedPredecessors(),如果有就不会再去获取锁了,因此能保证顺序执行。</span></span><br><span class="line">        <span class="keyword">for</span> (Node t = tail; t != <span class="keyword">null</span> &amp;&amp; t != node; t = t.prev)</span><br><span class="line">            <span class="keyword">if</span> (t.waitStatus &lt;= <span class="number">0</span>)</span><br><span class="line">                s = t;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (s != <span class="keyword">null</span>)</span><br><span class="line">        LockSupport.unpark(s.thread);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>volatile state<ul>
+<li>0：无锁</li>
+<li>1：有锁</li>
+<li>通过CAS设置 <code>boolean compareAndSetState(int expect, int update)</code></li>
+<li>也解决CountDownLatch的计数问题</li>
+</ul>
+</li>
+<li>入队 出队</li>
+<li>Node<ul>
+<li>SHARED EXCLUSIVE<ul>
+<li>ReentrantLock synchronized 用EXCLUSIVE</li>
+<li>ReentrantReadWriteLock read用SHARED</li>
+</ul>
+</li>
+<li>waitStatus： CAS设置<ul>
+<li>0:初始状态</li>
+<li>CANCELLED（1）：取消状态，当线程不再希望获取锁时，设置为取消状态</li>
+<li>SIGNAL（-1）：当前节点的后继者处于等待状态，当前节点的线程如果释放或取消了同步状态，通知后继节点</li>
+<li>CONDITION（-2）：等待队列的等待状态，当调用signal()时，进入同步队列</li>
+<li>PROPAGATE（-3）：共享模式，同步状态的获取的可传播状态</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>头Node设计</li>
+<li>共享和独享的实现</li>
+<li>CAS<ul>
+<li>缺点<ul>
+<li>cpu开销</li>
+<li>只能保证一个共享变量原子操作<ul>
+<li>AtomicReference</li>
+</ul>
+</li>
+<li>ABA<ul>
+<li>解决：标志位 时间戳</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>StampedLock</p>
+</li>
+<li><p>ReentrantReadWriteLock</p>
+<ul>
+<li>AQS<ul>
+<li>SHARED获取<ul>
+<li>尝试获取共享锁，如果当前是共享锁或无锁，设置共享锁的state,获取锁</li>
+<li>如果当前是写锁，进入等待流程</li>
+<li>入队，加入等待队列的末尾，成为tail节点</li>
+<li>判断当前节点的前一个节点是不是头节点，如果是的话尝试获取锁，如果获取到了就执行</li>
+<li>获取不到或前一个节点不是头节点就代表该线程需要暂时等待，直到被叫醒为止。设置前一个节点为SIGNAL状态，然后进入等待</li>
+<li>如果可以获取到锁，设置头节点并进入共享锁节点传播流程</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>synchronized关键字</p>
+<ul>
+<li>用法<ul>
+<li>实例方法上<ul>
+<li>code<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;synchronized method&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>原理<ul>
+<li>常量池中多了 ACC_SYNCHRONIZED 标示符，当方法调用时，调用指令将会检查方法的 ACC_SYNCHRONIZED flag，如果设置了，执行线程将获取monitor，执行，释放monitor</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>静态方法上</li>
+<li>对象实例<ul>
+<li>对象头<ul>
+<li>mark word（对象的hashCode，分代年龄和锁标志位信息）</li>
+<li>Klass Point (对象指向它的类元数据的指针，虚拟通过这个指针来确定这个对象是哪个类的实例)</li>
+<li>Monitor<ul>
+<li>EntryList</li>
+<li>Owner（指向Monitor对象拥有者线程）</li>
+<li>WaitSet</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>代码块上<ul>
+<li>code<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">      System.out.println(<span class="string">&quot;synchronized this&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>原理<ul>
+<li>前后加monitorenter和monitorexit指令</li>
+<li>monitor进入数有个计数，进入+1，其他线程等变0即可获取</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>特性保证<ul>
+<li>有序性<ul>
+<li>as-if-serial</li>
+<li>happens- before</li>
+</ul>
+</li>
+<li>可见性<ul>
+<li>内存强制刷新</li>
+</ul>
+</li>
+<li>原子性<ul>
+<li>单一线程持有</li>
+</ul>
+</li>
+<li>可重入性<ul>
+<li>计数器</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>synchronzied 锁升级不可逆</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>海量数据<ul>
+<li>hash切分</li>
+<li>位图</li>
+<li>布隆过滤</li>
+<li>hash表</li>
+<li>堆</li>
+</ul>
+</li>
+</ul>
+<h1 id="msa"><a href="#msa" class="headerlink" title="msa"></a>msa</h1><ul>
+<li>分布式事务<ul>
+<li>2PC反可伸缩模式的</li>
+<li>X/open XA：一个约定，定义了一个协议是2PC<ul>
+<li>JTA（Java Transaction API）：XA的API定义<ul>
+<li>Atomikos：JTA的实现，适用于一个application instance操作多个数据库，要求数据库支持（mysql，oracle，db2…）<ul>
+<li>prepare-commit/rollback</li>
+<li>缺点<ul>
+<li>性能，要等待所有线程返回yes才能提交</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>TCC:Atomikos提出的一篇论文，还没有实现，得自己写代码<ul>
+<li>try-Confirm/cancel</li>
+<li>优点<ul>
+<li>假设有AB两个操作, 假设A操作耗时短, 那么A就能较快的完成自身的try-confirm-cancel流程, 释放资源. 无需等待B操作. 如果事后出现问题, 追加执行补偿性事务即可.</li>
+</ul>
+</li>
+<li>注意点<ul>
+<li>事务管理器(协调器)这个节点必须以带同步复制语义的高可用集群(HAC)方式部署.\n事务管理器(协调器)还需要使用多数派算法来避免集群发生脑裂问题.。脑裂：在阶段2中，如果只有部分参与者接收并执行了Commit请求，会导致节点数据不一致。</li>
+</ul>
+</li>
+<li>适用<ul>
+<li>红包, 收付款业务.<ul>
+<li>实时性要求高，高度一致性要求</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>MQ<ul>
+<li>mq支持确认消息投递成功rabbitmq， activemq， rocketmq，kafka</li>
+<li>消息要求幂等性</li>
+<li>A发出消息，mq存储消息，B消费，失败可反复投递，三次失败可以通知A回滚</li>
+</ul>
+</li>
+<li>LCN分布式框架</li>
+<li>3PC<ul>
+<li>CanCommit</li>
+<li>PreCommit<ul>
+<li>undo和redo信息记录到事务日志中</li>
+</ul>
+</li>
+<li>DoCommit<ul>
+<li>提交释放transaction资源</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>CAP(下面三点只能同时保证两点）<ul>
+<li>一致性(Consistency)<ul>
+<li>强一致性：更新后，后续读取都得到新值</li>
+<li>弱一致性：更新后，可能读到老值。但经过“不一致时间窗口”期后，读取都是新值<ul>
+<li>最终一致性：属于弱一致性，保证最终所有的访问都是最后更新的值。<ul>
+<li>因果一致性。如果进程A通知进程B它已更新了一个数据项，那么进程B的后续访问将返回更新后的值，且一次写入将保证取代前一次写入。与进程A无因果关系的进程C的访问遵守一般的最终一致性规则。</li>
+<li>“读己之所写（read-your-writes）”一致性。当进程A自己更新一个数据项之后，它总是访问到更新过的值，绝不会看到旧值。这是因果一致性模型的一个特例。</li>
+<li>会话（Session）一致性。这是上一个模型的实用版本，它把访问存储系统的进程放到会话的上下文中。只要会话还存在，系统就保证“读己之所写”一致性。如果由于某些失败情形令会话终止，就要建立新的会话，而且系统的保证不会延续到新的会话。</li>
+<li>单调（Monotonic）读一致性。如果进程已经看到过数据对象的某个值，那么任何后续访问都不会返回在那个值之前的值。</li>
+<li>单调写一致性。系统保证来自同一个进程的写操作顺序执行。要是系统不能保证这种程度的一致性，就非常难以编程了。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>可用性(Availability)</li>
+<li>分区容忍性(Partition tolerance)</li>
+<li>应用<ul>
+<li>CA:那就是不要分布式系统</li>
+<li>CP:宁愿不给返回，也不要返回个错数据<ul>
+<li>Redis</li>
+<li>HBase</li>
+<li>Zookeeper</li>
+</ul>
+</li>
+<li>AP:可以暂时返回旧数据，保证高可用，实现BASE</li>
+</ul>
+</li>
+<li>证明<ul>
+<li>如果A和B是两个微服务，A和B的数据库是一样的，要做数据同步，A和B之间断网了，做不了同步，那么就只能<ul>
+<li>牺牲C，返回一个旧数据</li>
+<li>牺牲A，不给返回</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://kubernetes.io/">Kubernetes</a></li>
+<li>测试<ul>
+<li>montebank</li>
+<li>pact</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.docker.com/">Docker</a><ul>
+<li>Docker命令<ul>
+<li><code>docker search ubuntu</code></li>
+<li><code>docker pull ubuntu</code></li>
+<li><code>docker images</code></li>
+<li><code>docker ps</code></li>
+<li><code>docker run -itd &lt;image id&gt;</code><ul>
+<li><code>docker run --cap-add=SYS_PTRACE --security-opt seccomp=unconfined</code> 解决gdb不能run问题</li>
+</ul>
+</li>
+<li><code>docker exec -it &lt;container id&gt; bash</code><ul>
+<li><code>exit</code></li>
+</ul>
+</li>
+<li><code>docker logs</code></li>
+<li><code>docker cp ./a.txt &lt;container id&gt;:/root/</code></li>
+<li><code>docker commit &lt;container id&gt; &lt;a name for new image&gt;</code></li>
+</ul>
+</li>
+<li>镜像 容器 仓库</li>
+<li>四种网络模式<ul>
+<li>bridge 桥接模式</li>
+<li>host 模式</li>
+<li>container 模式</li>
+<li>none 模式</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://docs.docker.com/compose/">docker compose</a>:  同时起好几个docker，并相互协作<ul>
+<li>docker-compose.yml</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>etcd</li>
+<li>BASE（反ACID）<ul>
+<li>牺牲高一致性，获得可用性或可靠性</li>
+</ul>
+</li>
+<li>发布<ul>
+<li>蓝绿发布：50% 50%</li>
+<li>金丝雀发布：5%新的 95%老的</li>
+</ul>
+</li>
+<li>监控<ul>
+<li>Dynatrace</li>
+</ul>
+</li>
+<li>SpringCloud<ul>
+<li>Hystrix<ul>
+<li>应用场景<ul>
+<li>服务降级</li>
+<li>异常处理</li>
+<li>请求缓存</li>
+<li>命令，分组，线程池划分</li>
+</ul>
+</li>
+<li>容错原理</li>
+</ul>
+</li>
+<li>Zuul</li>
+<li>Spring Cloud Config</li>
+<li>Eureka</li>
+<li>Ribbon</li>
+</ul>
+</li>
+<li>分布式缓存</li>
+<li>RPC<ul>
+<li>Dubbo<ul>
+<li>例子</li>
+<li>源码阅读</li>
+</ul>
+</li>
+<li>GRPC</li>
+</ul>
+</li>
+<li>RMI Remote Method Invocation</li>
+<li>DWR Direct Web Remoting</li>
+<li>JMS Java Message Service</li>
+<li>CORBA Common Object Request Broker Architecture</li>
+</ul>
+<h1 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h1><ul>
+<li>新特性<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.ibm.com/zh/articles/the-new-features-of-java-9/">Java 9 新特性概述</a></li>
+</ul>
+</li>
+<li>JVM<ul>
+<li><a href="https://fanjingdan012.github.io/2019/04/10/GC/">GC</a></li>
+<li><a href="https://fanjingdan012.github.io/2019/04/10/GC/Memory.png">JMM</a><ul>
+<li>used</li>
+<li>committed</li>
+<li>max</li>
+<li>initial</li>
+</ul>
+</li>
+<li>tools<ul>
+<li>jprof</li>
+<li>jconsole</li>
+<li>jmap</li>
+<li>jstat</li>
+<li>jcmd</li>
+<li>jvisualVM</li>
+<li>jmx<ul>
+<li>jmx client</li>
+<li>jmx bean, program</li>
+</ul>
+</li>
+<li>jdb</li>
+<li>jps查看java进程</li>
+</ul>
+</li>
+<li>class加载<ul>
+<li>class结构<ul>
+<li>Magic 0xCAFEBABE</li>
+<li>Version</li>
+<li>Constant Pool</li>
+<li>Access_flag</li>
+<li>This Class</li>
+<li>Super Class</li>
+<li>Interfaces</li>
+<li>Fields</li>
+<li>Methods</li>
+<li>Class attributes</li>
+</ul>
+</li>
+<li>过程<ul>
+<li>加载 生成一个class对象</li>
+<li>验证<ul>
+<li>文件格式</li>
+<li>元数据</li>
+<li>字节码</li>
+<li>符号引用</li>
+</ul>
+</li>
+<li>准备<ul>
+<li>默认值</li>
+<li>static分配内存</li>
+</ul>
+</li>
+<li>解析<ul>
+<li>解析具体类信息 引用等</li>
+</ul>
+</li>
+<li>初始化<ul>
+<li>先加载父类</li>
+</ul>
+</li>
+<li>使用</li>
+<li>卸载</li>
+</ul>
+</li>
+<li>加载方式<ul>
+<li>main</li>
+<li>Class.forName</li>
+<li>ClassLoader.loadClass</li>
+</ul>
+</li>
+<li>类加载器<ul>
+<li>App ClassLoader</li>
+<li>Extention ClassLoader</li>
+<li>Bootstrap ClassLoader</li>
+</ul>
+</li>
+<li>双亲委派原则<ul>
+<li>可以避免重复加载</li>
+<li>安全</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>concurrent 包</li>
+<li>lambda表达式<ul>
+<li>stream API</li>
+<li>stream 原理 TODO</li>
+</ul>
+</li>
+<li>HashMap<ul>
+<li>7和8区别<ul>
+<li>7用头插，8尾插</li>
+<li>7用链表，8红黑树+链表</li>
+</ul>
+</li>
+<li>resize<ul>
+<li>负载因子 Default=0.75</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>cache<ul>
+<li>Guava： google cache</li>
+<li>ehcache</li>
+</ul>
+</li>
+<li><a href="https://fanjingdan012.github.io/2019/05/07/csapp-IO">IO</a><ul>
+<li>read/write<ul>
+<li>copy:硬盘—&gt;内核buf—&gt;用户buf—&gt;socket相关缓冲区—&gt;协议引擎</li>
+<li>Zero-Copy<ul>
+<li>linux2.1 sendfile(socket, file, len)已经减少了内核buf—&gt;用户buf—&gt;socket相关缓冲区copy</li>
+<li>linux2.4之后，fd结果被改变，sendfile实现了更简单的方式，再次减少了一次copy操作。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>BIO<ul>
+<li>每个请求过来开一个线程阻塞</li>
+</ul>
+</li>
+<li>伪异步IO：就是普通BIO加个线程池</li>
+<li>NIO<ul>
+<li>Reactor模式</li>
+<li>Channel管道</li>
+<li>Buffer</li>
+<li>Selector</li>
+<li>Netty 应用了零拷贝技术(Zero-Copy)</li>
+<li><a target="_blank" rel="noopener" href="https://devarea.com/linux-io-multiplexing-select-vs-poll-vs-epoll/#.XhQ5tUf7RaQ">io multiplexing</a> 用户需要自己从kernel copy 到user，会阻塞<ul>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000003063859#item-3-11">详解</a> 在 select/poll中，进程只有在调用一定的方法后，内核才对所有监视的文件描述符进行扫描，而epoll事先通过epoll_ctl()来注册一 个文件描述符，一旦基于某个文件描述符就绪时，内核会采用类似callback的回调机制，迅速激活这个文件描述符，当进程调用epoll_wait() 时便得到通知。(此处去掉了遍历文件描述符，而是通过监听回调的的机制。这正是epoll的魅力所在。)</li>
+<li>epoll<ul>
+<li>epoll_create: <code>int epoll_create(int size)</code></li>
+<li>epoll_ctl 添加，删除，更改 :<code>int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event)</code></li>
+<li>epoll_wait: <code>int epoll_wait(int epfd, struct epoll_event * events, int maxevents, int timeout)</code></li>
+<li>模式<ul>
+<li>level trigger（默认），收听到可以不立即处理</li>
+<li>edge trigger，必须立即处理，否则以后收不到新消息</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>select<ul>
+<li><code>int select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);</code></li>
+</ul>
+</li>
+<li>poll<ul>
+<li><code>int poll (struct pollfd *fds, unsigned int nfds, int timeout);</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Netty执行<ul>
+<li>初始化channel</li>
+<li>注册channel到selector 任务队列</li>
+<li>轮询accept事件 建立channel连接</li>
+<li>注册channel到selector接收方</li>
+<li>轮询写事件开线程处理 任务队列</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>AIO(NIO2) 直接实现从kernel copy到user</li>
+</ul>
+</li>
+<li>test<ul>
+<li>mockito<ul>
+<li>实现原理</li>
+</ul>
+</li>
+<li>powermock</li>
+<li>TestNG<ul>
+<li>group<ul>
+<li><code>@Test(groups = &#123; &quot;functest&quot;, &quot;checkintest&quot; &#125;)</code><ul>
+<li>方法上</li>
+<li>类上</li>
+</ul>
+</li>
+<li>testng.xml</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>热部署<ul>
+<li>JRebel</li>
+</ul>
+</li>
+<li>IDE<ul>
+<li><a target="_blank" rel="noopener" href="https://www.jetbrains.com/idea/">idea</a></li>
+</ul>
+</li>
+<li>包管理<ul>
+<li><a target="_blank" rel="noopener" href="https://maven.apache.org/download.cgi">maven</a></li>
+<li><a target="_blank" rel="noopener" href="https://gradle.org/releases/">gradle</a></li>
+<li><a target="_blank" rel="noopener" href="https://ant.apache.org/">ant</a></li>
+</ul>
+</li>
+<li>OOM排查<ul>
+<li>MAT</li>
+<li>help dump</li>
+</ul>
+</li>
+<li>CPU 100% 排查<ul>
+<li>topc -c</li>
+<li>top -Hp pid</li>
+<li>jstack 进制转换</li>
+<li>cat</li>
+</ul>
+</li>
+<li>框架<ul>
+<li>Spring</li>
+<li>JBoss<ul>
+<li>基于JMX(Java Management Extensions)</li>
+</ul>
+</li>
+<li>EJB Enterprise Java Bean</li>
+</ul>
+</li>
+<li>杂<ul>
+<li>jndi(Java Naming and Directory Interface):J2EE 组件在运行时间接地查找其他组件、资源或服务的通用机制<ul>
+<li>应用：配数据库<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">datasources</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">local-tx-datasource</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">jndi-name</span>&gt;</span>MySqlDS<span class="tag">&lt;/<span class="name">jndi-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">connection-url</span>&gt;</span>jdbc:mysql://localhost:3306/lw<span class="tag">&lt;/<span class="name">connection-url</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">driver-class</span>&gt;</span>com.mysql.jdbc.Driver<span class="tag">&lt;/<span class="name">driver-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">user-name</span>&gt;</span>root<span class="tag">&lt;/<span class="name">user-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">password</span>&gt;</span>rootpassword<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">exception-sorter-class-name</span>&gt;</span>org.jboss.resource.adapter.jdbc.vendor.MySQLExceptionSorter<span class="tag">&lt;/<span class="name">exception-sorter-class-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">metadata</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">type-mapping</span>&gt;</span>mySQL<span class="tag">&lt;/<span class="name">type-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">metadata</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">local-tx-datasource</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">datasources</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Connection conn=<span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    Context ctx=<span class="keyword">new</span> InitialContext();</span><br><span class="line">    Object datasourceRef=ctx.lookup(<span class="string">&quot;java:MySqlDS&quot;</span>);</span><br><span class="line">    <span class="comment">//引用数据源</span></span><br><span class="line">    DataSource ds=(Datasource)datasourceRef;</span><br><span class="line">    conn=ds.getConnection();</span><br><span class="line">    <span class="comment">/* 使用conn进行数据库SQL操作 */</span></span><br><span class="line">    c.close();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>(Exception e)&#123;e.printStackTrace();&#125;</span><br><span class="line"><span class="keyword">finally</span> &#123;<span class="keyword">if</span>(conn!=<span class="keyword">null</span>)&#123;<span class="keyword">try</span>&#123; conn.close();&#125;<span class="keyword">catch</span>(SQLException e)&#123;&#125;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="C"><a href="#C" class="headerlink" title="C"></a>C</h1><ul>
+<li>存储类<ul>
+<li>auto 默认</li>
+<li>register 存在寄存器里</li>
+<li>static 在程序生命周期内一直不销毁，不创建</li>
+<li>extern 对所有程序文件可见的全局变量的引用</li>
+</ul>
+</li>
+<li>指针<ul>
+<li>普通指针 <code>int *p</code></li>
+<li>函数指针 <code>int (* p)(int, int) = &amp; max; //max 是个函数</code><ul>
+<li>调用： <code>d=p(a,b);</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h1><ul>
+<li>anaconda<ul>
+<li><code>conda-env list</code></li>
+</ul>
+</li>
+<li>python exit:<ul>
+<li><code>exit()</code></li>
+</ul>
+</li>
+</ul>
+<h1 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h1><ul>
+<li>Core<ul>
+<li>IOC<ul>
+<li>控制的什么被反转了？就是：获得依赖对象的方式反转了。</li>
+<li><a target="_blank" rel="noopener" href="https://czwer.github.io/2018/05/27/%E8%BF%91%E7%9C%8BBean%E5%AE%9E%E4%BE%8B%E7%94%9F%E6%88%90/">Bean的生命周期</a><ul>
+<li>扫描类 invokeBeanFactoryPostProcessors</li>
+<li>封装beanDef</li>
+<li>放到map</li>
+<li>遍历map</li>
+<li>验证</li>
+<li>得到class</li>
+<li>推断构造方法<ul>
+<li>推断注入模型</li>
+<li>默认</li>
+</ul>
+</li>
+<li>得到构造方法</li>
+<li>反射 实例化对象</li>
+<li>后置处理器合并beanDef</li>
+<li>判断是否允许循环依赖</li>
+<li>提前暴露bean工厂对象</li>
+<li>填充属性 自动注入</li>
+<li>执行部分aware接口<ul>
+<li>如果这个Bean实现 BeanNameAware 接口, 工厂将调用setBeanName() 传递Bean的ID。</li>
+<li>如果bean实现BeanFactoryAware，工厂将调用 setBeanFactory(), 将自己的实例传给它。</li>
+</ul>
+</li>
+<li>继续执行部分aware接口 生命周期回调方法<ul>
+<li>如果这个bean有 BeanPostProcessors 关联，他们的postProcessBeforeInitialization()方法将被调用。</li>
+<li>如果这个Bean有一个初始init方法，它将被调用。</li>
+<li>如果有关联对象 BeanPostProcessors ，postProcessAfterInitialization()方法将被调用。</li>
+</ul>
+</li>
+<li>完成代理AOP</li>
+<li>实例化为bean</li>
+<li>放到单例池</li>
+<li>销毁</li>
+</ul>
+</li>
+<li>Bean的作用域scope(内嵌作用域不同的bean：因为动态代理)<ul>
+<li>singleton(default)</li>
+<li>prototype</li>
+<li>session</li>
+<li>request</li>
+<li>application</li>
+<li>websocket</li>
+</ul>
+</li>
+<li>循环依赖<ul>
+<li>情况<ul>
+<li>属性注入可以破解</li>
+<li>构造器不行 三级缓存没存自己 因二级缓存之后去加载B了</li>
+</ul>
+</li>
+<li>三级缓存<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> Object <span class="title">getSingleton</span><span class="params">(String beanName, <span class="keyword">boolean</span> allowEarlyReference)</span> </span>&#123;</span><br><span class="line">  <span class="comment">//1. 去1单例池找 6. 下次再来直接拿</span></span><br><span class="line">  Object singletonObject = <span class="keyword">this</span>.singletonObjects.get(beanName);</span><br><span class="line">  <span class="comment">//2. 判断是不是正在被创建的</span></span><br><span class="line">  <span class="keyword">if</span> (singletonObject == <span class="keyword">null</span> &amp;&amp; isSingletonCurrentlyInCreation(beanName)) &#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (<span class="keyword">this</span>.singletonObjects) &#123;</span><br><span class="line">      <span class="comment">//3. 是的话，2早期提前暴露的对象缓存拿出来，返回</span></span><br><span class="line">      singletonObject = <span class="keyword">this</span>.earlySingletonObjects.get(beanName);</span><br><span class="line">      <span class="comment">//4. 如果早期都没有，就看是否支持去工厂拿，默认true</span></span><br><span class="line">      <span class="keyword">if</span> (singletonObject == <span class="keyword">null</span> &amp;&amp; allowEarlyReference) &#123;</span><br><span class="line">        <span class="comment">//4. 支持的话，3工厂 放到 2早期</span></span><br><span class="line">        ObjectFactory&lt;?&gt; singletonFactory = <span class="keyword">this</span>.singletonFactories.get(beanName);</span><br><span class="line">        <span class="keyword">if</span> (singletonFactory != <span class="keyword">null</span>) &#123;</span><br><span class="line">          singletonObject = singletonFactory.getObject();</span><br><span class="line">          <span class="keyword">this</span>.earlySingletonObjects.put(beanName, singletonObject);</span><br><span class="line">          <span class="comment">//5. 干掉工厂 GC</span></span><br><span class="line">          <span class="keyword">this</span>.singletonFactories.remove(beanName);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> singletonObject;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>缓存 存放<code>DefaultSingletonBeanRegistry.java</code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** Cache of singleton objects: bean name --&gt; bean instance 一级缓存 单例缓存池*/</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, Object&gt; singletonObjects = <span class="keyword">new</span> ConcurrentHashMap&lt;String, Object&gt;(<span class="number">256</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Cache of singleton factories: bean name --&gt; ObjectFactory 三级缓存：单例对象工厂缓存*/</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, ObjectFactory&lt;?&gt;&gt; singletonFactories = <span class="keyword">new</span> HashMap&lt;String, ObjectFactory&lt;?&gt;&gt;(<span class="number">16</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Cache of early singleton objects: bean name --&gt; bean instance 二级缓存 早期提前暴露的对象缓存*/</span></span><br><span class="line"><span class="comment">//是一个不完整的对象，属性还没有值，没有被初始化。</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, Object&gt; earlySingletonObjects = <span class="keyword">new</span> HashMap&lt;String, Object&gt;(<span class="number">16</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Names of beans that are currently in creation. */</span></span><br><span class="line"><span class="comment">// 这个缓存也十分重要：它表示bean创建过程中都会在里面呆着~</span></span><br><span class="line"><span class="comment">// 它在Bean开始创建时放值，创建完成时会将其移出~</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Set&lt;String&gt; singletonsCurrentlyInCreation = Collections.newSetFromMap(<span class="keyword">new</span> ConcurrentHashMap&lt;&gt;(<span class="number">16</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Names of beans that have already been created at least once. */</span></span><br><span class="line"><span class="comment">// 当这个Bean被创建完成后，会标记为这个 注意：这里是set集合 不会重复</span></span><br><span class="line"><span class="comment">// 至少被创建了一次的  都会放进这里~~~~</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Set&lt;String&gt; alreadyCreated = Collections.newSetFromMap(<span class="keyword">new</span> ConcurrentHashMap&lt;&gt;(<span class="number">256</span>));</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>AOP<ul>
+<li>静态代理<ul>
+<li>AspectJ</li>
+<li>实现类</li>
+</ul>
+</li>
+<li>动态代理<ul>
+<li>CGLib<ul>
+<li><a target="_blank" rel="noopener" href="https://www.ibm.com/developerworks/cn/java/j-lo-asm30/index.html">ASM</a> </li>
+</ul>
+</li>
+<li>JDK Proxy:实现interface java反射机制生成代理接口匿名类 调用具体方法的时候调用invokeHandler</li>
+<li>SpringAOP=CGLib+JDK+AspectJ Annotations<ul>
+<li>是interface就用JDK</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Compile time weave<ul>
+<li>AspectJ ajc<ul>
+<li>ASM</li>
+</ul>
+</li>
+<li>AspectJ 编译后织入<ul>
+<li>ASM</li>
+</ul>
+</li>
+<li>JDK静态代理（自己手写Proxy）</li>
+</ul>
+</li>
+<li>Load time weave<ul>
+<li>AspectJ ltw<ul>
+<li>Java agent</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Run time weave<ul>
+<li>Spring CGLib<ul>
+<li>CGLib<ul>
+<li>ASM</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>JDK proxy</li>
+</ul>
+</li>
+<li>注意点<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/frightingforambition/article/details/78842306">代理对象不能获取Annotation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://czwer.github.io/2018/05/31/Spring%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86%E5%8E%9F%E7%90%86/">Transactional</a><ul>
+<li>采用不同连接器</li>
+<li>用AOP新建立一个连接 共享连接</li>
+<li>ThreadLocal当前事务</li>
+<li>前提是关闭AutoCommit</li>
+<li>建立连接，开启事务，执行方法，提交or回滚</li>
+<li>Propogation<ul>
+<li>Use Current Transaction<ul>
+<li>Currently No Transaction<ul>
+<li>just run without Transaction<ul>
+<li>SUPPORTS</li>
+</ul>
+</li>
+<li>Create New<ul>
+<li>REQUIRED</li>
+</ul>
+</li>
+<li>Throw Exception<ul>
+<li>MANDATORY</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Create New<ul>
+<li>Currently Have Transaction<ul>
+<li>Suspend<ul>
+<li>REQUIRES_NEW: A{B}, A’s connection != B’s connection, A rollback-&gt;B can still commit, B rollback-&gt;A can still commit</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>No Transaction<ul>
+<li>Currently Have Transaction<ul>
+<li>Suspend: A{B}, A’s transaction wait for B returns to continue, B runs without Transaction<ul>
+<li>NOT_SUPPORTED</li>
+</ul>
+</li>
+<li>Throw Exception<ul>
+<li>NEVER</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>NESTED: A{B}, A rollback-&gt;B rollback, B rollback-&gt;A can still commit</li>
+</ul>
+</li>
+<li>isolation</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Spring boot</li>
+<li>MVC<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/simple-spring-mvc">手写简化逻辑的代码</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="软件工程"><a href="#软件工程" class="headerlink" title="软件工程"></a>软件工程</h1><ul>
+<li>软件设计原则<ul>
+<li>单一职责原则SRP：一个类只负责一个领域的相应职责</li>
+<li>开闭原则：软件实体应对扩展开放，而对修改关闭</li>
+<li>里氏替换原则：所有引用基类的对象能够透明的使用其子类的对象</li>
+<li>依赖倒转原则IoC：抽象不应该依赖于细节，细节依赖于抽象</li>
+<li>接口隔离原则：使用多个专门的接口，而不是使用单一总接口</li>
+<li>合成复用原则Composite：尽量使用对象组合，而不是继承来达到复合目的</li>
+<li>迪米特法则Demeter：高内聚低耦合</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/design-pattern">设计模式23</a><ul>
+<li>行为模式11<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/design-pattern/tree/master/strategy">策略模式</a></li>
+<li>模板方法</li>
+<li>备忘录模式</li>
+<li><a href="">状态模式</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/design-pattern/tree/master/visitor">访问者模式</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/design-pattern/tree/master/observer">观察者模式（Observer）</a><ul>
+<li>JedisSentinePool中master挂掉通知</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/design-pattern/tree/master/iterator">Iterator</a></li>
+<li>责任链模式</li>
+<li>命令模式</li>
+<li>中介者模式</li>
+<li>解释器模式<ul>
+<li>编译器，运算表达式解析</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>结构模式7<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/design-pattern/tree/master/adapter">Adapter</a></li>
+<li>Bridge</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/design-pattern/tree/master/composite">Composite</a></li>
+<li>decoration</li>
+<li>Facade</li>
+<li>Flyweight</li>
+<li>Proxy</li>
+</ul>
+</li>
+<li>创建模式5<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/design-pattern/tree/master/factory">Factory</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/design-pattern/tree/master/singleton">Singleton</a></li>
+<li>Abstract Factory</li>
+<li>Builder</li>
+<li>Prototype</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="AI"><a href="#AI" class="headerlink" title="AI"></a>AI</h1><ul>
+<li>遗传算法<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/ai-learn/tree/master/genetic-algorithm">code</a></li>
+</ul>
+</li>
+<li>BP神经网络<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/ai-learn/tree/master/BP">code</a></li>
+</ul>
+</li>
+<li>粗糙集<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/ai-learn/tree/master/rough-set">code</a></li>
+</ul>
+</li>
+<li>自然语言处理</li>
+<li>分类</li>
+</ul>
+<h1 id="大数据"><a href="#大数据" class="headerlink" title="大数据"></a>大数据</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://hadoop.apache.org/">Hadoop</a><ul>
+<li>HBase<ul>
+<li>HRegion</li>
+<li>HMaster</li>
+<li>HClient</li>
+</ul>
+</li>
+<li>HDFS<ul>
+<li>NameNode</li>
+<li>DataNode</li>
+<li>Client</li>
+</ul>
+</li>
+<li>Map/Reduce</li>
+<li>Hive</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://spark.apache.org/downloads.html">Spark</a><ul>
+<li>components<ul>
+<li>core</li>
+<li>sql</li>
+<li>streaming</li>
+<li>MLlib</li>
+<li>GraphX</li>
+</ul>
+</li>
+<li>RDD(resilient弹性 distributed dataset)<ul>
+<li>分区partitions</li>
+<li>一个函数计算每个分区</li>
+<li>分区之间有依赖</li>
+<li>可选：对于键值对有一个partitioner（e.g.hash partitioner）</li>
+<li>可选：每一个分区有一串优先位置</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a><a href="https://fanjingdan012.github.io/2019/05/09/Net">网络</a></h1><ul>
+<li>五层协议<ul>
+<li>物理层<ul>
+<li>中继器，集线器，双绞线</li>
+<li>IEEE 802.1A IEEE 802.2~802.11</li>
+</ul>
+</li>
+<li>数据链路层<ul>
+<li>网桥，以太网交换机，网卡=1.5层</li>
+<li>FDDI， Ethernet， Arpanet， PDN， SLP, PPP</li>
+</ul>
+</li>
+<li>IP<ul>
+<li>路由器，三层交换机</li>
+<li>ICMP， ARP， RARP， AKP， UUCP</li>
+</ul>
+</li>
+<li>TCP/UDP</li>
+<li>应用层<ul>
+<li>DNS等</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>web hook 就是个回调函数，允许在收到某消息时顺便做xx事</li>
+<li>http2<ul>
+<li>支持multiplexing</li>
+</ul>
+</li>
+</ul>
+<h1 id="软件过程"><a href="#软件过程" class="headerlink" title="软件过程"></a>软件过程</h1><ul>
+<li>瀑布</li>
+<li>Agile</li>
+<li>Scrum<ul>
+<li>Backlog Refine</li>
+<li>Sprint Plan</li>
+<li>Daily Scrum</li>
+<li>In-Sprint Inspect</li>
+<li>Sprint Review</li>
+<li>Retro</li>
+<li>Scrum of scrums（TPO APO …）</li>
+</ul>
+</li>
+<li>XP极限编程</li>
+</ul>
+<h1 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h1><ul>
+<li><p>内存数据库</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://redis.io/">redis</a></p>
+<ul>
+<li><p>连接：<code>redis-cli -a &lt;password&gt;</code></p>
+</li>
+<li><p>数据结构</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/LeCoupa/1596b8f359ad8812c7271b5322c30946">cheat sheet</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jaycekon/p/6227442.html">底层数据结构</a></li>
+<li>String</li>
+<li>Hash<ul>
+<li>hget,hset,hgetall</li>
+</ul>
+</li>
+<li>List 左右都开口<ul>
+<li>lpush,rpush,lpop,rpop,lrange</li>
+<li>Redis list的实现为一个双向链表，即可以支持反向查找和遍历，更方便操作，不过带来了部分额外的内存开销，Redis内部的很多实现，包括发送缓冲队列等也都是用的这个数据结构。</li>
+</ul>
+</li>
+<li>Set<ul>
+<li>sadd,spop,smembers,sunion</li>
+</ul>
+</li>
+<li>Sorted Set</li>
+</ul>
+</li>
+<li><p>pub/sub</p>
+<ul>
+<li>subscribe messages news</li>
+<li>publish messages “Hi”-&gt; will get 1</li>
+<li>publish news “Great”-&gt; will get 1, if no subscription will return 0</li>
+</ul>
+</li>
+<li><p>transaction</p>
+</li>
+<li><p>redis客户端</p>
+<ul>
+<li>node: <a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/ioredis-learn">ioredis</a>)</li>
+<li>JedisPool</li>
+<li>Jediscluster</li>
+<li>Redis案例<ul>
+<li>缓存击穿</li>
+<li>Redis雪崩</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>redis持久化</p>
+<ul>
+<li>RDB(Redis DB file)<ul>
+<li>default</li>
+<li>taking snapshots, creating point-in-time copies of the data</li>
+<li>灾备</li>
+</ul>
+</li>
+<li>AOF(Append-only file)<ul>
+<li>use logs to rebuild the database</li>
+<li>速度快</li>
+</ul>
+</li>
+<li>redis.(windows.)conf,改了要重启<ul>
+<li>save 900 1 表示900s后如果&gt;=1key变了就save，可以配置</li>
+<li>appendonly no/yes就开启了RDB和AOF两个</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://redis.io/topics/cluster-tutorial">redis集群</a></p>
+<ul>
+<li>master-slave, redis.(windows.)conf，复制黏贴一个conf文件 ， redis-server redis2.(windows.)conf<ul>
+<li>slaveof 127.0.0.1 6379</li>
+<li>appendfilename “appendonly2.aof” 别忘了改</li>
+<li>port 6380 别忘了改</li>
+<li>两个会做sync</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>redis.conf</p>
+<ul>
+<li>CONFIG SET SAVE “60 1”</li>
+<li>requirepass somepwd(in master)</li>
+<li>masterauth somepwd(in slave)</li>
+<li>bind 127.0.0.1/protected-mode yes(两个要配合，一般不要改，如果该一定要设置protected-mode yes不要在公网暴露)</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://redis.io/topics/sentinel">哨兵Sentinel</a></p>
+<ul>
+<li>每个Sentinel以每秒钟一次的频率向它所知的Master，Slave以及其他 Sentinel 实例发送一个 PING 命令</li>
+<li>如果一个实例（instance）距离最后一次有效回复 PING 命令的时间超过 down-after-milliseconds 选项所指定的值， 则这个实例会被 Sentinel 标记为主观下线。</li>
+<li>如果一个Master被标记为主观下线，则正在监视这个Master的所有 Sentinel 要以每秒一次的频率确认Master的确进入了主观下线状态。</li>
+<li>当有足够数量的 Sentinel（大于等于配置文件指定的值）在指定的时间范围内确认Master的确进入了主观下线状态， 则Master会被标记为客观下线</li>
+<li>在一般情况下， 每个 Sentinel 会以每 10 秒一次的频率向它已知的所有Master，Slave发送 INFO 命令</li>
+<li>当Master被 Sentinel 标记为客观下线时，Sentinel 向下线的 Master 的所有 Slave 发送 INFO 命令的频率会从 10 秒一次改为每秒一次</li>
+<li>若没有足够数量的 Sentinel 同意 Master 已经下线， Master 的客观下线状态就会被移除。</li>
+<li>若 Master 重新向 Sentinel 的 PING 命令返回有效回复， Master 的主观下线状态就会被移除。</li>
+</ul>
+</li>
+<li><p>应用</p>
+<ul>
+<li>存翻译</li>
+<li>存Session</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>memcached</p>
+<ul>
+<li>缓存击穿</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>mq</p>
+<ul>
+<li>rabbitmq</li>
+<li>rocketmq</li>
+<li><a target="_blank" rel="noopener" href="http://kafka.apache.org/quickstart">kafka</a><ul>
+<li>启动<ul>
+<li><code>./kafka-server-start.sh ../config/server.properties</code></li>
+</ul>
+</li>
+<li>概念<ul>
+<li>producer</li>
+<li>consumer</li>
+<li>topic: queue,目录,一个topic可有多个partition</li>
+<li>partition:信道</li>
+<li>broker:一个kafka server节点，集群有多个server</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="http://kafka.apache.org/documentation/#semantics">消息保证机制</a><ul>
+<li>at most once<ul>
+<li>读完消息之后先commit然后再处理消息，在这种模式下comsumer在commit后还没有来得及处理就crash了，下次重新开始工作之后无法读到刚刚已提交而未处理的消息，这就对应了At most once。</li>
+</ul>
+</li>
+<li>at least once<ul>
+<li>读完消息之后先处理消息然后再commit，如果在消息处理之后commit之前crash，下次重新开始工作的时候刚刚处理未提交commit消息，但是实际上该消息已经被处理过，这就对应了At least once。</li>
+</ul>
+</li>
+<li>exactly once<ul>
+<li>需要offset来帮助实现，通用的方式是将offset和操作输出输出到同一个地方，但是对于high API来说，offset是保存在zk中的，无法输出到同一个地方，lower API是自己维护offset的，可以将它存在同一个地方，一般存在HDFS。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>保证数据不丢失<ul>
+<li>broker<ul>
+<li>acks=all : 所有副本都写入成功并确认。</li>
+<li>retries = 一个合理值。</li>
+<li>min.insync.replicas=2 消息至少要被写入到这么多副本才算成功。</li>
+<li>unclean.leader.election.enable=false 关闭unclean leader选举，即不允许非ISR中的副本被选举为leader，以避免数据丢失。</li>
+</ul>
+</li>
+<li>consumer如果保证数据得不丢失<ul>
+<li>enable.auto.commit=false 关闭自动提交offset。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>NIO<ul>
+<li>Zero-Copy</li>
+</ul>
+</li>
+<li>磁盘顺序读写<ul>
+<li>linux 优化<ul>
+<li>read-ahead</li>
+<li>write-behind</li>
+</ul>
+</li>
+<li>每一个partition（topic）一个文件，然后append，consumer根据自己保存的offset读取</li>
+</ul>
+</li>
+<li>memory mapped files<ul>
+<li>用操作系统的Page来实现文件到物理内存的直接映射</li>
+<li>参数producer.type来控制是不是主动flush<ul>
+<li>sync</li>
+<li>async</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Queue极致使用</li>
+<li>批量压缩（减少io大小）<ul>
+<li>多个消息一起压缩</li>
+<li>log也保持压缩</li>
+<li>消费者解压缩</li>
+<li>压缩协议<ul>
+<li>Gzip</li>
+<li>Snappy</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>书<ul>
+<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/27038473/">Apache Kafka源码剖析</a></li>
+<li>Kafka权威指南.pdf</li>
+<li>Apache kafka实战.pdf</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apache/kafka">源码</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.nginx.com/">Nginx</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://zookeeper.apache.org/releases.html">Zookeeper</a></p>
+<ul>
+<li>启动<ul>
+<li><code>./zookeeper-server-start.sh ../config/zookeeper.properties</code></li>
+</ul>
+</li>
+<li>原理<ul>
+<li>Observer模式</li>
+</ul>
+</li>
+<li>Client API</li>
+<li>应用场景<ul>
+<li>数据发布订阅</li>
+<li>负载均衡服务机制</li>
+<li>命名服务</li>
+<li>分布式通知协助机制</li>
+</ul>
+</li>
+<li>集群<ul>
+<li>Zab协议</li>
+<li>集群数据同步机制</li>
+<li>leader follower</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="http://tomcat.apache.org/">Tomcat</a></p>
+</li>
+</ul>
+<h1 id="Security安全"><a href="#Security安全" class="headerlink" title="Security安全"></a>Security安全</h1><ul>
+<li><p>密码学</p>
+<ul>
+<li><p>要求保密性（Confidentiality）和完整性（Integrity），</p>
+</li>
+<li><p>cryptosystem=(E,D,p,K,C)即(Encryption algorithm, Decryption, plaintext, Keys, Cipher texts)</p>
+</li>
+<li><p>Kerckhoffs假设：秘密全藏在密钥里</p>
+</li>
+<li><p>术语</p>
+<ul>
+<li>cryptology<ul>
+<li>cryptography：加密</li>
+<li>cryptanalysis：解密</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>加密</p>
+<ul>
+<li>Substitution：替换</li>
+<li>Transposition：换位置</li>
+<li>Product：以上两个结合，反复弄</li>
+<li>input顺序：block，stream</li>
+</ul>
+</li>
+<li><p>Steganography：传输效率低</p>
+<ul>
+<li>藏在长message里</li>
+<li>看不见的墨水</li>
+<li>在噪音图片和声音里隐藏信息<ul>
+<li>数字水印</li>
+<li>伪装保密通信：在普通图片里藏个机密图片之类的</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>古典加密技术</p>
+<ul>
+<li>羊皮传书</li>
+<li>藏头诗</li>
+<li>Caesar：Substitution<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/JavaDetails/blob/master/security/src/main/java/crypt/Cesar.java">code</a></li>
+<li>改进：Monoalphabetic Cypher替换字母表，理论上有26!种key，但是语言学上说有些字母用得更频繁</li>
+<li>再改进：一对多Vigenere，多对一Playfair</li>
+<li>Polyalphabetic Ciphers：再多一个key来选择用哪个字母表<ul>
+<li>Vigenere Cipher，一串k1k2…kn来决定是Caesar几字母表，每隔n个letter就换字母表</li>
+<li>One-Time Pad，一次一密绝对安全</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Transposition：换位置<ul>
+<li>Rail Fence cipher:信息W状写成两行，再按行拼接形成密文</li>
+<li>Row Transposition Ciphers</li>
+</ul>
+</li>
+<li>Enigma:Product<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/JavaDetails/blob/master/security/src/main/java/crypt/Enigma.java">code</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>对称Symmetric：加解密一个密钥</p>
+<ul>
+<li>DES（Data Encryption Standard）<ul>
+<li>Claude Shannon提出用Confusion和Deffusion来构造Substitution-Permutation network（SPN）</li>
+<li>Feistel cipher实现了SPN</li>
+</ul>
+</li>
+<li>AES：DES的改进版<ul>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/starwolf/p/3365834.html">加密模式</a><ul>
+<li>ECB (Electonic Code Book)</li>
+<li>CBC (Cipher Block Chaining)</li>
+<li>CTR (Counter)</li>
+<li>CFB (Cipher Feed Back)</li>
+<li>OFB (Output Feed Back)</li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/29b1ef3f84dc">AES-GCM</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>非对称Asymmetric</p>
+<ul>
+<li>RSA<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/JavaDetails/blob/master/security/src/main/java/crypt/RSAImpl.java">原理解释</a></li>
+<li><a target="_blank" rel="noopener" href="https://cnodejs.org/topic/5bb9c31e15e4fd1923f48d0b">数学原理解释</a></li>
+<li><a target="_blank" rel="noopener" href="http://github.tiankonguse.com/blog/2017/07/01/ASN1-SRA.html">密钥存储格式</a></li>
+<li>攻击方式<ul>
+<li>暴力头尾+中间</li>
+<li>共模攻击：不同public key加密同一个plainText，因为<code>C=plainMsg^e mod n</code>，根据”中国剩余定理”可以算出plainText，但不能得到private key，<a target="_blank" rel="noopener" href="https://github.com/fanjingdan012/JavaDetails/blob/master/security/src/test/java/crypt/RSAImplTest.java">CTF sample</a></li>
+<li>密码太短，直接辗转相除，分解质因数</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>消息认证码</p>
+<ul>
+<li>MAC(Message Authentication Code)</li>
+<li>Hash，有些简单hash直接google一下就出来了<ul>
+<li><a target="_blank" rel="noopener" href="https://hashcat.net/wiki/doku.php?id=example_hashes">which hash</a></li>
+<li>MD5: 32/16<ul>
+<li>MD2,MD4(x)</li>
+</ul>
+</li>
+<li>SHA<ul>
+<li>SHA-1(x): 40</li>
+<li>SHA-256: 256bit=64hex (n/4)</li>
+<li>SHA-384: 384bit=96hex</li>
+<li>SHA-512: 512bit=128hex</li>
+</ul>
+</li>
+<li>RIPEMD-160</li>
+<li>win zip hash<ul>
+<li><a target="_blank" rel="noopener" href="https://hashcat.net/forum/thread-7968.html">structure</a></li>
+</ul>
+</li>
+<li>tools<ul>
+<li><a target="_blank" rel="noopener" href="https://hashcat.net/">hashcat</a><ul>
+<li>install</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/hashcat/hashcat-utils/releases">hashcat-utils</a></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.openwall.com/john/">john the ripper</a><ul>
+<li><code>zip2john &lt;zip_file&gt; &gt; &lt;password_file&gt;</code></li>
+</ul>
+</li>
+<li>cewl 收集字典<ul>
+<li><code>cewl https://www.hbo.com/game-of-thrones -w gameOfThrone.txt -d 3</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Key</p>
+<ul>
+<li>PBKDF1/PBKDF2 (Password-Based Key Derivation Function)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>编码</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.systutorials.com/f/2013/ascii.txt">ascii</a></li>
+<li>Base64</li>
+<li>Base32</li>
+<li>Base16</li>
+<li>培根密码，AB表01替换字母</li>
+<li>摩尔斯电码</li>
+</ul>
+</li>
+<li><p>综合案例</p>
+<ul>
+<li><a href="https://fanjingdan012.github.io/2019/10/17/Bitcoin/">bitcoin</a></li>
+</ul>
+</li>
+<li><p>Identification：这个用户是谁</p>
+<ul>
+<li>IdP</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>Authentication：提供password，token，certificate等来证明这个用户的确是他自己</p>
+<ul>
+<li>SAML Authentication(Security Assertion Markup Language)<ul>
+<li>在IdP和SP(Service Provider)之间用Bearer消息来传递Authentication和Role等信息</li>
+</ul>
+</li>
+<li>Web Tokens<ul>
+<li><a target="_blank" rel="noopener" href="https://jwt.io/#encoded-jwt">JWT(JSON Web Tokens)</a><ul>
+<li>Header<ul>
+<li>“alg”: “HS256”,  “typ”: “JWT”等</li>
+</ul>
+</li>
+<li>Payload<ul>
+<li>ROLE,SCOPE,Username等</li>
+<li>jti: token uuid</li>
+<li>iat: issued at</li>
+<li>nbf: not effective before</li>
+<li>exp: expire</li>
+<li>fresh: boolean</li>
+<li>type: “access”</li>
+</ul>
+</li>
+<li>verify signature<ul>
+<li>可以用hash:HMACSHA256</li>
+<li>可以用RSA签名</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>OAuth2<ul>
+<li>5角色，sample：某app集成wechat<ul>
+<li>客户端（Client）某app在wechat的开发者中心注册的app</li>
+<li>用户代理（User Agent）某app用户的browser</li>
+<li>资源所有者（Resource Owner）某app用户（同时是wechat用户）</li>
+<li>授权服务器（Authorization Server）wechat的IDP</li>
+<li>资源服务器（Resource Server）wechat的数据服务器</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Kerberos 三头狗</li>
+</ul>
+</li>
+<li><p>Authorization：这个用户是不是允许访问这些资源，他是什么role，role含有哪些权限</p>
+</li>
+<li><p>OWASP&amp;CTF</p>
+<ul>
+<li><p>CTF cheat sheets</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://dvd848.github.io/CTFs/CheatSheet.html">sheet 1</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/uppusaikiran/awesome-ctf-cheatsheet#awesome-ctf-cheatsheet-">sheet 2</a></li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://wizardforcel.gitbooks.io/web-hacking-101/content/">web-hacking-101</a></p>
+<ul>
+<li>name server <code>nslookup www.baidu.com</code></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/412">412 precondition</a></li>
+<li>攻击<ul>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/hyddd/archive/2009/04/09/1432744.html">csrf 攻击</a></li>
+<li>xss</li>
+<li>phishing 偷 cookie</li>
+<li>phishing 偷 token</li>
+</ul>
+</li>
+<li>tools<ul>
+<li><a target="_blank" rel="noopener" href="https://subdomainfinder.c99.nl/index.php">subdomain scan</a></li>
+<li><a target="_blank" rel="noopener" href="https://postb.in/">Phishing 查询被调参数神站</a></li>
+<li>path scan<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/maurosoria/dirsearch">dirsearch</a><ul>
+<li><code>~/opt/anaconda3/bin/python dirsearch.py -e php,txt,gitignore,Dockerfile -u https://robokracy.com</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>port scan<ul>
+<li><a target="_blank" rel="noopener" href="https://nmap.org/download.html">nmap</a></li>
+</ul>
+</li>
+<li>抓包工具<ul>
+<li><a target="_blank" rel="noopener" href="https://www.wireshark.org/download.html">wireshark</a><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/wangqingchuan92/article/details/81095871">从http数据包获取用户登陆信息</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Git 项目还原<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/lijiejie/GitHack">Git Hack</a><ul>
+<li><code>python GitHack.py https://robokracy.com/.git </code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>C语言</p>
+<ul>
+<li><p>buffer overflow</p>
+<ul>
+<li>命令行输入0x0：Ctrl+Shift+2</li>
+</ul>
+</li>
+<li><p>printf 格式化字符串攻击</p>
+</li>
+<li><p>ELF(Executable and Linkable Format, 其实就是linux可执行文件)反编译</p>
+<ul>
+<li><p>可以尝试的命令</p>
+<ul>
+<li><code>readelf -a &lt;elf file&gt;</code></li>
+<li><code>objdump -S &lt;elf file&gt;</code></li>
+<li><code>gdb &lt;elf file&gt;</code></li>
+<li><code>strings &lt;elf file&gt;</code> 可以发现打包工具之类的</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://upx.github.io/">UPX packing</a></p>
+<ul>
+<li>安装<ul>
+<li>centos<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wget -c http://ftp.tu-chemnitz.de/pub/linux/dag/redhat/el7/en/x86_64/rpmforge/RPMS/ucl-1.03-2.el7.rf.x86_64.rpm</span><br><span class="line">rpm -Uvh ucl-1.03-2.el7.rf.x86_64.rpm</span><br><span class="line">yum install ucl</span><br><span class="line"></span><br><span class="line">wget -c http://ftp.tu-chemnitz.de/pub/linux/dag/redhat/el7/en/x86_64/rpmforge/RPMS/upx-3.91-1.el7.rf.x86_64.rpm</span><br><span class="line">rpm -Uvh upx-3.91-1.el7.rf.x86_64.rpm</span><br><span class="line">yum install upx</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><code>upx -d &lt;exeutable file&gt;</code> 解压</li>
+</ul>
+</li>
+<li><p>反编译工具</p>
+<ul>
+<li>objdump</li>
+<li>ida</li>
+<li><a target="_blank" rel="noopener" href="http://www.ollydbg.de/">ollydbg</a></li>
+</ul>
+</li>
+<li><p>debugger</p>
+<ul>
+<li>ida</li>
+<li>gdb</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Android</p>
+<ul>
+<li>反编译APK<ul>
+<li><a target="_blank" rel="noopener" href="https://www.toolfk.com/tool-decompile-apk">Online Android APK Decompile Tool</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/29370382">自己反编译</a><ul>
+<li><a target="_blank" rel="noopener" href="https://ibotpeaches.github.io/Apktool/install/">Apktool</a><ul>
+<li>这个实际没啥用，win直接改后缀为zip，winrar解压，mac直接<code>unzip &lt;xx.apk&gt;</code></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/dex2jar/files/">dex2jar</a><ul>
+<li>这个最重要<code>./d2j-dex2jar.sh classes.dex</code></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="http://java-decompiler.github.io/">jd-gui</a><ul>
+<li>这个也无所谓，直接找随便一个项目，idea导入为lib，就能看见源代码了</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>sql injection</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://sqlmap.org/">sqlmap</a><ul>
+<li><code>~/opt/anaconda3/bin/python sqlmap.py -u http://robokracy.com:18443/admin.php --batch --banner</code></li>
+<li><code>~/opt/anaconda3/bin/python sqlmap.py -u http://robokracy.com:18443/admin.php --batch --passwords</code></li>
+<li><code>~/opt/anaconda3/bin/python sqlmap.py -u http://robokracy.com:18443/admin.php --batch --dbs</code></li>
+<li><code>~/opt/anaconda3/bin/python sqlmap.py -u http://robokracy.com:18443/admin.php --batch --tables -D testdb</code></li>
+<li><code>~/opt/anaconda3/bin/python sqlmap.py -u http://robokracy.com:18443/admin.php --batch --os-shell</code></li>
+</ul>
+</li>
+<li><code>admin or 1=1--</code></li>
+<li><code>admin or 1=1)--</code></li>
+<li><code>&quot; or &quot;&quot;=&quot;</code></li>
+<li><code>105; DROP TABLE Suppliers</code></li>
+</ul>
+</li>
+<li><p>nosql injection</p>
+<ul>
+<li><code>username[$ne]=help&amp;password[$ne]=help&amp;login=login</code></li>
+</ul>
+</li>
+<li><p>图片</p>
+<ul>
+<li>common<ul>
+<li>文件meta</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/zardus/ctf-tools/blob/master/stegsolve/install">StegSolve</a></li>
+</ul>
+</li>
+<li>jpg<ul>
+<li>FFD8~FFD9<ul>
+<li>copy命令</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>png<ul>
+<li>改高度</li>
+</ul>
+</li>
+<li>小色差</li>
+</ul>
+</li>
+<li><p>xml攻击</p>
+</li>
+<li><p>reverse shell</p>
+</li>
+<li><p>pentest</p>
+<ul>
+<li>tools<ul>
+<li>ZAP<ul>
+<li>active scan</li>
+<li>passive scan</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><ul>
+<li>shell<ul>
+<li>目录文件<ul>
+<li><code>cp -R dir1 dir2</code></li>
+<li><code>mv dir1 dir2</code></li>
+<li><code>mkdir -p a/b/c/d</code></li>
+<li><code>find . -iname &#39;abc&#39;</code></li>
+</ul>
+</li>
+<li>网络<ul>
+<li><code>lsof -i :12345</code><ul>
+<li>list open files with port 12345</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>线程<ul>
+<li><code>kill -9 &lt;pid&gt;</code></li>
+</ul>
+</li>
+<li><code>uname -a</code>  查看操作系统信息</li>
+<li><code>file &lt;file&gt;</code> 查看这是啥文件</li>
+<li>txt处理<ul>
+<li><code>cat a.txt|sort|uniq</code> 排序，去重</li>
+<li>awk<ul>
+<li>csv<ul>
+<li><code>awk -F &quot;\&quot;*,\&quot;*&quot; &#39;&#123;print $3&#125;&#39; data.csv</code></li>
+</ul>
+</li>
+<li>count<ul>
+<li><code>awk -F &#39;,&#39; &#39; &#123;c[$1]++&#125; END&#123; for (i in c) printf(&quot;%s\t%s\n&quot;,i,c[i]) &#125;&#39; data.csv</code></li>
+<li><code>awk &#39;&#123; print $1&#125;&#39; system-access.log.txt | sort | uniq -c | sort -nr | head -n 10</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>sort<ul>
+<li><code>sort --field-separator=&#39;\t&#39; --key=2,1</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>安装<ul>
+<li><code>apt-get install binutils</code><ul>
+<li>objdump<ul>
+<li><code>objdump -D &lt;file&gt;</code></li>
+<li><code>objdump -S &lt;file&gt;</code></li>
+</ul>
+</li>
+<li>readelf<ul>
+<li><code>readelf -a &lt;file&gt;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>apt-get install gdb</code><ul>
+<li>gdb<ul>
+<li><code>printf &quot;%s&quot;, &lt;address&gt;</code></li>
+<li><code>gdb &lt;program&gt;</code></li>
+<li><code>gdb &lt;program&gt; &lt;core_dump&gt;</code></li>
+<li><code>run</code></li>
+<li><code>quit</code></li>
+<li><code>continue</code></li>
+<li><code>break &lt;function&gt;</code></li>
+<li><code>info break</code></li>
+<li><code>delete &lt;breakpoint&gt;</code></li>
+<li><code>step</code></li>
+<li><code>stepi</code></li>
+<li><code>next</code></li>
+<li><code>nexti</code></li>
+<li><code>finish</code></li>
+<li><code>print &lt;expression&gt;</code></li>
+<li><code>x /&lt;nfu&gt; &lt;addr&gt;</code></li>
+<li><code>info variables</code></li>
+<li><code>info locals</code></li>
+<li><code>info args</code></li>
+<li><code>list</code></li>
+<li><code>disassemble</code></li>
+<li><code>backtrace</code></li>
+<li><code>frame &lt;n&gt;</code></li>
+<li><code>info threads</code></li>
+<li><code>thread apply all &lt;command&gt;</code></li>
+<li><code>thread &lt;ThreadNumber&gt;</code></li>
+<li><code>until</code></li>
+<li><code>info address &lt;address&gt;</code></li>
+<li><code>info proc mappings</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="MAC"><a href="#MAC" class="headerlink" title="MAC"></a>MAC</h1><ul>
+<li>lock screen = Command + Ctrl + Q</li>
+<li>use brew install</li>
+<li>sublime<ul>
+<li>alt+f3 = Command + Ctrl + G</li>
+</ul>
+</li>
+</ul>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FJD</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

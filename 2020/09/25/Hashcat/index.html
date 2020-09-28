@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"fanjingdan012.github.io","root":"/","scheme":"Mist","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+
+  <meta name="description" content="Official Site https:&#x2F;&#x2F;hashcat.net&#x2F; hashcat-utils example hashes  Install NVIDIA GPUs require “NVIDIA Driver” (440.64 or later) and “CUDA Toolkit” (9.0 or later)  Examplesguess a 10 digit pin and its s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hashcat">
+<meta property="og:url" content="https://fanjingdan012.github.io/2020/09/25/Hashcat/index.html">
+<meta property="og:site_name" content="FJD">
+<meta property="og:description" content="Official Site https:&#x2F;&#x2F;hashcat.net&#x2F; hashcat-utils example hashes  Install NVIDIA GPUs require “NVIDIA Driver” (440.64 or later) and “CUDA Toolkit” (9.0 or later)  Examplesguess a 10 digit pin and its s">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-25T03:35:53.000Z">
+<meta property="article:modified_time" content="2020-09-28T02:36:45.107Z">
+<meta property="article:author" content="FJD">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://fanjingdan012.github.io/2020/09/25/Hashcat/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Hashcat | FJD</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">FJD</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-计算机知识树">
+
+    <a href="/CSKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>计算机知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-会计学知识树">
+
+    <a href="/AccountingKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>会计学知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Official-Site"><span class="nav-number">1.</span> <span class="nav-text">Official Site</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Install"><span class="nav-number">2.</span> <span class="nav-text">Install</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Examples"><span class="nav-number">3.</span> <span class="nav-text">Examples</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#guess-a-10-digit-pin-and-its-sha-256-hash"><span class="nav-number">3.1.</span> <span class="nav-text">guess a 10 digit pin and its sha-256 hash :</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8C%9C%E4%B8%80%E4%B8%B2%E5%9B%BD%E9%99%85%E8%B1%A1%E6%A3%8B%E6%A3%8B%E7%9B%98%E4%BD%8D%E7%BD%AE"><span class="nav-number">3.2.</span> <span class="nav-text">猜一串国际象棋棋盘位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8C%9C%E7%BE%8E%E5%9B%BD%E8%BF%90%E9%80%9A%E5%8D%A1%E5%8D%A1%E5%8F%B7"><span class="nav-number">3.3.</span> <span class="nav-text">猜美国运通卡卡号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ntlm-hash"><span class="nav-number">3.4.</span> <span class="nav-text">ntlm hash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mysql"><span class="nav-number">3.5.</span> <span class="nav-text">Mysql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zip-hash"><span class="nav-number">3.6.</span> <span class="nav-text">zip hash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WPA"><span class="nav-number">3.7.</span> <span class="nav-text">WPA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JWT"><span class="nav-number">3.8.</span> <span class="nav-text">JWT</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FJD</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://fanjingdan012.github.io/2020/09/25/Hashcat/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FJD">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FJD">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hashcat
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-09-25 11:35:53" itemprop="dateCreated datePublished" datetime="2020-09-25T11:35:53+08:00">2020-09-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-09-28 10:36:45" itemprop="dateModified" datetime="2020-09-28T10:36:45+08:00">2020-09-28</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Official-Site"><a href="#Official-Site" class="headerlink" title="Official Site"></a>Official Site</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://hashcat.net/">https://hashcat.net/</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/hashcat/hashcat-utils/releases">hashcat-utils</a></li>
+<li><a target="_blank" rel="noopener" href="https://hashcat.net/wiki/doku.php?id=example_hashes">example hashes</a></li>
+</ul>
+<h1 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h1><ul>
+<li>NVIDIA GPUs require “NVIDIA Driver” (440.64 or later) and “CUDA Toolkit” (9.0 or later)</li>
+</ul>
+<h1 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h1><h2 id="guess-a-10-digit-pin-and-its-sha-256-hash"><a href="#guess-a-10-digit-pin-and-its-sha-256-hash" class="headerlink" title="guess a 10 digit pin and its sha-256 hash :"></a>guess a 10 digit pin and its sha-256 hash :</h2><ul>
+<li>题目:<code>BCAB7BC1271648F17BCD97969ED526B29AC569835B482603378C9AB673ECF713</code></li>
+<li><code>hashcat.exe -a 3 -m 1400 BCAB7BC1271648F17BCD97969ED526B29AC569835B482603378C9AB673ECF713 ?d?d?d?d?d?d?d?d?d?d</code></li>
+</ul>
+<h2 id="猜一串国际象棋棋盘位置"><a href="#猜一串国际象棋棋盘位置" class="headerlink" title="猜一串国际象棋棋盘位置"></a>猜一串国际象棋棋盘位置</h2><ul>
+<li>题目:类似A1B2…, 几个位置，不知道，但是可以组成图形，SHA-512: <code>76695A0407FD086391470B672B4A16208352DCF014C634D698C3062090ECDCE5E033C028B6AE10EDA2654855F126876ACA66743D4E0B5371140D9FCC6936A6C1</code></li>
+<li><code>hashcat.exe -a 3 -m 1700 -1 ABCDEFGH -2 12345678 76695A0407FD086391470B672B4A16208352DCF014C634D698C3062090ECDCE5E033C028B6AE10EDA2654855F126876ACA66743D4E0B5371140D9FCC6936A6C1 ?1?2?1?2?1?2?1?2?1?2</code></li>
+</ul>
+<h2 id="猜美国运通卡卡号"><a href="#猜美国运通卡卡号" class="headerlink" title="猜美国运通卡卡号"></a>猜美国运通卡卡号</h2><ul>
+<li>题目:<code>2c59e74197a0558783111bdea47670bf1503f79d904108dec2db2dca7f2232f3</code> 末尾<code>8028</code></li>
+<li><code>hashcat -a 3 -m 1400 2c59e74197a0558783111bdea47670bf1503f79d904108dec2db2dca7f2232f3 34?d?d?d?d?d?d?d?d?d8028</code></li>
+<li><code>hashcat -a 3 -m 1400 2c59e74197a0558783111bdea47670bf1503f79d904108dec2db2dca7f2232f3 37?d?d?d?d?d?d?d?d?d8028</code></li>
+</ul>
+<h2 id="ntlm-hash"><a href="#ntlm-hash" class="headerlink" title="ntlm hash"></a>ntlm hash</h2><ul>
+<li>题目:<code>8846F7EAEE8FB117AD06BDD830B7586C</code></li>
+<li><code>hashcat.exe -a 0 -m 1000  8846F7EAEE8FB117AD06BDD830B7586C    top1000.dict</code></li>
+</ul>
+<h2 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h2><ul>
+<li>题目: He was a big fan of Game of Thrones because he threw away all his merch after season 8. crack mysql db: <code>b691e3dc40993ab6df870ce03ba2dfe021406df8</code></li>
+<li><code>cewl -w 1.txt -d 2 https://www.google.com/search?q=game+of+thrones</code></li>
+<li><code>cewl --proxy_host proxy.host --proxy_port 8080 https://www.hbo.com/game-of-thrones -w 2.txt -d 3</code></li>
+<li><code>hashcat.exe -a 0 -m 300  b691e3dc40993ab6df870ce03ba2dfe021406df8  3.txt</code></li>
+</ul>
+<h2 id="zip-hash"><a href="#zip-hash" class="headerlink" title="zip hash"></a>zip hash</h2><ul>
+<li>题目:<code>$zip2$030f2424d6c3a08245a148c62c9f64544c102a1f34f6bbca756cdaed98435148cd041c3f57d220f2c008cc4da2b5c7dc329ed667e093bda9d6f2dbdba96a096e05a63b2823c47bbafc741ea70f839c1c6d1f8f3563027c172a48db9805988e198adb58775c90d4ae7ccf985758e1c4caf866d143ef6ce38257de0abaf0e106d5c3c41db0e5c9c5d79837836136e53bb460095b86b4fbbc1c4a7dbcbef14837d48a3b0b1ae23eb6dd39889a2d9abc92fbe01a068c2ba4f1fd2b0d0f80e233dfc13c9436ca6bc8b1363229d49c10f8a43c7378b0849e8024c37d041e87db47aa88194e9e414e6b3a868d188d9af3e97d0d727640d547553a09341caa92de2d3ada1f5adabe21ea8aab379c66835c6f4a3e1dd*$/zip2$</code> 密码由Color, Country, Fruit组成</li>
+<li><a target="_blank" rel="noopener" href="https://hashcat.net/forum/thread-7968.html">zip hash 加星号</a><code>$zip2$*0*3*0*f2424d6c3a08245a148c62c9f64544c1*2a1*f3*4f6bbca756cdaed98435148cd041c3f57d220f2c008cc4da2b5c7dc329ed667e093bda9d6f2dbdba96a096e05a63b2823c47bbafc741ea70f839c1c6d1f8f3563027c172a48db9805988e198adb58775c90d4ae7ccf985758e1c4caf866d143ef6ce38257de0abaf0e106d5c3c41db0e5c9c5d79837836136e53bb460095b86b4fbbc1c4a7dbcbef14837d48a3b0b1ae23eb6dd39889a2d9abc92fbe01a068c2ba4f1fd2b0d0f80e233dfc13c9436ca6bc8b1363229d49c10f8a43c7378b0849e8024c37d041e87db47aa88194e9e414e6b3a868d188d9af3e97d0d727640d547553a09341caa92de2d3ada1f5adabe21ea8aa*b379c66835c6f4a3e1dd*$/zip2$</code></li>
+<li><code>combinator3 color1.dict country1.dict fruit1.dict &gt;all.dict</code></li>
+<li><code>hashcat.exe -a 0 -m 13600 a.hash   all.dict  --force</code></li>
+</ul>
+<h2 id="WPA"><a href="#WPA" class="headerlink" title="WPA"></a>WPA</h2><ul>
+<li>题目:We were monitoring the wifis from outside the building and were able to run a death attack to sniff a wpa 4-way handshake on reconnection. Cracking wpa is tediously slow and an only wordlist attack didn’t work, So we are trying to apply rules and everyone is taking a part of it. Your part of the wordlist is attached. The robokracy guys are lacking creativity so choose your ruleset accordingly.</li>
+<li><code>hashcat -m 2500 wpa.hccapx rockyou-short.txt -r rules/dive.rule</code></li>
+</ul>
+<h2 id="JWT"><a href="#JWT" class="headerlink" title="JWT"></a>JWT</h2><ul>
+<li><code>hashcat -a 0 -m 16500 eyJhbGciOiJIUzI1NiJ9.eyIzNDM2MzQyMCI6NTc2ODc1NDd9.f1nXZ3V_Hrr6ee-AFCTLaHRnrkiKmio2t3JqwL32guY example.dict</code></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/09/18/Windows-Zip-Hash/" rel="prev" title="Windows Zip Hash">
+                  <i class="fa fa-chevron-left"></i> Windows Zip Hash
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FJD</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
