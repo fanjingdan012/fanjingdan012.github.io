@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -21,17 +21,18 @@
   </script>
 
   <meta name="description" content="一条记录有n个物理版本  读：读最新version 写：创建新version 支持time-travel query，即回溯版本  一定要看的论文 single-version scheme DB2 Sybase  Concurrency Control ProtocolTimestamping Ordering(MV-TO)Optimistic Concurrency Control(MV-OC">
-<meta name="keywords" content="DB,CMU15721">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MVCC:Multi-Version Concurrency Control">
 <meta property="og:url" content="https://fanjingdan012.github.io/2019/05/24/MVCC/index.html">
 <meta property="og:site_name" content="FJD">
 <meta property="og:description" content="一条记录有n个物理版本  读：读最新version 写：创建新version 支持time-travel query，即回溯版本  一定要看的论文 single-version scheme DB2 Sybase  Concurrency Control ProtocolTimestamping Ordering(MV-TO)Optimistic Concurrency Control(MV-OC">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-11-19T09:43:16.542Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-05-24T05:54:36.000Z">
+<meta property="article:modified_time" content="2021-11-19T09:52:32.443Z">
+<meta property="article:author" content="FJD">
+<meta property="article:tag" content="DB">
+<meta property="article:tag" content="CMU15721">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MVCC:Multi-Version Concurrency Control">
-<meta name="twitter:description" content="一条记录有n个物理版本  读：读最新version 写：创建新version 支持time-travel query，即回溯版本  一定要看的论文 single-version scheme DB2 Sybase  Concurrency Control ProtocolTimestamping Ordering(MV-TO)Optimistic Concurrency Control(MV-OC">
 
 <link rel="canonical" href="https://fanjingdan012.github.io/2019/05/24/MVCC/">
 
@@ -211,7 +212,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-19 17:43:16" itemprop="dateModified" datetime="2021-11-19T17:43:16+08:00">2021-11-19</time>
+                <time title="修改时间：2021-11-19 17:52:32" itemprop="dateModified" datetime="2021-11-19T17:52:32+08:00">2021-11-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -240,12 +241,18 @@
 <li>写：创建新version</li>
 <li>支持time-travel query，即回溯版本</li>
 </ul>
-<p><a href="https://15721.courses.cs.cmu.edu/spring2019/papers/03-mvcc1/wu-vldb2017.pdf" target="_blank" rel="noopener">一定要看的论文</a></p>
+<p><a target="_blank" rel="noopener" href="https://15721.courses.cs.cmu.edu/spring2019/papers/03-mvcc1/wu-vldb2017.pdf">一定要看的论文</a></p>
 <h1 id="single-version-scheme"><a href="#single-version-scheme" class="headerlink" title="single-version scheme"></a>single-version scheme</h1><ul>
 <li>DB2</li>
 <li>Sybase</li>
 </ul>
-<h1 id="Concurrency-Control-Protocol"><a href="#Concurrency-Control-Protocol" class="headerlink" title="Concurrency Control Protocol"></a>Concurrency Control Protocol</h1><h2 id="Timestamping-Ordering-MV-TO"><a href="#Timestamping-Ordering-MV-TO" class="headerlink" title="Timestamping Ordering(MV-TO)"></a>Timestamping Ordering(MV-TO)</h2><h2 id="Optimistic-Concurrency-Control-MV-OCC"><a href="#Optimistic-Concurrency-Control-MV-OCC" class="headerlink" title="Optimistic Concurrency Control(MV-OCC)"></a>Optimistic Concurrency Control(MV-OCC)</h2><h2 id="Two-Phase-Locking-MV-2PL"><a href="#Two-Phase-Locking-MV-2PL" class="headerlink" title="Two-Phase Locking(MV-2PL)"></a>Two-Phase Locking(MV-2PL)</h2><h1 id="Version-Storage"><a href="#Version-Storage" class="headerlink" title="Version Storage"></a>Version Storage</h1><h2 id="Append-Only-Storage"><a href="#Append-Only-Storage" class="headerlink" title="Append-Only Storage"></a>Append-Only Storage</h2><pre><code>- 只有主表</code></pre><h2 id="Time-Travel-Storage"><a href="#Time-Travel-Storage" class="headerlink" title="Time-Travel Storage"></a>Time-Travel Storage</h2><pre><code>- 主表+time-travel table(全量)</code></pre><h2 id="Delta-Storage"><a href="#Delta-Storage" class="headerlink" title="Delta Storage"></a>Delta Storage</h2><pre><code>- 主表+Delta Storage Segment(只有Delta部分)</code></pre><h1 id="GC"><a href="#GC" class="headerlink" title="GC"></a>GC</h1><h2 id="Tuple-level"><a href="#Tuple-level" class="headerlink" title="Tuple-level"></a>Tuple-level</h2><h2 id="Transaction-level"><a href="#Transaction-level" class="headerlink" title="Transaction-level"></a>Transaction-level</h2><h1 id="Index"><a href="#Index" class="headerlink" title="Index"></a>Index</h1><h1 id="MVCC应用"><a href="#MVCC应用" class="headerlink" title="MVCC应用"></a>MVCC应用</h1><ul>
+<h1 id="Concurrency-Control-Protocol"><a href="#Concurrency-Control-Protocol" class="headerlink" title="Concurrency Control Protocol"></a>Concurrency Control Protocol</h1><h2 id="Timestamping-Ordering-MV-TO"><a href="#Timestamping-Ordering-MV-TO" class="headerlink" title="Timestamping Ordering(MV-TO)"></a>Timestamping Ordering(MV-TO)</h2><h2 id="Optimistic-Concurrency-Control-MV-OCC"><a href="#Optimistic-Concurrency-Control-MV-OCC" class="headerlink" title="Optimistic Concurrency Control(MV-OCC)"></a>Optimistic Concurrency Control(MV-OCC)</h2><h2 id="Two-Phase-Locking-MV-2PL"><a href="#Two-Phase-Locking-MV-2PL" class="headerlink" title="Two-Phase Locking(MV-2PL)"></a>Two-Phase Locking(MV-2PL)</h2><h1 id="Version-Storage"><a href="#Version-Storage" class="headerlink" title="Version Storage"></a>Version Storage</h1><h2 id="Append-Only-Storage"><a href="#Append-Only-Storage" class="headerlink" title="Append-Only Storage"></a>Append-Only Storage</h2><pre><code>  - 只有主表
+</code></pre>
+<h2 id="Time-Travel-Storage"><a href="#Time-Travel-Storage" class="headerlink" title="Time-Travel Storage"></a>Time-Travel Storage</h2><pre><code>  - 主表+time-travel table(全量)
+</code></pre>
+<h2 id="Delta-Storage"><a href="#Delta-Storage" class="headerlink" title="Delta Storage"></a>Delta Storage</h2><pre><code>  - 主表+Delta Storage Segment(只有Delta部分)
+</code></pre>
+<h1 id="GC"><a href="#GC" class="headerlink" title="GC"></a>GC</h1><h2 id="Tuple-level"><a href="#Tuple-level" class="headerlink" title="Tuple-level"></a>Tuple-level</h2><h2 id="Transaction-level"><a href="#Transaction-level" class="headerlink" title="Transaction-level"></a>Transaction-level</h2><h1 id="Index"><a href="#Index" class="headerlink" title="Index"></a>Index</h1><h1 id="MVCC应用"><a href="#MVCC应用" class="headerlink" title="MVCC应用"></a>MVCC应用</h1><ul>
 <li>Oracle</li>
 <li>Postgres</li>
 <li>MySQL’s InnoDB</li>
@@ -340,7 +347,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#single-version-scheme"><span class="nav-number">1.</span> <span class="nav-text">single-version scheme</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Concurrency-Control-Protocol"><span class="nav-number">2.</span> <span class="nav-text">Concurrency Control Protocol</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Timestamping-Ordering-MV-TO"><span class="nav-number">2.1.</span> <span class="nav-text">Timestamping Ordering(MV-TO)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Optimistic-Concurrency-Control-MV-OCC"><span class="nav-number">2.2.</span> <span class="nav-text">Optimistic Concurrency Control(MV-OCC)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Two-Phase-Locking-MV-2PL"><span class="nav-number">2.3.</span> <span class="nav-text">Two-Phase Locking(MV-2PL)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Version-Storage"><span class="nav-number">3.</span> <span class="nav-text">Version Storage</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Append-Only-Storage"><span class="nav-number">3.1.</span> <span class="nav-text">Append-Only Storage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Time-Travel-Storage"><span class="nav-number">3.2.</span> <span class="nav-text">Time-Travel Storage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Delta-Storage"><span class="nav-number">3.3.</span> <span class="nav-text">Delta Storage</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GC"><span class="nav-number">4.</span> <span class="nav-text">GC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Tuple-level"><span class="nav-number">4.1.</span> <span class="nav-text">Tuple-level</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transaction-level"><span class="nav-number">4.2.</span> <span class="nav-text">Transaction-level</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Index"><span class="nav-number">5.</span> <span class="nav-text">Index</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MVCC应用"><span class="nav-number">6.</span> <span class="nav-text">MVCC应用</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#single-version-scheme"><span class="nav-number">1.</span> <span class="nav-text">single-version scheme</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Concurrency-Control-Protocol"><span class="nav-number">2.</span> <span class="nav-text">Concurrency Control Protocol</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Timestamping-Ordering-MV-TO"><span class="nav-number">2.1.</span> <span class="nav-text">Timestamping Ordering(MV-TO)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Optimistic-Concurrency-Control-MV-OCC"><span class="nav-number">2.2.</span> <span class="nav-text">Optimistic Concurrency Control(MV-OCC)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Two-Phase-Locking-MV-2PL"><span class="nav-number">2.3.</span> <span class="nav-text">Two-Phase Locking(MV-2PL)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Version-Storage"><span class="nav-number">3.</span> <span class="nav-text">Version Storage</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Append-Only-Storage"><span class="nav-number">3.1.</span> <span class="nav-text">Append-Only Storage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Time-Travel-Storage"><span class="nav-number">3.2.</span> <span class="nav-text">Time-Travel Storage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Delta-Storage"><span class="nav-number">3.3.</span> <span class="nav-text">Delta Storage</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GC"><span class="nav-number">4.</span> <span class="nav-text">GC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Tuple-level"><span class="nav-number">4.1.</span> <span class="nav-text">Tuple-level</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transaction-level"><span class="nav-number">4.2.</span> <span class="nav-text">Transaction-level</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Index"><span class="nav-number">5.</span> <span class="nav-text">Index</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MVCC%E5%BA%94%E7%94%A8"><span class="nav-number">6.</span> <span class="nav-text">MVCC应用</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -354,7 +361,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -400,7 +407,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">FJD</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
@@ -420,9 +427,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/muse.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 

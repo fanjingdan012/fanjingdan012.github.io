@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -20,18 +20,18 @@
     var CONFIG = {"hostname":"fanjingdan012.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Git 是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个开放源码的版本控制软件。  git help xxx git help workflows git help everyday git help tutorial git help revisions   chmod -R u+w .git  Config global ignore  git config -">
-<meta name="keywords" content="VersionControl">
+  <meta name="description" content="Git 是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个开放源码的版本控制软件。  git help xxx git help workflows git help everyday git help tutorial git help revisions   chmod -R u+w .git  Config global ignore git config --">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git">
 <meta property="og:url" content="https://fanjingdan012.github.io/2020/11/27/Git/index.html">
 <meta property="og:site_name" content="FJD">
-<meta property="og:description" content="Git 是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个开放源码的版本控制软件。  git help xxx git help workflows git help everyday git help tutorial git help revisions   chmod -R u+w .git  Config global ignore  git config -">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-11-19T09:43:16.515Z">
+<meta property="og:description" content="Git 是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个开放源码的版本控制软件。  git help xxx git help workflows git help everyday git help tutorial git help revisions   chmod -R u+w .git  Config global ignore git config --">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-11-27T05:33:13.000Z">
+<meta property="article:modified_time" content="2021-11-19T09:52:32.419Z">
+<meta property="article:author" content="FJD">
+<meta property="article:tag" content="VersionControl">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Git">
-<meta name="twitter:description" content="Git 是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个开放源码的版本控制软件。  git help xxx git help workflows git help everyday git help tutorial git help revisions   chmod -R u+w .git  Config global ignore  git config -">
 
 <link rel="canonical" href="https://fanjingdan012.github.io/2020/11/27/Git/">
 
@@ -211,7 +211,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-19 17:43:16" itemprop="dateModified" datetime="2021-11-19T17:43:16+08:00">2021-11-19</time>
+                <time title="修改时间：2021-11-19 17:52:32" itemprop="dateModified" datetime="2021-11-19T17:52:32+08:00">2021-11-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -246,27 +246,22 @@
 <li>chmod -R u+w .git</li>
 </ul>
 <h1 id="Config"><a href="#Config" class="headerlink" title="Config"></a>Config</h1><ul>
-<li><p><a href="https://gist.github.com/subfuzion/db7f57fff2fb6998a16c" target="_blank" rel="noopener">global ignore</a></p>
-<ul>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/subfuzion/db7f57fff2fb6998a16c">global ignore</a><ul>
 <li><code>git config --global core.excludesfile ~/.gitignore</code></li>
-<li>e.g.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">target</span><br><span class="line">bin</span><br><span class="line">*.db</span><br></pre></td></tr></table></figure>
-</li>
+<li>e.g.<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">target</span><br><span class="line">bin</span><br><span class="line">*.db</span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
-<li><p>git config –list 看所有用户</p>
-</li>
-<li><p>proxy</p>
-<ul>
+<li>git config –list 看所有用户</li>
+<li>proxy<ul>
 <li>git config –global –unset https.proxy</li>
 <li>git config –global –unset http.proxy</li>
 <li>git config –global http.proxy ‘proxy.example.com:8080’</li>
 <li>git config –global https.proxy ‘socks5://127.0.0.1:1080’’</li>
-<li>git config –global http.proxy <a href="http://proxy.example.com:8080" target="_blank" rel="noopener">http://proxy.example.com:8080</a></li>
-<li>git config –global https.proxy <a href="http://proxy.example.com:8080" target="_blank" rel="noopener">http://proxy.example.com:8080</a></li>
+<li>git config –global http.proxy <a target="_blank" rel="noopener" href="http://proxy.example.com:8080/">http://proxy.example.com:8080</a></li>
+<li>git config –global https.proxy <a target="_blank" rel="noopener" href="http://proxy.example.com:8080/">http://proxy.example.com:8080</a></li>
 </ul>
 </li>
-<li><p><code>git config --global commit.template ~/commit_template.txt</code></p>
-</li>
+<li><code>git config --global commit.template ~/commit_template.txt</code></li>
 </ul>
 <h1 id="Git命令状态图"><a href="#Git命令状态图" class="headerlink" title="Git命令状态图"></a>Git命令状态图</h1><h2 id="Workdspace"><a href="#Workdspace" class="headerlink" title="Workdspace"></a>Workdspace</h2><ul>
 <li>git status -u(-uall) show all files untracked</li>
@@ -434,48 +429,56 @@
 </ul>
 </li>
 <li>方案一<ol>
-<li>updatea master to latest<ul>
+<li>updatea master to latest</li>
+</ol>
+<ul>
 <li>git checkout master</li>
 <li>git fetch origin</li>
 <li>git pull –rebase</li>
 </ul>
-</li>
-<li>update 冲突branch to master<ul>
+<ol start="2">
+<li>update 冲突branch to master</li>
+</ol>
+<ul>
 <li>git rebase master</li>
 </ul>
-</li>
-<li>解决冲突后<ul>
+<ol start="3">
+<li>解决冲突后</li>
+</ol>
+<ul>
 <li>git add –all</li>
 <li>git rebase –continue</li>
 <li>git commit –amend</li>
 </ul>
 </li>
-</ol>
-</li>
 <li>方案二<ol>
-<li>checout a new branch to latest<ul>
+<li>checout a new branch to latest</li>
+</ol>
+<ul>
 <li>git checkout -b merge1 origin/master</li>
 <li>git fetch origin</li>
 <li>git pull</li>
 </ul>
-</li>
-<li>update 冲突branch to the new branch<ul>
+<ol start="2">
+<li>update 冲突branch to the new branch</li>
+</ol>
+<ul>
 <li>git rebase merge1</li>
 </ul>
-</li>
-<li>解决冲突后<ul>
+<ol start="3">
+<li>解决冲突后</li>
+</ol>
+<ul>
 <li>git add –all</li>
 <li>git rebase –continue</li>
 <li>git commit –amend</li>
 </ul>
-</li>
-</ol>
 </li>
 </ul>
 </li>
 </ul>
 <ul>
-<li><a href="https://blog.csdn.net/endlu/article/details/51605861" target="_blank" rel="noopener">rebase Reapply commits on top of another base tip</a><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/endlu/article/details/51605861">rebase Reapply commits on top of another base tip</a><ul>
 <li>git rebase -i HEAD~3</li>
 <li>git rebase -i 3a4226b</li>
 <li>git rebase -i origin/master</li>
@@ -546,7 +549,7 @@
 </li>
 <li>查看远程仓库：$ git remote -v</li>
 <li>添加远程仓库：$ git remote add [name] [url]<ul>
-<li>git remote add origin <a href="mailto:git@xxx.xxx.git" target="_blank" rel="noopener">git@xxx.xxx.git</a></li>
+<li>git remote add origin <a href="mailto:&#103;&#105;&#116;&#x40;&#120;&#120;&#x78;&#46;&#x78;&#120;&#120;&#x2e;&#103;&#105;&#x74;">&#103;&#105;&#116;&#x40;&#120;&#120;&#x78;&#46;&#x78;&#120;&#120;&#x2e;&#103;&#105;&#x74;</a></li>
 </ul>
 </li>
 <li>删除远程仓库：$ git remote rm [name]</li>
@@ -573,18 +576,13 @@
 </li>
 </ul>
 <h1 id="Gerrit"><a href="#Gerrit" class="headerlink" title="Gerrit"></a>Gerrit</h1><ul>
-<li><p>Automatically add Change-Id to your commit</p>
-<ul>
-<li><p><code>touch ~/commit_template.txt</code></p>
-</li>
-<li><p><code>scp -p -P 29418 &lt;your username&gt;@&lt;your Gerrit review server&gt;:hooks/commit-msg &lt;local path to your git&gt;/.git/hooks/</code> 下载生成Change-Id脚本</p>
-<ul>
-<li>测试生成脚本<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"change-id"</span> &gt; testChangeid.txt</span><br><span class="line">./git/hooks/commit-msg testChangeid.txt</span><br><span class="line">cat testChangeid.txt</span><br></pre></td></tr></table></figure>
-</li>
+<li>Automatically add Change-Id to your commit<ul>
+<li><code>touch ~/commit_template.txt</code></li>
+<li><code>scp -p -P 29418 &lt;your username&gt;@&lt;your Gerrit review server&gt;:hooks/commit-msg &lt;local path to your git&gt;/.git/hooks/</code> 下载生成Change-Id脚本<ul>
+<li>测试生成脚本<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;change-id&quot;</span> &gt; testChangeid.txt</span><br><span class="line">./git/hooks/commit-msg testChangeid.txt</span><br><span class="line">cat testChangeid.txt</span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
-<li><p>commit template: <code>git config --global commit.template ~/commit_template.txt</code></p>
-<ul>
+<li>commit template: <code>git config --global commit.template ~/commit_template.txt</code><ul>
 <li><code>～/.gitconfig</code><blockquote>
 <p>[commit]<br>   template = ~/commit_template.txt</p>
 </blockquote>
@@ -595,15 +593,13 @@
 </li>
 </ul>
 </li>
-<li><p>then git commit will automatically generate Change-Id</p>
-<ul>
+<li>then git commit will automatically generate Change-Id<ul>
 <li>check <code>&lt;your repo&gt;/.git/COMMIT_EDITMSG</code> has Author and Change-Id</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p><code>git push origin HEAD:refs/for/&lt;branch&gt;</code></p>
-</li>
+<li><code>git push origin HEAD:refs/for/&lt;branch&gt;</code></li>
 </ul>
 <h1 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h1><h2 id="解决错误"><a href="#解决错误" class="headerlink" title="解决错误"></a>解决错误</h2><ul>
 <li>git fsck –full –strict</li>
@@ -630,7 +626,7 @@
 <li>click ‘Merge’</li>
 </ul>
 <h1 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h1><ul>
-<li><a href="http://www.ithao123.cn/content-1544598.html" target="_blank" rel="noopener">http://www.ithao123.cn/content-1544598.html</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ithao123.cn/content-1544598.html">http://www.ithao123.cn/content-1544598.html</a></li>
 </ul>
 
     </div>
@@ -654,8 +650,8 @@
       <i class="fa fa-chevron-left"></i> Hello World
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/11/27/CTF2020Final/" rel="next" title="CTF2020Final">
-      CTF2020Final <i class="fa fa-chevron-right"></i>
+    <a href="/2020/12/01/Performance-Log/" rel="next" title="Performance Log">
+      Performance Log <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -715,7 +711,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Config"><span class="nav-number">1.</span> <span class="nav-text">Config</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Git命令状态图"><span class="nav-number">2.</span> <span class="nav-text">Git命令状态图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Workdspace"><span class="nav-number">2.1.</span> <span class="nav-text">Workdspace</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stash-lt-gt-Workspace"><span class="nav-number">2.2.</span> <span class="nav-text">Stash &lt;-&gt; Workspace</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Workspace-gt-Staged"><span class="nav-number">2.3.</span> <span class="nav-text">Workspace -&gt; Staged</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Staged-gt-Workspace"><span class="nav-number">2.4.</span> <span class="nav-text">Staged -&gt; Workspace</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Staged-gt-Local-Repo"><span class="nav-number">2.5.</span> <span class="nav-text">Staged -&gt; Local Repo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Local-Repo-gt-Remote-Repo"><span class="nav-number">2.6.</span> <span class="nav-text">Local Repo -&gt; Remote Repo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Remote-Repo-gt-Local-Repo"><span class="nav-number">2.7.</span> <span class="nav-text">Remote Repo -&gt; Local Repo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Remote-Repo"><span class="nav-number">2.8.</span> <span class="nav-text">Remote Repo</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#子模块-submodule-相关操作命令"><span class="nav-number">3.</span> <span class="nav-text">子模块(submodule)相关操作命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gerrit"><span class="nav-number">4.</span> <span class="nav-text">Gerrit</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#场景"><span class="nav-number">5.</span> <span class="nav-text">场景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解决错误"><span class="nav-number">5.1.</span> <span class="nav-text">解决错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Github-fork"><span class="nav-number">5.2.</span> <span class="nav-text">Github fork</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Submitting-a-Pull-Request"><span class="nav-number">5.3.</span> <span class="nav-text">Submitting a Pull Request</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#资料"><span class="nav-number">6.</span> <span class="nav-text">资料</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Config"><span class="nav-number">1.</span> <span class="nav-text">Config</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Git%E5%91%BD%E4%BB%A4%E7%8A%B6%E6%80%81%E5%9B%BE"><span class="nav-number">2.</span> <span class="nav-text">Git命令状态图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Workdspace"><span class="nav-number">2.1.</span> <span class="nav-text">Workdspace</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stash-lt-gt-Workspace"><span class="nav-number">2.2.</span> <span class="nav-text">Stash &lt;-&gt; Workspace</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Workspace-gt-Staged"><span class="nav-number">2.3.</span> <span class="nav-text">Workspace -&gt; Staged</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Staged-gt-Workspace"><span class="nav-number">2.4.</span> <span class="nav-text">Staged -&gt; Workspace</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Staged-gt-Local-Repo"><span class="nav-number">2.5.</span> <span class="nav-text">Staged -&gt; Local Repo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Local-Repo-gt-Remote-Repo"><span class="nav-number">2.6.</span> <span class="nav-text">Local Repo -&gt; Remote Repo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Remote-Repo-gt-Local-Repo"><span class="nav-number">2.7.</span> <span class="nav-text">Remote Repo -&gt; Local Repo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Remote-Repo"><span class="nav-number">2.8.</span> <span class="nav-text">Remote Repo</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%90%E6%A8%A1%E5%9D%97-submodule-%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">子模块(submodule)相关操作命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gerrit"><span class="nav-number">4.</span> <span class="nav-text">Gerrit</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF"><span class="nav-number">5.</span> <span class="nav-text">场景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E9%94%99%E8%AF%AF"><span class="nav-number">5.1.</span> <span class="nav-text">解决错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Github-fork"><span class="nav-number">5.2.</span> <span class="nav-text">Github fork</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Submitting-a-Pull-Request"><span class="nav-number">5.3.</span> <span class="nav-text">Submitting a Pull Request</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B5%84%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">资料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -729,7 +725,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -775,7 +771,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">FJD</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
@@ -795,9 +791,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/muse.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 

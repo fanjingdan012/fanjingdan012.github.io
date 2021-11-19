@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -24,9 +24,9 @@
 <meta property="og:title" content="FJD">
 <meta property="og:url" content="https://fanjingdan012.github.io/page/4/index.html">
 <meta property="og:site_name" content="FJD">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="FJD">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="FJD">
 
 <link rel="canonical" href="https://fanjingdan012.github.io/page/4/">
 
@@ -175,172 +175,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://fanjingdan012.github.io/2019/05/21/Splay-Tree-and-AVL-Tree/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="FJD">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FJD">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/05/21/Splay-Tree-and-AVL-Tree/" class="post-title-link" itemprop="url">Splay Tree and AVL Tree</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-05-21 18:10:40" itemprop="dateCreated datePublished" datetime="2019-05-21T18:10:40+08:00">2019-05-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 13:32:29" itemprop="dateModified" datetime="2020-11-27T13:32:29+08:00">2020-11-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Splay-Tree"><a href="#Splay-Tree" class="headerlink" title="Splay Tree"></a>Splay Tree</h1><p>一套规则，用于提高BST的读效率，当node s 被读到，就进行splay，也就是说读得多的靠近根</p>
-<ul>
-<li>single rotation<br><img src="https://fanjingdan012.github.io/2019/05/21/Splay-Tree-and-AVL-Tree/single-rotation.png" alt="single-rotation"></li>
-<li>double rotation<ul>
-<li>zigzag<br><img src="https://fanjingdan012.github.io/2019/05/21/Splay-Tree-and-AVL-Tree/zigzag.png" alt="zigzag"></li>
-<li>zigzig<br><img src="https://fanjingdan012.github.io/2019/05/21/Splay-Tree-and-AVL-Tree/zigzig.png" alt="zigzig"></li>
-</ul>
-</li>
-</ul>
-<h1 id="AVL-Tree-Adelson-Velskii-Landis-平衡树"><a href="#AVL-Tree-Adelson-Velskii-Landis-平衡树" class="headerlink" title="AVL Tree(Adelson-Velskii-Landis):平衡树"></a>AVL Tree(Adelson-Velskii-Landis):平衡树</h1><ul>
-<li>balance factor BF(node) = 左孩子高度-右孩子高度=-1,0,1</li>
-<li>rotation：就是看长出来的树是右孩子的右孩子就是RR，依次类推，<ul>
-<li>RR rotation<br><img src="https://fanjingdan012.github.io/2019/05/21/Splay-Tree-and-AVL-Tree/RR.png" alt="RR"></li>
-<li>LL rotation<br><img src="https://fanjingdan012.github.io/2019/05/21/Splay-Tree-and-AVL-Tree/LL.png" alt="LL"></li>
-<li>LR rotation<br><img src="https://fanjingdan012.github.io/2019/05/21/Splay-Tree-and-AVL-Tree/LR.png" alt="LR"></li>
-<li>RL rotation<br><img src="https://fanjingdan012.github.io/2019/05/21/Splay-Tree-and-AVL-Tree/RL.png" alt="RL"></li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://fanjingdan012.github.io/2019/05/14/Corporate-Finance/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="FJD">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FJD">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/05/14/Corporate-Finance/" class="post-title-link" itemprop="url">Corporate Finance</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-05-14 17:33:00" itemprop="dateCreated datePublished" datetime="2019-05-14T17:33:00+08:00">2019-05-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 13:32:29" itemprop="dateModified" datetime="2020-11-27T13:32:29+08:00">2020-11-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Finance/" itemprop="url" rel="index"><span itemprop="name">Finance</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="https://fanjingdan012.github.io/2019/05/14/Corporate-Finance/2.png" alt="2"><br><img src="https://fanjingdan012.github.io/2019/05/14/Corporate-Finance/3.png" alt="3"><br><img src="https://fanjingdan012.github.io/2019/05/14/Corporate-Finance/456.jpg" alt="456"><br><img src="https://fanjingdan012.github.io/2019/05/14/Corporate-Finance/678.jpg" alt="678"><br><img src="https://fanjingdan012.github.io/2019/05/14/Corporate-Finance/89.jpg" alt="89"><br><img src="https://fanjingdan012.github.io/2019/05/14/Corporate-Finance/1011.jpg" alt="1011"><br><img src="https://fanjingdan012.github.io/2019/05/14/Corporate-Finance/1112.jpg" alt="1112"><br><img src="https://fanjingdan012.github.io/2019/05/14/Corporate-Finance/13.jpg" alt="13"><br><img src="https://fanjingdan012.github.io/2019/05/14/Corporate-Finance/1415.jpg" alt="1415"><br><img src="https://fanjingdan012.github.io/2019/05/14/Corporate-Finance/16.jpg" alt="16"><br><img src="https://fanjingdan012.github.io/2019/05/14/Corporate-Finance/171819.jpg" alt="171819"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://fanjingdan012.github.io/2019/05/10/csapp-Concurrent/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -372,7 +206,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 13:32:29" itemprop="dateModified" datetime="2020-11-27T13:32:29+08:00">2020-11-27</time>
+                <time title="修改时间：2021-11-19 17:52:32" itemprop="dateModified" datetime="2021-11-19T17:52:32+08:00">2021-11-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -402,15 +236,11 @@
 <p>fdset就是fd列表的bitmap,n是大小,有这些宏操作指令</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FD_ZERO(fd_set *fdset); <span class="comment">//统统清空</span></span><br><span class="line">FD_CLR(<span class="keyword">int</span> fd,fd_set *fdset); <span class="comment">//清掉一个fd</span></span><br><span class="line">FD_SET(<span class="keyword">int</span> fd,fd_set *fdset); <span class="comment">//开一个fd</span></span><br><span class="line">FD_ISSET(<span class="keyword">int</span> fd,fd_set *fdset);<span class="comment">//返回某个fd是开着的吗</span></span><br></pre></td></tr></table></figure>
 
-<p><a href="http://csapp.cs.cmu.edu/3e/ics3/code/conc/select.c">select.c</a></p>
+<p><a target="_blank" rel="noopener" href="http://csapp.cs.cmu.edu/3e/ics3/code/conc/select.c">select.c</a></p>
 <h1 id="基于线程"><a href="#基于线程" class="headerlink" title="基于线程"></a>基于线程</h1><h1 id="API"><a href="#API" class="headerlink" title="API"></a>API</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_create</span><span class="params">(<span class="keyword">pthread_t</span> *tid, <span class="keyword">pthread_addr_t</span> *addr, func *f, <span class="keyword">void</span> *arg)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">pthread_t</span> <span class="title">pthread_self</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_exit</span><span class="params">(<span class="keyword">void</span> *thread_return)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_cancel</span><span class="params">(<span class="keyword">pthread_t</span> tid)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_join</span><span class="params">(<span class="keyword">pthread_t</span> tid, <span class="keyword">void</span> **thread_return)</span></span>;<span class="comment">//阻塞，等tid结束，然后release它的资源，成功的话返回0</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_detach</span><span class="params">(<span class="keyword">pthread_t</span> tid)</span></span>;<span class="comment">//分离tid，我不管tid了，它结束了就自己回收资源吧</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_once</span><span class="params">(<span class="keyword">pthread_once_t</span> *once_control, <span class="keyword">void</span> (*init_routine)(<span class="keyword">void</span>))</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h1 id="线程同步"><a href="#线程同步" class="headerlink" title="线程同步"></a>线程同步</h1><p>共享变量count问题</p>
-<pre><code>其他指令H
-movl count, %eax
-leal l(%eax), %edx //count++
-movl %edx, count
-其他指令T</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">其他指令H</span><br><span class="line">movl count, %eax</span><br><span class="line">leal l(%eax), %edx //count++</span><br><span class="line">movl %edx, count</span><br><span class="line">其他指令T</span><br></pre></td></tr></table></figure>
 <h2 id="进度图"><a href="#进度图" class="headerlink" title="进度图"></a>进度图</h2><p><img src="https://fanjingdan012.github.io/2019/05/10/csapp-Concurrent/progress-graph.png" alt="progress-graph"></p>
 <h2 id="Semaphore"><a href="#Semaphore" class="headerlink" title="Semaphore"></a>Semaphore</h2><p>然后就要锁定不安全区<br><img src="https://fanjingdan012.github.io/2019/05/10/csapp-Concurrent/semaphore-op.png" alt="semaphore-op"><br><img src="https://fanjingdan012.github.io/2019/05/10/csapp-Concurrent/semaphore.png" alt="semaphore"><br>就是看每个点只能往上和往右走，但是P操作可能会被block，V操作是自由的<br>红线就是被block的P操作。保护出来走不到的点就是禁止区。</p>
 <h2 id="线程不安全的情况"><a href="#线程不安全的情况" class="headerlink" title="线程不安全的情况"></a>线程不安全的情况</h2><ol>
@@ -468,7 +298,7 @@ movl %edx, count
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 13:32:29" itemprop="dateModified" datetime="2020-11-27T13:32:29+08:00">2020-11-27</time>
+                <time title="修改时间：2021-11-19 17:52:32" itemprop="dateModified" datetime="2021-11-19T17:52:32+08:00">2021-11-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -498,8 +328,8 @@ movl %edx, count
 <li>官方说法是要看住的酒店天数，哪国最多就哪国，如果一样多就要看先入境的，为了法签特意把意大利和法国弄成各住7晚，因为巴黎进，罗马出，所以可以法签。</li>
 </ul>
 </li>
-<li><a href="https://france-visas.gouv.fr/zh/web/france-visas">法签官网</a><ul>
-<li>要注册，填报信息，准备材料，预约时间到签证中心（法国大使馆授权给签证中心了）提交材料。<a href="https://france-visas.gouv.fr/zh/web/france-visas/visa-application-guidelines">签证中心官方步骤</a></li>
+<li><a target="_blank" rel="noopener" href="https://france-visas.gouv.fr/zh/web/france-visas">法签官网</a><ul>
+<li>要注册，填报信息，准备材料，预约时间到签证中心（法国大使馆授权给签证中心了）提交材料。<a target="_blank" rel="noopener" href="https://france-visas.gouv.fr/zh/web/france-visas/visa-application-guidelines">签证中心官方步骤</a></li>
 </ul>
 </li>
 <li>费用：如果你可以工作日请假，可以省去220元人民币/人的贵宾服务费，可惜我俩不行，因为两个人必须同时请假，一起递交材料。签证费650+服务费+贵宾费大概900多一个人，签证材料还要加上保险，200多一个人。后来上网看了，感觉淘宝代办省不了多少事，代办费多出300多，自己能搞定的</li>
@@ -638,7 +468,7 @@ movl %edx, count
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 13:32:29" itemprop="dateModified" datetime="2020-11-27T13:32:29+08:00">2020-11-27</time>
+                <time title="修改时间：2021-11-19 17:52:32" itemprop="dateModified" datetime="2021-11-19T17:52:32+08:00">2021-11-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -670,10 +500,10 @@ movl %edx, count
 <li>可靠：最终会按照顺序收到所有包</li>
 </ol>
 <h1 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h1><p>SAN(System Area Network):cluster级别<br>LAN(Local …):building, campus<br>WAN(Wide …):world<br>internet:一堆network以共享的router互联, Internet: internet的最著名实现</p>
-<h1 id="Socket-API"><a href="#Socket-API" class="headerlink" title="Socket API"></a>Socket API</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getaddrinfo</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *host,              </span></span></span><br><span class="line"><span class="function"><span class="params">                <span class="keyword">const</span> <span class="keyword">char</span> *service            <span class="comment">/* port or service name */</span></span></span></span><br><span class="line"><span class="function"><span class="params">                <span class="keyword">const</span> struct addrinfo *hints,  <span class="comment">/* input parameters */</span></span></span></span><br><span class="line"><span class="function"><span class="params">                struct addrinfo **result)</span>      <span class="comment">/* 这个其实是返回值linked list&lt;addrinfo&gt; */</span></span></span><br><span class="line"><span class="function"><span class="comment">//然后server端就会轮询这个linked list，尝试连接socket，直到bind成功</span></span></span><br><span class="line"><span class="function"><span class="comment">//client端轮询这个linked list，尝试连接socket，直到connect成功</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">freeaddrinfo</span><span class="params">(struct addrinfo *result)</span>     </span></span><br><span class="line"><span class="function"><span class="comment">//free linked list</span></span></span><br><span class="line"><span class="function"><span class="keyword">const</span> <span class="keyword">char</span> *<span class="title">gai_strerror</span><span class="params">(<span class="keyword">int</span> errcode)</span>          </span></span><br><span class="line"><span class="function"><span class="comment">//return error message</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">socket</span><span class="params">(<span class="keyword">int</span> domain, <span class="keyword">int</span> type, <span class="keyword">int</span> protocol)</span></span></span><br><span class="line"><span class="function"><span class="comment">//3个参数总是AF_INET SOCK_STREAM 0，就是创建socket</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bind</span><span class="params">(<span class="keyword">int</span> sockfd, SA *addr, <span class="keyword">socklen_t</span> addrlen)</span></span></span><br><span class="line"><span class="function"><span class="comment">//告诉kernal把addr和sockfd bind起来</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">listen</span><span class="params">(<span class="keyword">int</span> sockfd, <span class="keyword">int</span> backlog)</span></span></span><br><span class="line"><span class="function"><span class="comment">//kernal 默认socket函数的fd都是active socket，这个函数是告诉kernal把这个sockfd变成server端的listening socket,阻塞的</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">accept</span><span class="params">(intlistenfd, SA *addr, <span class="keyword">int</span> *addrlen)</span></span></span><br><span class="line"><span class="function"> <span class="comment">//server 等待connect连上来，后两个参数其实是返回值，客户端的socket地址和地址长度,函数本身的返回值是connected fd</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">connect</span><span class="params">(<span class="keyword">int</span> clientfd, SA *addr, <span class="keyword">socklen_t</span> addrlen)</span></span></span><br><span class="line"><span class="function"><span class="comment">//也是阻塞的</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">open_listenfd</span><span class="params">(<span class="keyword">int</span> port)</span></span>=socket+bind+listen</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">open_clientfd</span><span class="params">()</span></span>=socket+connect</span><br></pre></td></tr></table></figure>
-<p>socket<br>socket address= IP地址:port<br>![socket-api](<a href="https://fanjingdanhttps//fanjingdan012.github.io/2019/05/09/Net/">https://fanjingdanhttps://fanjingdan012.github.io/2019/05/09/Net/</a></p>
-<h1 id="Example-Code"><a href="#Example-Code" class="headerlink" title="Example Code"></a>Example Code</h1><p>一个小型server，main方法进来，无限循环accept(),然后doit()做一些读写和处理<br><a href="http://csapp.cs.cmu.edu/3e/ics3/code/netp/tiny/tiny.c">tiny.c</a></p>
-<h1 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$&gt; nslookup localhost</span><br><span class="line">127.0.0.1</span><br></pre></td></tr></table></figure>
+<h1 id="Socket-API"><a href="#Socket-API" class="headerlink" title="Socket API"></a>Socket API</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getaddrinfo</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *host,              </span></span></span><br><span class="line"><span class="params"><span class="function">                <span class="keyword">const</span> <span class="keyword">char</span> *service            <span class="comment">/* port or service name */</span></span></span></span><br><span class="line"><span class="params"><span class="function">                <span class="keyword">const</span> struct addrinfo *hints,  <span class="comment">/* input parameters */</span></span></span></span><br><span class="line"><span class="params"><span class="function">                struct addrinfo **result)</span>      <span class="comment">/* 这个其实是返回值linked list&lt;addrinfo&gt; */</span></span></span><br><span class="line"><span class="function"><span class="comment">//然后server端就会轮询这个linked list，尝试连接socket，直到bind成功</span></span></span><br><span class="line"><span class="function"><span class="comment">//client端轮询这个linked list，尝试连接socket，直到connect成功</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">freeaddrinfo</span><span class="params">(struct addrinfo *result)</span>     </span></span><br><span class="line"><span class="function"><span class="comment">//free linked list</span></span></span><br><span class="line"><span class="function"><span class="keyword">const</span> <span class="keyword">char</span> *<span class="title">gai_strerror</span><span class="params">(<span class="keyword">int</span> errcode)</span>          </span></span><br><span class="line"><span class="function"><span class="comment">//return error message</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">socket</span><span class="params">(<span class="keyword">int</span> domain, <span class="keyword">int</span> type, <span class="keyword">int</span> protocol)</span></span></span><br><span class="line"><span class="function"><span class="comment">//3个参数总是AF_INET SOCK_STREAM 0，就是创建socket</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bind</span><span class="params">(<span class="keyword">int</span> sockfd, SA *addr, <span class="keyword">socklen_t</span> addrlen)</span></span></span><br><span class="line"><span class="function"><span class="comment">//告诉kernal把addr和sockfd bind起来</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">listen</span><span class="params">(<span class="keyword">int</span> sockfd, <span class="keyword">int</span> backlog)</span></span></span><br><span class="line"><span class="function"><span class="comment">//kernal 默认socket函数的fd都是active socket，这个函数是告诉kernal把这个sockfd变成server端的listening socket,阻塞的</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">accept</span><span class="params">(intlistenfd, SA *addr, <span class="keyword">int</span> *addrlen)</span></span></span><br><span class="line"><span class="function"> <span class="comment">//server 等待connect连上来，后两个参数其实是返回值，客户端的socket地址和地址长度,函数本身的返回值是connected fd</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">connect</span><span class="params">(<span class="keyword">int</span> clientfd, SA *addr, <span class="keyword">socklen_t</span> addrlen)</span></span></span><br><span class="line"><span class="function"><span class="comment">//也是阻塞的</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">open_listenfd</span><span class="params">(<span class="keyword">int</span> port)</span></span>=socket+bind+<span class="function">listen</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">open_clientfd</span><span class="params">()</span></span>=socket+connect</span><br></pre></td></tr></table></figure>
+<p>socket<br>socket address= IP地址:port<br>![socket-api](<a target="_blank" rel="noopener" href="https://fanjingdanhttps//fanjingdan012.github.io/2019/05/09/Net/">https://fanjingdanhttps://fanjingdan012.github.io/2019/05/09/Net/</a></p>
+<h1 id="Example-Code"><a href="#Example-Code" class="headerlink" title="Example Code"></a>Example Code</h1><p>一个小型server，main方法进来，无限循环accept(),然后doit()做一些读写和处理<br><a target="_blank" rel="noopener" href="http://csapp.cs.cmu.edu/3e/ics3/code/netp/tiny/tiny.c">tiny.c</a></p>
+<h1 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$&gt; nslookup localhost</span><br><span class="line">127.0.0.1</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -723,7 +553,7 @@ movl %edx, count
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 13:32:29" itemprop="dateModified" datetime="2020-11-27T13:32:29+08:00">2020-11-27</time>
+                <time title="修改时间：2021-11-19 17:52:32" itemprop="dateModified" datetime="2021-11-19T17:52:32+08:00">2021-11-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -808,7 +638,7 @@ movl %edx, count
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 13:32:29" itemprop="dateModified" datetime="2020-11-27T13:32:29+08:00">2020-11-27</time>
+                <time title="修改时间：2021-11-19 17:52:32" itemprop="dateModified" datetime="2021-11-19T17:52:32+08:00">2021-11-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -881,7 +711,7 @@ movl %edx, count
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 13:32:29" itemprop="dateModified" datetime="2020-11-27T13:32:29+08:00">2020-11-27</time>
+                <time title="修改时间：2021-11-19 17:52:32" itemprop="dateModified" datetime="2021-11-19T17:52:32+08:00">2021-11-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -906,13 +736,101 @@ movl %edx, count
       
           <h1 id="Propagation"><a href="#Propagation" class="headerlink" title="Propagation"></a>Propagation</h1><p><img src="https://fanjingdan012.github.io/2019/04/16/Spring-Transaction/propagation.png" alt="Propagation"></p>
 <h1 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h1><p>其实通过Interceptor加的。<br><code>TransactionAspectSupport.java</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * General delegate for around-advice-based subclasses, delegating to several other template</span></span><br><span class="line"><span class="comment">	 * methods on this class. Able to handle &#123;<span class="doctag">@link</span> CallbackPreferringPlatformTransactionManager&#125;</span></span><br><span class="line"><span class="comment">	 * as well as regular &#123;<span class="doctag">@link</span> PlatformTransactionManager&#125; implementations.</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> method the Method being invoked</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> targetClass the target class that we&#x27;re invoking the method on</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> invocation the callback to use for proceeding with the target invocation</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Nullable</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> Object <span class="title">invokeWithinTransaction</span><span class="params">(Method method, <span class="meta">@Nullable</span> Class&lt;?&gt; targetClass,</span></span></span><br><span class="line"><span class="function"><span class="params">			<span class="keyword">final</span> InvocationCallback invocation)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// If the transaction attribute is null, the method is non-transactional.</span></span><br><span class="line">		TransactionAttributeSource tas = getTransactionAttributeSource();</span><br><span class="line">		<span class="keyword">final</span> TransactionAttribute txAttr = (tas != <span class="keyword">null</span> ? tas.getTransactionAttribute(method, targetClass) : <span class="keyword">null</span>);</span><br><span class="line">		<span class="keyword">final</span> PlatformTransactionManager tm = determineTransactionManager(txAttr);</span><br><span class="line">		<span class="keyword">final</span> String joinpointIdentification = methodIdentification(method, targetClass, txAttr);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (txAttr == <span class="keyword">null</span> || !(tm <span class="keyword">instanceof</span> CallbackPreferringPlatformTransactionManager)) &#123;</span><br><span class="line">			<span class="comment">// Standard transaction demarcation with getTransaction and commit/rollback calls.</span></span><br><span class="line">			TransactionInfo txInfo = createTransactionIfNecessary(tm, txAttr, joinpointIdentification);</span><br><span class="line">			Object retVal = <span class="keyword">null</span>;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="comment">// This is an around advice: Invoke the next interceptor in the chain.</span></span><br><span class="line">				<span class="comment">// This will normally result in a target object being invoked.</span></span><br><span class="line">				retVal = invocation.proceedWithInvocation();</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">				<span class="comment">// target invocation exception</span></span><br><span class="line">				completeTransactionAfterThrowing(txInfo, ex);</span><br><span class="line">				<span class="keyword">throw</span> ex;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">finally</span> &#123;</span><br><span class="line">				cleanupTransactionInfo(txInfo);</span><br><span class="line">			&#125;</span><br><span class="line">			commitTransactionAfterReturning(txInfo);</span><br><span class="line">			<span class="keyword">return</span> retVal;</span><br><span class="line">		&#125; <span class="keyword">else</span>&#123;...CallbackPreferringPlatformTransactionManager处理：可以定义transaction callback的&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * General delegate for around-advice-based subclasses, delegating to several other template</span></span><br><span class="line"><span class="comment">	 * methods on this class. Able to handle &#123;<span class="doctag">@link</span> CallbackPreferringPlatformTransactionManager&#125;</span></span><br><span class="line"><span class="comment">	 * as well as regular &#123;<span class="doctag">@link</span> PlatformTransactionManager&#125; implementations.</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> method the Method being invoked</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> targetClass the target class that we&#x27;re invoking the method on</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> invocation the callback to use for proceeding with the target invocation</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Nullable</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> Object <span class="title">invokeWithinTransaction</span><span class="params">(Method method, <span class="meta">@Nullable</span> Class&lt;?&gt; targetClass,</span></span></span><br><span class="line"><span class="params"><span class="function">			<span class="keyword">final</span> InvocationCallback invocation)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// If the transaction attribute is null, the method is non-transactional.</span></span><br><span class="line">		TransactionAttributeSource tas = getTransactionAttributeSource();</span><br><span class="line">		<span class="keyword">final</span> TransactionAttribute txAttr = (tas != <span class="keyword">null</span> ? tas.getTransactionAttribute(method, targetClass) : <span class="keyword">null</span>);</span><br><span class="line">		<span class="keyword">final</span> PlatformTransactionManager tm = determineTransactionManager(txAttr);</span><br><span class="line">		<span class="keyword">final</span> String joinpointIdentification = methodIdentification(method, targetClass, txAttr);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (txAttr == <span class="keyword">null</span> || !(tm <span class="keyword">instanceof</span> CallbackPreferringPlatformTransactionManager)) &#123;</span><br><span class="line">			<span class="comment">// Standard transaction demarcation with getTransaction and commit/rollback calls.</span></span><br><span class="line">			TransactionInfo txInfo = createTransactionIfNecessary(tm, txAttr, joinpointIdentification);</span><br><span class="line">			Object retVal = <span class="keyword">null</span>;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="comment">// This is an around advice: Invoke the next interceptor in the chain.</span></span><br><span class="line">				<span class="comment">// This will normally result in a target object being invoked.</span></span><br><span class="line">				retVal = invocation.proceedWithInvocation();</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">				<span class="comment">// target invocation exception</span></span><br><span class="line">				completeTransactionAfterThrowing(txInfo, ex);</span><br><span class="line">				<span class="keyword">throw</span> ex;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">finally</span> &#123;</span><br><span class="line">				cleanupTransactionInfo(txInfo);</span><br><span class="line">			&#125;</span><br><span class="line">			commitTransactionAfterReturning(txInfo);</span><br><span class="line">			<span class="keyword">return</span> retVal;</span><br><span class="line">		&#125; <span class="keyword">else</span>&#123;...CallbackPreferringPlatformTransactionManager处理：可以定义transaction callback的&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
 
 <p>transactionInfoHolder 其实是个ThreadLocal bindToThread</p>
 <h1 id="提交点"><a href="#提交点" class="headerlink" title="提交点"></a>提交点</h1><p>java1.4<br>savepoint<br>a1<br>insert1<br>a2<br>insert2<br>a3<br>insert3</p>
 <p>savepoint是在数据库事务处理中实现“子事务”（subtransaction），也称为嵌套事务的方法。事务可以回滚到savepoint而不影响savepoint创建前的变化。不需要放弃整个事务。</p>
 <p>SQL语言国际标准中，SAVEPOINT name语句声明一个savepoint。ROLLBACK TO SAVEPOINT name语句回滚到savepoint。RELEASE SAVEPOINT name将使得命名的savepoint被放弃，但不影响其他savepoint。ROLLBACK或COMMIT导致所有savepoint被放弃。</p>
 <p>支持savepoint的数据库有：PostgreSQL, Oracle数据库, Microsoft SQL Server, MySQL, DB2, SQLite (从3.6.8), Firebird, H2数据库, Informix (从11.50xC3).</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://fanjingdan012.github.io/2019/04/10/Economic-History/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FJD">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FJD">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/10/Economic-History/" class="post-title-link" itemprop="url">Econimic History</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-04-10 10:50:55" itemprop="dateCreated datePublished" datetime="2019-04-10T10:50:55+08:00">2019-04-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-19 17:52:32" itemprop="dateModified" datetime="2021-11-19T17:52:32+08:00">2021-11-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li>米尔顿.弗里德曼 1912-<ul>
+<li>自由经济</li>
+</ul>
+</li>
+<li>科斯</li>
+<li>张五常<ul>
+<li>市场经济</li>
+</ul>
+</li>
+<li>阿尔钦<ul>
+<li>产权与竞争</li>
+</ul>
+</li>
+</ul>
 
       
     </div>
@@ -963,7 +881,7 @@ movl %edx, count
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 13:32:29" itemprop="dateModified" datetime="2020-11-27T13:32:29+08:00">2020-11-27</time>
+                <time title="修改时间：2021-11-19 17:52:32" itemprop="dateModified" datetime="2021-11-19T17:52:32+08:00">2021-11-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1076,7 +994,7 @@ movl %edx, count
 </ul>
 </li>
 </ul>
-<h2 id="G1"><a href="#G1" class="headerlink" title="G1"></a>G1</h2><p><a href="https://www.oracle.com/technetwork/articles/java/g1gc-1984535.html">https://www.oracle.com/technetwork/articles/java/g1gc-1984535.html</a><br><img src="https://fanjingdan012.github.io/2019/04/10/GC/G1.jpg" alt="G1"><br>Young GC + mixed GC（新生代，再加上部分老生代）＋ Full GC for G1 GC算法（应对G1 GC算法某些时候的不赶趟，开销很大）；</p>
+<h2 id="G1"><a href="#G1" class="headerlink" title="G1"></a>G1</h2><p><a target="_blank" rel="noopener" href="https://www.oracle.com/technetwork/articles/java/g1gc-1984535.html">https://www.oracle.com/technetwork/articles/java/g1gc-1984535.html</a><br><img src="https://fanjingdan012.github.io/2019/04/10/GC/G1.jpg" alt="G1"><br>Young GC + mixed GC（新生代，再加上部分老生代）＋ Full GC for G1 GC算法（应对G1 GC算法某些时候的不赶趟，开销很大）；</p>
 <ul>
 <li>优点<ul>
 <li>可预测的停顿<br>这是G1相对于CMS的另一大优势。使用G1收集器时，Java堆的内存布局就与其他收集器有很大差别，它将整个Java堆划分为多个大小相等的独立区域（Region），虽然还保留有新生代和老年代的概念，但新生代和老年代不再是物理隔离的了，它们都是一部分Region（不需要连续）的集合。G1收集器之所以能建立可预测的停顿时间模型，是因为它可以有计划地避免在整个Java堆中进行全区域的垃圾收集。G1跟踪各个Region里面的垃圾堆积的价值大小（回收所获得的空间大小以及回收所需时间的经验值），在后台维护一个优先列表，每次根据允许的收集时间，优先回收价值最大的Region（这也就是Garbage-First名称的来由）。这种使用Region划分内存空间以及有优先级的区域回收方式，保证了G1收集器在有限的时间内可以获取尽可能高的收集效率。</li>
@@ -1113,7 +1031,7 @@ movl %edx, count
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://fanjingdan012.github.io/2019/04/10/Economic-History/">
+    <link itemprop="mainEntityOfPage" href="https://fanjingdan012.github.io/2018/12/04/Spring-Security/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1127,7 +1045,7 @@ movl %edx, count
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/04/10/Economic-History/" class="post-title-link" itemprop="url">Econimic History</a>
+            <a href="/2018/12/04/Spring-Security/" class="post-title-link" itemprop="url">Spring Security</a>
         </h2>
 
         <div class="post-meta">
@@ -1137,14 +1055,14 @@ movl %edx, count
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-04-10 10:50:55" itemprop="dateCreated datePublished" datetime="2019-04-10T10:50:55+08:00">2019-04-10</time>
+              <time title="创建时间：2018-12-04 16:43:57" itemprop="dateCreated datePublished" datetime="2018-12-04T16:43:57+08:00">2018-12-04</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-19 17:43:16" itemprop="dateModified" datetime="2021-11-19T17:43:16+08:00">2021-11-19</time>
+                <time title="修改时间：2021-11-19 17:52:32" itemprop="dateModified" datetime="2021-11-19T17:52:32+08:00">2021-11-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1167,20 +1085,281 @@ movl %edx, count
     <div class="post-body" itemprop="articleBody">
 
       
-          <ul>
-<li>米尔顿.弗里德曼 1912-<ul>
-<li>自由经济</li>
+          <h1 id="SSO-server-Callstack"><a href="#SSO-server-Callstack" class="headerlink" title="SSO server Callstack"></a>SSO server Callstack</h1><ul>
+<li>在Spring mvc里call Filter Chain, call到org.springframework.security.web.FilterChainProxy.doFilter （extends GenericFilterBean ）<ul>
+<li>这里加装了一个HttpFirewall， 提供firewalledRequest和firewalledResponse，去掉一些危险的请求</li>
 </ul>
 </li>
-<li>科斯</li>
-<li>张五常<ul>
-<li>市场经济</li>
+<li>然后Filter到熟悉的OncePerRequestFilter，有一个WebAsyncManagerIntegrationFilter继承自它<ul>
+<li>就是添加了一个SecurityContextCallableProcessingInterceptor，在处理请求的前后包了一层securityContext，preProcess设置它，postProcess clear它</li>
 </ul>
 </li>
-<li>阿尔钦<ul>
-<li>产权与竞争</li>
+<li>SecurityContextPersistenceFilter 强制的session管理</li>
+<li>HeaderWriterFilter， 写了一些security相关的header</li>
+<li>CsrfFilter<ul>
+<li>从csrf token repository里load这个request的csrf token， 如果没有csrf token的话，那就generate一个，存csrf token repository。 跟request里带的csrf token比对，不对的话就拦截。</li>
+<li>当然，可以设置不需要csrf保护，RequestMatcher requireCsrfProtectionMatcher来决定要不要</li>
+<li>example:<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&#x27;hidden&#x27;</span> <span class="attr">name</span>=<span class="string">&#x27;$&#123;_csrf.parameterName&#125;&#x27;</span> <span class="attr">value</span>=<span class="string">&#x27;$&#123;_csrf.token&#125;&#x27;</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
+<li>LogoutFilter<ul>
+<li>Logout是专门用这个来做的</li>
+</ul>
+</li>
+<li>AbstractAuthenticationProcessingFilter<ul>
+<li>！核心部分，就是这里验证用户名、密码。</li>
+<li>call UsernamePasswordAuthenticationFilter</li>
+<li>call ProviderManager.authenticate</li>
+<li>call AbstractUserDetailsAuthenticationProvider.authenticate</li>
+<li>call DaoAuthenticationProvider.retrieveUser</li>
+<li>call this.getUserDetailsService().loadUserByUsername(username)<ul>
+<li>这里我们要自己写一个XXXUserDetailsService implements UserDetailsService，实现loadUserByUsername方法就可以。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>oauth/confirm_access<br>前面是一样的，后面又call了：</p>
+<ul>
+<li>AbstractAuthenticationProcessingFilter<ul>
+<li>可以设置需不需要authentication保护</li>
+<li>用了strategy模式，自己实现sessionSrategy.onAuthentication, 一般来说会检查session，保证不被fix session攻击</li>
+</ul>
+</li>
+<li>DefaultLoginPageGeneratingFilter<ul>
+<li>返回login成功以后的page的</li>
+</ul>
+</li>
+<li>RequestCacheAwareFilter<ul>
+<li>加cache</li>
+</ul>
+</li>
+<li>SecurityContextHolderAwareRequestFilter <ul>
+<li>把request替换掉了， 用来处理servlet2.5和servlet3不同的request</li>
+<li>可以设置以下<ul>
+<li>rolePrefix</li>
+<li>AuthenticationEntryPoint</li>
+<li>AuthenticationManager</li>
+<li>LogoutHandler</li>
+<li>updateFactory</li>
+<li>TrustResolver</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>AnonymousAuthenticationFilter<ul>
+<li>检查securityContext有没有authentication，没有就创建</li>
+</ul>
+</li>
+<li>SessionManagementFilter<ul>
+<li>检查authentication，如果有且不是匿名，就触发sessionAuthenticationStrategy.onAuthentication(authentication,request, response)</li>
+</ul>
+</li>
+<li>ExceptionTranslationFilter<ul>
+<li>翻译authentication的exception</li>
+</ul>
+</li>
+<li>FilterSecurityInterceptor</li>
+<li>WsFilter <ul>
+<li>可忽略，only needs to handle WebSocket upgrade requests</li>
+</ul>
+</li>
+<li>然后就回到了正常spring web的FilterChain，经过doDispatch到Controller这里</li>
+</ul>
+<h1 id="通过-session-cookie-维护-authentication"><a href="#通过-session-cookie-维护-authentication" class="headerlink" title="通过 session/cookie 维护 authentication"></a>通过 session/cookie 维护 authentication</h1><p>请求 <a target="_blank" rel="noopener" href="http://127.0.0.1:8060/client2/index.html">http://127.0.0.1:8060/client2/index.html</a> 需要Cookie: </p>
+<ul>
+<li>JSESSIONID=90AEBC55CFDCDFD9277A00E654C6A4B4; </li>
+<li>PGADMIN_LANGUAGE=en; </li>
+<li>PGADMIN_KEY=13d9a244-76c6-46aa-9c66-e32ab9c9e447; </li>
+<li>pga4_session=”7e6549b3-743a-4992-9b04-d423caa34fcc!51GhrQLaPDsFNZMsyrY0nD2Lx/g=”</li>
+</ul>
+<h1 id="SSO-Client"><a href="#SSO-Client" class="headerlink" title="SSO Client"></a>SSO Client</h1><p>@EnableOAuth2Sso<br>marks your service as an OAuth 2.0 Client. This means that it will be responsible for redirecting Resource Owner (end user) to the Authorization Server where the user has to enter their credentials. After it’s done the user is redirected back to the Client with Authorization Code (don’t confuse with Access Code). Then the Client takes the Authorization Code and exchanges it for an Access Token by calling Authorization Server. Only after that, the Client can make a call to a Resource Server with Access Token.</p>
+<p>Also, if you take a look into the source code of @EnableOAuth2Sso annotation you will see two interesting things:</p>
+<p>@EnableOAuth2Client. This is where your service becomes OAuth 2.0 Client. It makes it possible to forward access token (after it has been exchanged for Authorization Code) to downstream services in case you are calling those services via OAuth2RestTemplate.</p>
+<p>@EnableConfigurationProperties(OAuth2SsoProperties.class). OAuth2SsoProperties has only one property String loginPath which is /login by default. This will intercept browser requests to the /login by OAuth2ClientAuthenticationProcessingFilter and will redirect the user to the Authorization Server.</p>
+<p><code>application.properties</code><br>security.oauth2.client.client-id=client2<br>security.oauth2.client.client-secret=client2<br>security.oauth2.client.user-authorization-uri=<a target="_blank" rel="noopener" href="http://127.0.0.1:9999/server/oauth/authorize">http://127.0.0.1:9999/server/oauth/authorize</a><br>security.oauth2.client.access-token-uri=<a target="_blank" rel="noopener" href="http://127.0.0.1:9999/server/oauth/token">http://127.0.0.1:9999/server/oauth/token</a><br>security.oauth2.resource.jwt.key-uri=<a target="_blank" rel="noopener" href="http://127.0.0.1:9999/server/oauth/token_key">http://127.0.0.1:9999/server/oauth/token_key</a></p>
+<h2 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h2><ul>
+<li>client2/index.html<ul>
+<li>Cookie: JSESSIONID=F9D6E6701C3446256BBDD3536B4C37A2</li>
+<li>response: 302 </li>
+</ul>
+</li>
+<li>client2/login <ul>
+<li>Cookie: JSESSIONID=F9D6E6701C3446256BBDD3536B4C37A2</li>
+<li>response: 302</li>
+</ul>
+</li>
+<li>server/oauth/authorize?client_id=client2&amp;redirect_uri=<a target="_blank" rel="noopener" href="http://127.0.0.1:8060/client2/login&amp;response_type=code&amp;state=FDAZ6f">http://127.0.0.1:8060/client2/login&amp;response_type=code&amp;state=FDAZ6f</a><ul>
+<li>Cookie: JSESSIONID=3E6CBEFE193913C53AC3AAA1C7687C89</li>
+<li>response: 302</li>
+</ul>
+</li>
+<li>server/login<ul>
+<li>Cookie: JSESSIONID=3E6CBEFE193913C53AC3AAA1C7687C89</li>
+<li>response: 200 + login 页面</li>
+</ul>
+</li>
+</ul>
+<p>@EnableResourceServer</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://fanjingdan012.github.io/2018/08/17/Refactor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FJD">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FJD">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/08/17/Refactor/" class="post-title-link" itemprop="url">Refactor</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-08-17 12:36:38" itemprop="dateCreated datePublished" datetime="2018-08-17T12:36:38+08:00">2018-08-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-19 17:52:32" itemprop="dateModified" datetime="2021-11-19T17:52:32+08:00">2021-11-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="principles-checklist-for-refactor"><a href="#principles-checklist-for-refactor" class="headerlink" title="principles/checklist for refactor"></a>principles/checklist for refactor</h1><ul>
+<li>small</li>
+<li>safe</li>
+<li>improve<ul>
+<li>readable<ul>
+<li>meet with human god feelings</li>
+<li>naming correctly</li>
+</ul>
+</li>
+<li>testable</li>
+</ul>
+</li>
+</ul>
+<h1 id="good-practice"><a href="#good-practice" class="headerlink" title="good practice"></a>good practice</h1><ul>
+<li>don’t modify param</li>
+<li>don’t mass up input and output<ul>
+<li>e.g. <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Param <span class="title">someMethod</span><span class="params">(Param p)</span></span>&#123;</span><br><span class="line">   <span class="keyword">if</span>(p.getA())&#123;</span><br><span class="line">      p.setB(<span class="string">&quot;a&quot;</span>)</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>one responsibility for one method</li>
+<li>pass only the parameters needed by method</li>
+<li>keep smallest visibility</li>
+<li>use design pattern correctly</li>
+<li>UT<ul>
+<li>can run locally</li>
+<li>fast</li>
+<li>as doc to tell users how to use the method</li>
+</ul>
+</li>
+</ul>
+<h1 id="case-study"><a href="#case-study" class="headerlink" title="case study"></a>case study</h1><h2 id="refactor-long-refreshUserGroup-method"><a href="#refactor-long-refreshUserGroup-method" class="headerlink" title="refactor long refreshUserGroup method"></a>refactor long refreshUserGroup method</h2><h3 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h3><ul>
+<li>do update and conditional dispatch in one method</li>
+<li>modify parameter</li>
+<li>parse whole cmd but use part of the params</li>
+<li>no UT, just using testNG(integration test ~20 cases)<ul>
+<li>need to run tomcat to run cases</li>
+<li>long time to run cases(~7 minutes)</li>
+<li>dependency between cases(must run in a certain order)</li>
+<li>dependency on db initial data</li>
+</ul>
+</li>
+<li>no pipeline</li>
+<li>code too large<ul>
+<li>out of memory when running locally</li>
+<li>long time to compile(~7 minutes)</li>
+</ul>
+</li>
+<li>after dispached in one case, outside of that class, actually modify the param and call itself for update again</li>
+<li>misuse of parameter, eg isrefreshAll actually int, set to _99 to mean another case</li>
+<li>cmd execute is common way to implement a service, actually naming is bad, bacause not preventing any information…</li>
+</ul>
+<h2 id="Actions"><a href="#Actions" class="headerlink" title="Actions"></a>Actions</h2><ul>
+<li>separate update logic and dispatch logic</li>
+<li>separate input with output</li>
+<li>add UT</li>
+<li>only pass params that used to methods</li>
+</ul>
+<h1 id="refactor-30000-line-code-UserDAO"><a href="#refactor-30000-line-code-UserDAO" class="headerlink" title="refactor 30000 line code UserDAO"></a>refactor 30000 line code UserDAO</h1><h2 id="Problem-1"><a href="#Problem-1" class="headerlink" title="Problem"></a>Problem</h2><ul>
+<li>too large</li>
+<li>own by multiple teams  </li>
+<li>user specific logics and application specific logics together</li>
+<li>referenced by other modules by jar dependency</li>
+</ul>
+<h2 id="Actions-1"><a href="#Actions-1" class="headerlink" title="Actions"></a>Actions</h2><ul>
+<li>remove unused methods</li>
+<li>move some to new user specific logic UserDAO and some to application DAO</li>
+<li>make original one a delegate to new ones</li>
+<li>add UT</li>
+<li>rely on interfaces between modules，interface be small</li>
+<li>adapters in caller,学习型测试</li>
+</ul>
+<h1 id="UT-for-singlton-RuleEngine"><a href="#UT-for-singlton-RuleEngine" class="headerlink" title="UT for singlton RuleEngine"></a>UT for singlton RuleEngine</h1><h2 id="Problem-2"><a href="#Problem-2" class="headerlink" title="Problem"></a>Problem</h2><ul>
+<li>different tests for different scenarios</li>
+<li>misuse of singleton</li>
+<li>class name XXFactory, actually not, it is a singleton and not producing XX Bean</li>
+</ul>
+<h2 id="Actions-2"><a href="#Actions-2" class="headerlink" title="Actions"></a>Actions</h2><ul>
+<li>modify UT to add mock for different scenarios</li>
+</ul>
+<h1 id="UT-for-smart-controller"><a href="#UT-for-smart-controller" class="headerlink" title="UT for smart controller"></a>UT for smart controller</h1><h2 id="Problem-3"><a href="#Problem-3" class="headerlink" title="Problem"></a>Problem</h2><ul>
+<li>too much logic done by smart widgets, not easy to test</li>
+</ul>
+<h2 id="Actions-3"><a href="#Actions-3" class="headerlink" title="Actions"></a>Actions</h2><ul>
+<li>verify if update methods called</li>
+<li>some logic move to service level to reuse code</li>
+<li>only test code written by you</li>
 </ul>
 
       
@@ -1200,7 +1379,7 @@ movl %edx, count
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1266,7 +1445,7 @@ movl %edx, count
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1312,7 +1491,7 @@ movl %edx, count
   </span>
   <span class="author" itemprop="copyrightHolder">FJD</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
@@ -1332,9 +1511,17 @@ movl %edx, count
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/muse.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 
