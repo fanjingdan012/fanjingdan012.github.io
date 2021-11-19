@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"fanjingdan012.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="principles/checklist for refactor small safe improve readable meet with human god feelings naming correctly   testable    good practice don’t modify param don’t mass up input and output e.g. 123456Par">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Refactor">
+<meta property="og:url" content="https://fanjingdan012.github.io/2018/08/17/Refactor/index.html">
+<meta property="og:site_name" content="FJD">
+<meta property="og:description" content="principles/checklist for refactor small safe improve readable meet with human god feelings naming correctly   testable    good practice don’t modify param don’t mass up input and output e.g. 123456Par">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-11-27T05:32:29.370Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Refactor">
+<meta name="twitter:description" content="principles/checklist for refactor small safe improve readable meet with human god feelings naming correctly   testable    good practice don’t modify param don’t mass up input and output e.g. 123456Par">
+
+<link rel="canonical" href="https://fanjingdan012.github.io/2018/08/17/Refactor/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Refactor | FJD</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FJD</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-计算机知识树">
+
+    <a href="/CSKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>计算机知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-会计学知识树">
+
+    <a href="/AccountingKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>会计学知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-数学知识树">
+
+    <a href="/MathKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>数学知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://fanjingdan012.github.io/2018/08/17/Refactor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FJD">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FJD">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Refactor
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-08-17 12:36:38" itemprop="dateCreated datePublished" datetime="2018-08-17T12:36:38+08:00">2018-08-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-27 13:32:29" itemprop="dateModified" datetime="2020-11-27T13:32:29+08:00">2020-11-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="principles-checklist-for-refactor"><a href="#principles-checklist-for-refactor" class="headerlink" title="principles/checklist for refactor"></a>principles/checklist for refactor</h1><ul>
+<li>small</li>
+<li>safe</li>
+<li>improve<ul>
+<li>readable<ul>
+<li>meet with human god feelings</li>
+<li>naming correctly</li>
+</ul>
+</li>
+<li>testable</li>
+</ul>
+</li>
+</ul>
+<h1 id="good-practice"><a href="#good-practice" class="headerlink" title="good practice"></a>good practice</h1><ul>
+<li>don’t modify param</li>
+<li>don’t mass up input and output<ul>
+<li>e.g. <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Param <span class="title">someMethod</span><span class="params">(Param p)</span></span>&#123;</span><br><span class="line">   <span class="keyword">if</span>(p.getA())&#123;</span><br><span class="line">      p.setB(<span class="string">&quot;a&quot;</span>)</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>one responsibility for one method</li>
+<li>pass only the parameters needed by method</li>
+<li>keep smallest visibility</li>
+<li>use design pattern correctly</li>
+<li>UT<ul>
+<li>can run locally</li>
+<li>fast</li>
+<li>as doc to tell users how to use the method</li>
+</ul>
+</li>
+</ul>
+<h1 id="case-study"><a href="#case-study" class="headerlink" title="case study"></a>case study</h1><h2 id="refactor-long-refreshUserGroup-method"><a href="#refactor-long-refreshUserGroup-method" class="headerlink" title="refactor long refreshUserGroup method"></a>refactor long refreshUserGroup method</h2><h3 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h3><ul>
+<li>do update and conditional dispatch in one method</li>
+<li>modify parameter</li>
+<li>parse whole cmd but use part of the params</li>
+<li>no UT, just using testNG(integration test ~20 cases)<ul>
+<li>need to run tomcat to run cases</li>
+<li>long time to run cases(~7 minutes)</li>
+<li>dependency between cases(must run in a certain order)</li>
+<li>dependency on db initial data</li>
+</ul>
+</li>
+<li>no pipeline</li>
+<li>code too large<ul>
+<li>out of memory when running locally</li>
+<li>long time to compile(~7 minutes)</li>
+</ul>
+</li>
+<li>after dispached in one case, outside of that class, actually modify the param and call itself for update again</li>
+<li>misuse of parameter, eg isrefreshAll actually int, set to _99 to mean another case</li>
+<li>cmd execute is common way to implement a service, actually naming is bad, bacause not preventing any information…</li>
+</ul>
+<h2 id="Actions"><a href="#Actions" class="headerlink" title="Actions"></a>Actions</h2><ul>
+<li>separate update logic and dispatch logic</li>
+<li>separate input with output</li>
+<li>add UT</li>
+<li>only pass params that used to methods</li>
+</ul>
+<h1 id="refactor-30000-line-code-UserDAO"><a href="#refactor-30000-line-code-UserDAO" class="headerlink" title="refactor 30000 line code UserDAO"></a>refactor 30000 line code UserDAO</h1><h2 id="Problem-1"><a href="#Problem-1" class="headerlink" title="Problem"></a>Problem</h2><ul>
+<li>too large</li>
+<li>own by multiple teams  </li>
+<li>user specific logics and application specific logics together</li>
+<li>referenced by other modules by jar dependency</li>
+</ul>
+<h2 id="Actions-1"><a href="#Actions-1" class="headerlink" title="Actions"></a>Actions</h2><ul>
+<li>remove unused methods</li>
+<li>move some to new user specific logic UserDAO and some to application DAO</li>
+<li>make original one a delegate to new ones</li>
+<li>add UT</li>
+<li>rely on interfaces between modules，interface be small</li>
+<li>adapters in caller,学习型测试</li>
+</ul>
+<h1 id="UT-for-singlton-RuleEngine"><a href="#UT-for-singlton-RuleEngine" class="headerlink" title="UT for singlton RuleEngine"></a>UT for singlton RuleEngine</h1><h2 id="Problem-2"><a href="#Problem-2" class="headerlink" title="Problem"></a>Problem</h2><ul>
+<li>different tests for different scenarios</li>
+<li>misuse of singleton</li>
+<li>class name XXFactory, actually not, it is a singleton and not producing XX Bean</li>
+</ul>
+<h2 id="Actions-2"><a href="#Actions-2" class="headerlink" title="Actions"></a>Actions</h2><ul>
+<li>modify UT to add mock for different scenarios</li>
+</ul>
+<h1 id="UT-for-smart-controller"><a href="#UT-for-smart-controller" class="headerlink" title="UT for smart controller"></a>UT for smart controller</h1><h2 id="Problem-3"><a href="#Problem-3" class="headerlink" title="Problem"></a>Problem</h2><ul>
+<li>too much logic done by smart widgets, not easy to test</li>
+</ul>
+<h2 id="Actions-3"><a href="#Actions-3" class="headerlink" title="Actions"></a>Actions</h2><ul>
+<li>verify if update methods called</li>
+<li>some logic move to service level to reuse code</li>
+<li>only test code written by you</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/08/07/CGLib-Source-Code-Read/" rel="prev" title="CGLib Source Code Read">
+      <i class="fa fa-chevron-left"></i> CGLib Source Code Read
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/12/04/Spring-Security/" rel="next" title="Spring Security">
+      Spring Security <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#principles-checklist-for-refactor"><span class="nav-number">1.</span> <span class="nav-text">principles/checklist for refactor</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#good-practice"><span class="nav-number">2.</span> <span class="nav-text">good practice</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#case-study"><span class="nav-number">3.</span> <span class="nav-text">case study</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#refactor-long-refreshUserGroup-method"><span class="nav-number">3.1.</span> <span class="nav-text">refactor long refreshUserGroup method</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem"><span class="nav-number">3.1.1.</span> <span class="nav-text">Problem</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Actions"><span class="nav-number">3.2.</span> <span class="nav-text">Actions</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#refactor-30000-line-code-UserDAO"><span class="nav-number">4.</span> <span class="nav-text">refactor 30000 line code UserDAO</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Problem-1"><span class="nav-number">4.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Actions-1"><span class="nav-number">4.2.</span> <span class="nav-text">Actions</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UT-for-singlton-RuleEngine"><span class="nav-number">5.</span> <span class="nav-text">UT for singlton RuleEngine</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Problem-2"><span class="nav-number">5.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Actions-2"><span class="nav-number">5.2.</span> <span class="nav-text">Actions</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UT-for-smart-controller"><span class="nav-number">6.</span> <span class="nav-text">UT for smart controller</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Problem-3"><span class="nav-number">6.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Actions-3"><span class="nav-number">6.2.</span> <span class="nav-text">Actions</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FJD</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FJD</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

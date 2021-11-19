@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"fanjingdan012.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Git 是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个开放源码的版本控制软件。  git help xxx git help workflows git help everyday git help tutorial git help revisions   chmod -R u+w .git  Config global ignore  git config -">
+<meta name="keywords" content="VersionControl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git">
+<meta property="og:url" content="https://fanjingdan012.github.io/2020/11/27/Git/index.html">
+<meta property="og:site_name" content="FJD">
+<meta property="og:description" content="Git 是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个开放源码的版本控制软件。  git help xxx git help workflows git help everyday git help tutorial git help revisions   chmod -R u+w .git  Config global ignore  git config -">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-11-19T09:43:16.515Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git">
+<meta name="twitter:description" content="Git 是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个开放源码的版本控制软件。  git help xxx git help workflows git help everyday git help tutorial git help revisions   chmod -R u+w .git  Config global ignore  git config -">
+
+<link rel="canonical" href="https://fanjingdan012.github.io/2020/11/27/Git/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Git | FJD</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FJD</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-计算机知识树">
+
+    <a href="/CSKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>计算机知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-会计学知识树">
+
+    <a href="/AccountingKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>会计学知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-数学知识树">
+
+    <a href="/MathKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>数学知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://fanjingdan012.github.io/2020/11/27/Git/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FJD">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FJD">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Git
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-27 13:33:13" itemprop="dateCreated datePublished" datetime="2020-11-27T13:33:13+08:00">2020-11-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-19 17:43:16" itemprop="dateModified" datetime="2021-11-19T17:43:16+08:00">2021-11-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Git 是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个开放源码的版本控制软件。</p>
+<ul>
+<li>git help xxx<ul>
+<li>git help workflows</li>
+<li>git help everyday</li>
+<li>git help tutorial</li>
+<li>git help revisions</li>
+</ul>
+</li>
+<li>chmod -R u+w .git</li>
+</ul>
+<h1 id="Config"><a href="#Config" class="headerlink" title="Config"></a>Config</h1><ul>
+<li><p><a href="https://gist.github.com/subfuzion/db7f57fff2fb6998a16c" target="_blank" rel="noopener">global ignore</a></p>
+<ul>
+<li><code>git config --global core.excludesfile ~/.gitignore</code></li>
+<li>e.g.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">target</span><br><span class="line">bin</span><br><span class="line">*.db</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>git config –list 看所有用户</p>
+</li>
+<li><p>proxy</p>
+<ul>
+<li>git config –global –unset https.proxy</li>
+<li>git config –global –unset http.proxy</li>
+<li>git config –global http.proxy ‘proxy.example.com:8080’</li>
+<li>git config –global https.proxy ‘socks5://127.0.0.1:1080’’</li>
+<li>git config –global http.proxy <a href="http://proxy.example.com:8080" target="_blank" rel="noopener">http://proxy.example.com:8080</a></li>
+<li>git config –global https.proxy <a href="http://proxy.example.com:8080" target="_blank" rel="noopener">http://proxy.example.com:8080</a></li>
+</ul>
+</li>
+<li><p><code>git config --global commit.template ~/commit_template.txt</code></p>
+</li>
+</ul>
+<h1 id="Git命令状态图"><a href="#Git命令状态图" class="headerlink" title="Git命令状态图"></a>Git命令状态图</h1><h2 id="Workdspace"><a href="#Workdspace" class="headerlink" title="Workdspace"></a>Workdspace</h2><ul>
+<li>git status -u(-uall) show all files untracked</li>
+<li>git clean -df 删除所有untracked的文件</li>
+<li>git ls-files 看已经被提交的</li>
+<li><code>git update-index --assume-unchanged xx/xx/configuration.xml</code> ignore file</li>
+<li>init      Create an empty Git repository or reinitialize an existing one<ul>
+<li>git init</li>
+<li>git init-db 则在当前目录中产生一个.git 的子目录。</li>
+<li>创建新git<ul>
+<li>mkdir WebApp</li>
+<li>cd WebApp</li>
+<li>git init</li>
+<li>touch README</li>
+<li>git add README</li>
+<li>git commit -m ‘first commit’</li>
+<li>git remote add origin xxxx.git</li>
+<li>git push -u origin master</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>bisect    Use binary search to find the commit that introduced a bug</li>
+<li>diff      Show changes between commits, commit and working tree, etc<ul>
+<li>git diff –cached<ul>
+<li>see what you’ve staged that will go into your next commit</li>
+</ul>
+</li>
+<li>git diff –cached 或 $ git diff –staged 查看尚未提交的更新</li>
+</ul>
+</li>
+<li>grep      Print lines matching a pattern</li>
+<li>log       Show commit logs<ul>
+<li>git log -p ./manifest.yml</li>
+</ul>
+</li>
+<li>show      Show various types of objects</li>
+<li>status    Show the working tree status<ul>
+<li>git status 查看当前状态</li>
+</ul>
+</li>
+<li>blame<ul>
+<li>git blame xx.java<ul>
+<li>git blame xx.xml -L 1 第一行开始<h2 id="Stash-lt-gt-Workspace"><a href="#Stash-lt-gt-Workspace" class="headerlink" title="Stash &lt;-&gt; Workspace"></a>Stash &lt;-&gt; Workspace</h2></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>git stash list</li>
+<li>git stash push 将文件给push到一个临时空间中</li>
+<li>git stash pop 将文件从临时空间pop下来</li>
+<li>git stash drop 删掉上一个stash</li>
+<li>git stahs clear</li>
+</ul>
+<h2 id="Workspace-gt-Staged"><a href="#Workspace-gt-Staged" class="headerlink" title="Workspace -&gt; Staged"></a>Workspace -&gt; Staged</h2><ul>
+<li>git add [fileName | path]<ul>
+<li>git add .</li>
+<li>git add –all</li>
+</ul>
+</li>
+<li>mv        Move or rename a file, a directory, or a symlink</li>
+<li>restore   Restore working tree files</li>
+<li>rm        Remove files from the working tree and from the index<ul>
+<li>git rm a.a 移除文件(从暂存区和工作区中删除)</li>
+<li>git rm –cached a.a 移除文件(只从暂存区中删除)</li>
+<li>git rm -f a.a 强行移除修改后文件(从暂存区和工作区中删除)</li>
+<li>git删除文件<ul>
+<li>rm add2.txt</li>
+<li>git rm add2.txt</li>
+<li>git commit -m “rm test”</li>
+<li>git push web</li>
+</ul>
+</li>
+<li>at server<ul>
+<li>cd /var/www/foo.git;sudo git update-server-info</li>
+</ul>
+</li>
+<li>检查删除效果<ul>
+<li>rm foo3 -rf</li>
+<li>git clone xxx/foo.git foo3</li>
+</ul>
+</li>
+<li>更新已经存在的local code<ul>
+<li>cd foo2</li>
+<li>git remote add web [user]@[ip]:/var/www/foo.git/</li>
+<li>git pull web master<h2 id="Staged-gt-Workspace"><a href="#Staged-gt-Workspace" class="headerlink" title="Staged -&gt; Workspace"></a>Staged -&gt; Workspace</h2></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>git reset 撤销add<ul>
+<li>git reset HEAD [fileName] If no fileName, all staged files will be reset to untraced or not staged.</li>
+<li>git reset head^</li>
+<li>git reset –hard origin/master<h2 id="Staged-gt-Local-Repo"><a href="#Staged-gt-Local-Repo" class="headerlink" title="Staged -&gt; Local Repo"></a>Staged -&gt; Local Repo</h2></li>
+</ul>
+</li>
+<li>commit<ul>
+<li>git commit –amend</li>
+<li>git commit -am “init” 提交并且加注释</li>
+<li>git commit -a<ul>
+<li>-a是代表all，把所有的change加到git index里然后再commit</li>
+<li>-v 当你用－v参数的时候可以看commit的差异</li>
+<li>-m “This is the message describing the commit” 添加commit信息</li>
+<li>–amend</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>branch<ul>
+<li>查看本地分支：$ git branch<ul>
+<li>git branch -a 查看所有的分支</li>
+<li>查看远程分支：$ git branch -r</li>
+</ul>
+</li>
+<li>创建本地分支：$ git branch [name] —-注意新分支创建后不会自动切换为当前分支<ul>
+<li>git branch branch_0.1 master 从主分支master创建branch_0.1分支</li>
+<li>git branch -m branch_0.1 branch_1.0 将branch_0.1重命名为branch_1.0</li>
+<li>git branch –set-upstream-to=origin/master feature1</li>
+</ul>
+</li>
+<li>切换分支：$ git checkout [name]<ul>
+<li>git checkout branch_1.0/master 切换到branch_1.0/master分支</li>
+<li>git checkout –track origin/dev 切换到远程dev分支</li>
+<li>git checkout -b dev 建立一个新的本地分支dev</li>
+<li>git checkout dev 切换到本地dev分支</li>
+<li>git checkout xxx.java</li>
+<li><code>git checkout HEAD~2</code> current work point 向上移动2个提交</li>
+</ul>
+</li>
+<li>删除分支：$ git branch -d [name]<ul>
+<li>-d选项只能删除已经参与了合并的分支，对于未有合并的分支是无法删除的。</li>
+<li>-D force delete<ul>
+<li>git branch -D develop 删除本地库develop</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>创建空的分支：(执行命令之前记得先提交你当前分支的修改，否则会被强制删干净没得后悔)<ul>
+<li>$git symbolic-ref HEAD refs/heads/[name]</li>
+<li>$rm .git/index</li>
+<li>$git clean -fdx</li>
+</ul>
+</li>
+<li>merge<ul>
+<li>git merge [name] —-将名称为[name]的分支与当前分支合并</li>
+<li>git mergetool</li>
+<li>同一个分支提交起冲突的时<ul>
+<li>git add</li>
+<li>git commit</li>
+<li>git pull –rebase</li>
+<li>修改本地代码</li>
+<li>git push</li>
+</ul>
+</li>
+<li>不同分支提交冲突时<ul>
+<li>git add</li>
+<li>git commit</li>
+<li>git merge master(master分支合并到本地分支)</li>
+<li>修改本地文件</li>
+<li>git add</li>
+<li>git commit</li>
+<li>git push</li>
+</ul>
+</li>
+<li>方案一<ol>
+<li>updatea master to latest<ul>
+<li>git checkout master</li>
+<li>git fetch origin</li>
+<li>git pull –rebase</li>
+</ul>
+</li>
+<li>update 冲突branch to master<ul>
+<li>git rebase master</li>
+</ul>
+</li>
+<li>解决冲突后<ul>
+<li>git add –all</li>
+<li>git rebase –continue</li>
+<li>git commit –amend</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>方案二<ol>
+<li>checout a new branch to latest<ul>
+<li>git checkout -b merge1 origin/master</li>
+<li>git fetch origin</li>
+<li>git pull</li>
+</ul>
+</li>
+<li>update 冲突branch to the new branch<ul>
+<li>git rebase merge1</li>
+</ul>
+</li>
+<li>解决冲突后<ul>
+<li>git add –all</li>
+<li>git rebase –continue</li>
+<li>git commit –amend</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a href="https://blog.csdn.net/endlu/article/details/51605861" target="_blank" rel="noopener">rebase Reapply commits on top of another base tip</a><ul>
+<li>git rebase -i HEAD~3</li>
+<li>git rebase -i 3a4226b</li>
+<li>git rebase -i origin/master</li>
+<li>git rebase origin/master</li>
+<li>git rebase origin/master branchname</li>
+<li>git rebase –continue</li>
+<li>git rebase –skip</li>
+<li>Squashing Your Commits<ul>
+<li><code>git rebase -i HEAD~3</code> This will bring you into your editor with some text that will look something like this:<blockquote>
+<p>pick df94881 Allow install to SD<br>pick a7323e5 README Junkyism<br>pick 3ead26f rm classpath from git</p>
+</blockquote>
+</li>
+<li>To squash those commits into one, change to something like this:<blockquote>
+<p>pick df94881 Allow install to SD<br>squash a7323e5 README Junkyism<br>squash 3ead26f rm classpath from git</p>
+</blockquote>
+</li>
+<li>Then, save/quit</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>switch    Switch branches</li>
+<li>tag       Create, list, delete or verify a tag object signed with GPG<ul>
+<li>查看版本：$ git tag</li>
+<li>创建版本：$ git tag [name]</li>
+<li>删除版本：$ git tag -d [name]</li>
+<li>查看远程版本：$ git tag -r</li>
+<li>创建带注释的tag：$ git tag -a [name] -m ‘yourMessage’</li>
+</ul>
+</li>
+<li>cherry-pick<ul>
+<li>git cherry-pick <commitid></commitid></li>
+</ul>
+</li>
+</ul>
+<h2 id="Local-Repo-gt-Remote-Repo"><a href="#Local-Repo-gt-Remote-Repo" class="headerlink" title="Local Repo -&gt; Remote Repo"></a>Local Repo -&gt; Remote Repo</h2><ul>
+<li>push      Update remote refs along with associated objects<ul>
+<li>git push [远程仓库名] [branchname] 将本地分支推送到服务器上去<ul>
+<li>git push origin master 将本地项目给提交到服务器中</li>
+<li>git push origin test:master    提交本地test分支作为远程的master分支<ul>
+<li>删除远程分支：git push origin :heads/[name] 或 git push origin :[name]</li>
+</ul>
+</li>
+<li>git push origin –delete feature/login</li>
+<li>删除远程版本：git push origin :refs/tags/[name]</li>
+<li>上传本地tag到远程仓库：git push origin –tags<h2 id="Remote-Repo-gt-Local-Repo"><a href="#Remote-Repo-gt-Local-Repo" class="headerlink" title="Remote Repo -&gt; Local Repo"></a>Remote Repo -&gt; Local Repo</h2></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>git clone xxxxxxx.git 从服务器上将代码给拉下来</li>
+<li>fetch     Download objects and refs from another repository<ul>
+<li>git fetch origin</li>
+<li>git fetch -p origin<ul>
+<li>prune local “cache” of remote branches</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>pull      Fetch from and integrate with another repository or a local branch<ul>
+<li>拉取远程仓库：$ git pull [remoteName] [localBranchName]</li>
+<li>合并远程仓库的tag到本地：$ git pull origin –tags</li>
+<li>git pull -t<ul>
+<li>-t is pull tags<h2 id="Remote-Repo"><a href="#Remote-Repo" class="headerlink" title="Remote Repo"></a>Remote Repo</h2></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>查看远程仓库：$ git remote -v</li>
+<li>添加远程仓库：$ git remote add [name] [url]<ul>
+<li>git remote add origin <a href="mailto:git@xxx.xxx.git" target="_blank" rel="noopener">git@xxx.xxx.git</a></li>
+</ul>
+</li>
+<li>删除远程仓库：$ git remote rm [name]</li>
+<li>修改远程仓库：$ git remote set-url –push [name] [newUrl]</li>
+<li>git remote show origin，显示远程库origin里的资源<ul>
+<li>git remote show 查看远程库</li>
+</ul>
+</li>
+<li>git remote prune origin 删除本地缓存的远程分支，还你一个清晰的git branch -r：</li>
+</ul>
+<h1 id="子模块-submodule-相关操作命令"><a href="#子模块-submodule-相关操作命令" class="headerlink" title="子模块(submodule)相关操作命令"></a>子模块(submodule)相关操作命令</h1><ul>
+<li>添加子模块：$ git submodule add [url] [path]<ul>
+<li>如：$git submodule add git://github.com/soberh/ui-libs.git src/main/webapp/ui-libs</li>
+</ul>
+</li>
+<li>初始化子模块：$ git submodule init  —-只在首次检出仓库时运行一次就行</li>
+<li>更新子模块：$ git submodule update —-每次更新或切换分支后都需要运行一下</li>
+<li>删除子模块：（分4步走哦）<ul>
+<li>$ git rm –cached [path]</li>
+<li>编辑“.gitmodules”文件，将子模块的相关配置节点删除掉</li>
+<li>编辑“ .git/config”文件，将子模块的相关配置节点删除掉</li>
+<li>手动删除子模块残留的目录</li>
+</ul>
+</li>
+</ul>
+<h1 id="Gerrit"><a href="#Gerrit" class="headerlink" title="Gerrit"></a>Gerrit</h1><ul>
+<li><p>Automatically add Change-Id to your commit</p>
+<ul>
+<li><p><code>touch ~/commit_template.txt</code></p>
+</li>
+<li><p><code>scp -p -P 29418 &lt;your username&gt;@&lt;your Gerrit review server&gt;:hooks/commit-msg &lt;local path to your git&gt;/.git/hooks/</code> 下载生成Change-Id脚本</p>
+<ul>
+<li>测试生成脚本<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"change-id"</span> &gt; testChangeid.txt</span><br><span class="line">./git/hooks/commit-msg testChangeid.txt</span><br><span class="line">cat testChangeid.txt</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>commit template: <code>git config --global commit.template ~/commit_template.txt</code></p>
+<ul>
+<li><code>～/.gitconfig</code><blockquote>
+<p>[commit]<br>   template = ~/commit_template.txt</p>
+</blockquote>
+</li>
+<li><code>~/commit-template.txt</code><blockquote>
+<p>some comments<br>Signed-off-by: MyName <myemail></myemail></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>then git commit will automatically generate Change-Id</p>
+<ul>
+<li>check <code>&lt;your repo&gt;/.git/COMMIT_EDITMSG</code> has Author and Change-Id</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>git push origin HEAD:refs/for/&lt;branch&gt;</code></p>
+</li>
+</ul>
+<h1 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h1><h2 id="解决错误"><a href="#解决错误" class="headerlink" title="解决错误"></a>解决错误</h2><ul>
+<li>git fsck –full –strict</li>
+<li>git prune -v</li>
+<li>git repack -adf –window=5</li>
+<li>git gc –aggressive</li>
+</ul>
+<h2 id="Github-fork"><a href="#Github-fork" class="headerlink" title="Github fork"></a>Github fork</h2><ul>
+<li>click ‘Fork’</li>
+<li>git clone your-ssh-git-url</li>
+<li>git remote add –track master upstream git://github.com/upstreamname/projectname.git<ul>
+<li>git remote add upstream git://github.com/upstream/project</li>
+</ul>
+</li>
+<li>git fetch upstream</li>
+<li>git merge upstream/master</li>
+<li>git branch newfeature</li>
+<li>git checkout newfeature</li>
+</ul>
+<h2 id="Submitting-a-Pull-Request"><a href="#Submitting-a-Pull-Request" class="headerlink" title="Submitting a Pull Request"></a>Submitting a Pull Request</h2><ul>
+<li>git push origin newfeature</li>
+<li>click ‘Pull Request’</li>
+<li>click ‘Submit Pull Request’</li>
+<li>click ‘Merge’</li>
+</ul>
+<h1 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h1><ul>
+<li><a href="http://www.ithao123.cn/content-1544598.html" target="_blank" rel="noopener">http://www.ithao123.cn/content-1544598.html</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/VersionControl/" rel="tag"># VersionControl</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/27/hello-world/" rel="prev" title="Hello World">
+      <i class="fa fa-chevron-left"></i> Hello World
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/27/CTF2020Final/" rel="next" title="CTF2020Final">
+      CTF2020Final <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Config"><span class="nav-number">1.</span> <span class="nav-text">Config</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Git命令状态图"><span class="nav-number">2.</span> <span class="nav-text">Git命令状态图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Workdspace"><span class="nav-number">2.1.</span> <span class="nav-text">Workdspace</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stash-lt-gt-Workspace"><span class="nav-number">2.2.</span> <span class="nav-text">Stash &lt;-&gt; Workspace</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Workspace-gt-Staged"><span class="nav-number">2.3.</span> <span class="nav-text">Workspace -&gt; Staged</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Staged-gt-Workspace"><span class="nav-number">2.4.</span> <span class="nav-text">Staged -&gt; Workspace</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Staged-gt-Local-Repo"><span class="nav-number">2.5.</span> <span class="nav-text">Staged -&gt; Local Repo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Local-Repo-gt-Remote-Repo"><span class="nav-number">2.6.</span> <span class="nav-text">Local Repo -&gt; Remote Repo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Remote-Repo-gt-Local-Repo"><span class="nav-number">2.7.</span> <span class="nav-text">Remote Repo -&gt; Local Repo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Remote-Repo"><span class="nav-number">2.8.</span> <span class="nav-text">Remote Repo</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#子模块-submodule-相关操作命令"><span class="nav-number">3.</span> <span class="nav-text">子模块(submodule)相关操作命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gerrit"><span class="nav-number">4.</span> <span class="nav-text">Gerrit</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#场景"><span class="nav-number">5.</span> <span class="nav-text">场景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解决错误"><span class="nav-number">5.1.</span> <span class="nav-text">解决错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Github-fork"><span class="nav-number">5.2.</span> <span class="nav-text">Github fork</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Submitting-a-Pull-Request"><span class="nav-number">5.3.</span> <span class="nav-text">Submitting a Pull Request</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#资料"><span class="nav-number">6.</span> <span class="nav-text">资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FJD</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FJD</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"fanjingdan012.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="会计学Reactjs做的账户表 B/S   Balance Sheet     金融资产 负债   存货 应付职工薪酬   固定资产    无形资产    投资性房地产 所有者权益   长期股权投资,企业合并,合并财务报表 股份支付   IS   Income Statement    收入费用和利润   资产减值   借款费用   政府补助   外币折算   所得税   每股收益TODO   非">
+<meta property="og:type" content="website">
+<meta property="og:title" content="会计学知识树">
+<meta property="og:url" content="https://fanjingdan012.github.io/AccountingKT/index.html">
+<meta property="og:site_name" content="FJD">
+<meta property="og:description" content="会计学Reactjs做的账户表 B/S   Balance Sheet     金融资产 负债   存货 应付职工薪酬   固定资产    无形资产    投资性房地产 所有者权益   长期股权投资,企业合并,合并财务报表 股份支付   IS   Income Statement    收入费用和利润   资产减值   借款费用   政府补助   外币折算   所得税   每股收益TODO   非">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-11-19T09:43:16.587Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="会计学知识树">
+<meta name="twitter:description" content="会计学Reactjs做的账户表 B/S   Balance Sheet     金融资产 负债   存货 应付职工薪酬   固定资产    无形资产    投资性房地产 所有者权益   长期股权投资,企业合并,合并财务报表 股份支付   IS   Income Statement    收入费用和利润   资产减值   借款费用   政府补助   外币折算   所得税   每股收益TODO   非">
+
+<link rel="canonical" href="https://fanjingdan012.github.io/AccountingKT/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>会计学知识树 | FJD
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FJD</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-计算机知识树">
+
+    <a href="/CSKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>计算机知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-会计学知识树">
+
+    <a href="/AccountingKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>会计学知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-数学知识树">
+
+    <a href="/MathKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>数学知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">会计学知识树
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h1 id="会计学"><a href="#会计学" class="headerlink" title="会计学"></a>会计学</h1><p><a href="https://fanjingdan012.github.io/js-learn/accounting.html">Reactjs做的账户表</a></p>
+<h2 id="B-S"><a href="#B-S" class="headerlink" title="B/S"></a>B/S</h2><table>
+<thead>
+<tr>
+<th>Balance Sheet</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="index/fin-asset.jpg">金融资产</a></td>
+<td><a href="index/debt.jpg">负债</a></td>
+</tr>
+<tr>
+<td><a href="index/inventory.jpg">存货</a></td>
+<td><a href="index/salary.jpg">应付职工薪酬</a></td>
+</tr>
+<tr>
+<td><a href="index/fixed-asset.jpg">固定资产</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="index/intangible-asset.jpg">无形资产</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="index/investment-property.jpg">投资性房地产</a></td>
+<td><a href="index/equity.jpg">所有者权益</a></td>
+</tr>
+<tr>
+<td><a href="index/long-term-stock.jpg">长期股权投资,企业合并,合并财务报表</a></td>
+<td><a href="index/stock-pay.png">股份支付</a></td>
+</tr>
+</tbody></table>
+<h2 id="IS"><a href="#IS" class="headerlink" title="IS"></a>IS</h2><table>
+<thead>
+<tr>
+<th>Income Statement</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="index/income-cost-profit.jpg">收入费用和利润</a></td>
+</tr>
+<tr>
+<td><a href="index/impairment-of-assets.jpg">资产减值</a></td>
+</tr>
+<tr>
+<td><a href="index/fee4loan.png">借款费用</a></td>
+</tr>
+<tr>
+<td><a href="index/gov-grants.png">政府补助</a></td>
+</tr>
+<tr>
+<td><a href="index/foreign-currency.png">外币折算</a></td>
+</tr>
+<tr>
+<td><a href="index/income-tax.png">所得税</a></td>
+</tr>
+<tr>
+<td><a href>每股收益TODO</a></td>
+</tr>
+</tbody></table>
+<p><a href>非货币性资产交换TODO</a><br><a href="index/debt-restructuring.png">债务重组</a><br><a href="index/rent.png">租赁</a><br><a href="index/hold-to-sale.png">持有待售的非流动性资产、处置组合终止经营</a><br>[FMV计量TODO]<br>[政府及民间非营利组织会计TODO]</p>
+<p>[财务报告TODO]<br><a href="index/probable.png">或有事项</a><br>[会计政策、会计估计变更和差错更正TODO]<br><a href="index/bs-after.png">B/S日后事项</a></p>
+<h2 id="会计科目表"><a href="#会计科目表" class="headerlink" title="会计科目表"></a>会计科目表</h2><ul>
+<li>资产类<ul>
+<li>1001 库存现金  Cash on Hand</li>
+<li>1002 银行存款  Cash in bank</li>
+<li>1003 存放中央银行款项 银行专用 Deposit in the Central Bank</li>
+<li>1011 存放同业 银行专用 Due from Placements with Banks and Other Financial Institutions</li>
+<li>1015 其他货币资金  Other Monetary Capital</li>
+<li>1021 结算备付金 证券专用 Deposit Reservation for Balance</li>
+<li>1031 存出保证金 金融共用 Deposit for Recognizance</li>
+<li>1051 拆出资金 金融共用 Lendings to Banks and Other Financial Institutions</li>
+<li>1101 交易性金融资产  Transactional Monetary Capital</li>
+<li>1111 买入返售金融资产 金融共用 Redemptory Monetary Capital for Sale</li>
+<li>1121 应收票据  Notes Receivable</li>
+<li>1122 应收账款  Accounts Receivable</li>
+<li>1123 预付账款  Advance to suppliers</li>
+<li>1131 应收股利  Dividend Receivable</li>
+<li>1132 应收利息  Accrued Interest Receivable</li>
+<li>1211 应收保户储金 保险专用 Receivable Deposit from the Insured</li>
+<li>1221 应收代位追偿款 保险专用 Subrogation Receivables</li>
+<li>1222 应收分保账款 保险专用 Reinsurance Accounts Receivable</li>
+<li>1223 应收分保未到期责任准备金 保险专用 Receivable Deposit for Undue Duty of Reinsurance</li>
+<li>1224 应收分保保险责任准备金 保险专用 Receivable Deposit for Duty of Reinsurance</li>
+<li>1231 其他应收款  Other Receivable</li>
+<li>1241 坏账准备  Provision for bad debts</li>
+<li>1251 贴现资产 银行专用 Deposit of Capital Discounted</li>
+<li>1301 贷款 银行和保险共用 Loans</li>
+<li>1302 贷款损失准备 银行和保险共用 Loans Impairment Reserve</li>
+<li>1311 代理兑付证券 银行和证券共用 Vicariously Cashed Securities</li>
+<li>1321 代理业务资产  Capital in Vicarious Business</li>
+<li>1401 材料采购  Procurement of Materials</li>
+<li>1402 在途物资  Materials in Transit</li>
+<li>1403 原材料  Raw Materials</li>
+<li>1404 材料成本差异  Balance of Materials</li>
+<li>1406 库存商品  Commodity Stocks</li>
+<li>1407 发出商品  Goods in Transit</li>
+<li>1410 商品进销差价  Difference between Purchase and Sales of Commodities</li>
+<li>1411 委托加工物资  Materials for Consigned Processing</li>
+<li>1412 包装物及低值易耗品  Wrappage and Easily Wornout Inexpensive Articles</li>
+<li>1421 消耗性生物资产 农业专用 Consumptive Biological Assets</li>
+<li>1431 周转材料 建造承包商专用 Revolving Materials</li>
+<li>1441 贵金属 银行专用 Expensive Metals</li>
+<li>1442 抵债资产 金融共用 Capital for Debt Payment</li>
+<li>1451 损余物资 保险专用 Salvage Value Of Insured Properties</li>
+<li>1461 存货跌价准备  Reserve For Stock Depreciation</li>
+<li>1501 待摊费用  Unamortized Expenditures</li>
+<li>1511 独立账户资产 保险专用 Capital in Independent Accounts</li>
+<li>1521 持有至到期投资  Held-To-Maturity Investment</li>
+<li>1522 持有至到期投资减值准备  Reserve for Held-To-Maturity Investment Impairment</li>
+<li>1523 可供出售金融资产  Financial Assets Available for Sale</li>
+<li>1524 长期股权投资  Long-term Equity Investment</li>
+<li>1525 长期股权投资减值准备  Reserve for Long-term Equity Investment Impairment</li>
+<li>1526 投资性房地产  Investment Real Estate</li>
+<li>1531 长期应收款  Long-term Accounts Receivable</li>
+<li>1541 未实现融资收益  Unrealized Financing Profits</li>
+<li>1551 存出资本保证金 保险专用 Deposit for Capital Recognizance</li>
+<li>1601 固定资产  Fixed assets</li>
+<li>1602 累计折旧  Accumulative Depreciation</li>
+<li>1603 固定资产减值准备  Provision for impairment of fixed assets</li>
+<li>1604 在建工程  Construction in Process</li>
+<li>1605 工程物资  Engineer Material</li>
+<li>1606 固定资产清理  Disposal of Fixed Assets</li>
+<li>1611 融资租赁资产 租赁专用 Financial Leasing Assets</li>
+<li>1612 未担保余值 租赁专用 Unguaranteed Residual Value</li>
+<li>1621 生产性生物资产 农业专用 Productive Biological Assets</li>
+<li>1622 生产性生物资产累计折旧 农业专用 Accumulative Depreciation of Productive Biological Assets</li>
+<li>1623 公益性生物资产 农业专用 Biological Assets for Commonweal</li>
+<li>1631 油气资产 石油天然气开采专用 Oil and Gas Assets</li>
+<li>1632 累计折耗 石油天然气开采专用 Accumulated Depletion</li>
+<li>1701 无形资产  Intangible Assets</li>
+<li>1702 累计摊销  Accumulated Amortization</li>
+<li>1703 无形资产减值准备  Reserve for Intangible Assets Impairment</li>
+<li>1711 商誉  Business Reputation</li>
+<li>1801 长期待摊费用  Long-term Deferred Expenses</li>
+<li>1811 递延所得税资产  Deferred Income Tax Assets</li>
+<li>1901 待处理财产损溢  Profit &amp; loss of assets pending disposal</li>
+</ul>
+</li>
+<li>负债类<ul>
+<li>2001 短期借款  Short-term Borrowings</li>
+<li>2002 存入保证金 金融共用 Deposit Received for Recognizance</li>
+<li>2003 拆入资金 金融共用 Borrowings from Banks and Other Financial Institutions</li>
+<li>2004 向中央银行借款 银行专用 Borrowings from the Central Bank</li>
+<li>2011 同业存放 银行专用 Due to Placements with Banks and Other Financial Institutions</li>
+<li>2012 吸收存款 银行专用 Savings Absorption</li>
+<li>2021 贴现负债 银行专用 Liabilities of Capital Discounted</li>
+<li>2101 交易性金融负债  Transactional Moneytary Liabilities</li>
+<li>2111 卖出回购金融资产款 金融共用 Financial Assets Sold for Repurchase</li>
+<li>2201 应付票据  Notes Payable</li>
+<li>2202 应付账款  Accounts Payable</li>
+<li>2205 预收账款  Advance from customers</li>
+<li>2211 应付职工薪酬  Payroll Payable</li>
+<li>2221 应交税费  Taxes Payable</li>
+<li>2231 应付股利  Dividend Payable</li>
+<li>2232 应付利息  Accrued Interest Payable</li>
+<li>2241 其他应付款  Other Accounts Payable</li>
+<li>2251 应付保户红利 保险专用 Dividend Payable for The Insured</li>
+<li>2261 应付分保账款 保险专用 Dividend Payable for Reinsurance</li>
+<li>2311 代理买卖证券款 证券专用 Receivings from Vicariously Traded Securities</li>
+<li>2312 代理承销证券款 证券和银行共用 Receivings from Vicariously Sold Securities</li>
+<li>2313 代理兑付证券款 证券和银行共用 Receivings from Vicariously Cashed Securities</li>
+<li>2314 代理业务负债  Liabilities from Vicarious Business</li>
+<li>2401 预提费用  Accrued expensess</li>
+<li>2411 预计负债  Estimated Liabilities</li>
+<li>2501 递延收益  Deferred Profits</li>
+<li>2601 长期借款  Long-term loans</li>
+<li>2602 长期债券  Long-term Bonds</li>
+<li>2701 未到期责任准备金 保险专用 Deposit for Undue Duty of Reinsurance</li>
+<li>2702 保险责任准备金 保险专用 Deposit for Duty of Reinsurance</li>
+<li>2711 保户储金 保险专用 Deposit of the Insured</li>
+<li>2721 独立账户负债 保险专用 Liabilities of Independent Accounts</li>
+<li>2801 长期应付款  Long-term Payable</li>
+<li>2802 未确认融资费用  Unsettled Financing Expenses</li>
+<li>2811 专项应付款  Special Accounts Payable</li>
+<li>2901 递延所得税负债  Deferred Income Tax Liabilities</li>
+</ul>
+</li>
+<li>共同类<ul>
+<li>3001 清算资金往来 银行专用 Liquidation of Inter Bank Business</li>
+<li>3002 外汇买卖 金融共用 Foreign Exchange Buy and Sale</li>
+<li>3101 衍生工具  Derivative Tools</li>
+<li>3201 套期工具  Arbitrage Tools</li>
+<li>3202 被套期项目  Arbitraged Items</li>
+</ul>
+</li>
+<li>所有者权益类<ul>
+<li>115 4001 实收资本  Paid-in Capital</li>
+<li>116 4002 资本公积  Capital Reserve</li>
+<li>117 4101 盈余公积  Surplus Reserve</li>
+<li>118 4102 一般风险准备 金融共用 Generic Risk Reserve</li>
+<li>119 4103 本年利润  Profit &amp; loss summary</li>
+<li>120 4104 利润分配  Distribution profit</li>
+<li>121 4201 库存股  Treasury Share</li>
+</ul>
+</li>
+<li>成本类<ul>
+<li>122 5001 生产成本  Production Costs</li>
+<li>123 5101 制造费用  Manufacturing Expenditures</li>
+<li>124 5201 劳务成本  Service Costs</li>
+<li>125 5301 研发支出  Research and Development Expenditures</li>
+<li>126 5401 工程施工 建造承包商专用 Engineering Constructon</li>
+<li>127 5402 工程结算 建造承包商专用 Engineering Settlement</li>
+<li>128 5403 机械作业 建造承包商专用 Mechanical Operations</li>
+</ul>
+</li>
+<li>损益类<ul>
+<li>129 6001 主营业务收入  Sales revenue</li>
+<li>130 6011 利息收入 金融共用 Interest Income</li>
+<li>131 6021 手续费收入 金融共用 Commission Income</li>
+<li>132 6031 保费收入 保险专用 Premium Income</li>
+<li>133 6032 分保费收入 保险专用 Reinsurance Premium Income</li>
+<li>134 6041 租赁收入 租赁专用 Leasehold Income</li>
+<li>135 6051 其他业务收入  Revenues from other operationse</li>
+<li>136 6061 汇兑损益 金融专用 Exchange Gain or Loss</li>
+<li>137 6101 公允价值变动损益  Profit and Loss from Fair Value Changes</li>
+<li>138 6111 投资收益  Income on Investment</li>
+<li>139 6201 摊回保险责任准备金 保险专用 Amortized Deposit for Duty</li>
+<li>140 6202 摊回赔付支出 保险专用 Amortized Compensation Expenses</li>
+<li>141 6203 摊回分保费用 保险专用 Amortized Reinsurance Expenditures</li>
+<li>142 6301 营业外收入  Non-operating profit</li>
+<li>143 6401 主营业务成本  Cost of sales</li>
+<li>144 6402 其他业务成本  Cost of other operations</li>
+<li>145 6405 营业税金及附加  Business Tax and Surcharges</li>
+<li>146 6411 利息支出 金融共用 Interest Expenses</li>
+<li>147 6421 手续费支出 金融共用 Commission Expenses</li>
+<li>148 6501 提取未到期责任准备金 保险专用 Appropriation of Deposit for Undue Duty</li>
+<li>149 6502 提取保险责任准备金 保险专用 Appropriation of Deposit for Duty</li>
+<li>150 6511 赔付支出 保险专用 Compensation Expenses</li>
+<li>151 6521 保户红利支出 保险专用 Dividend Expenses for The Insured</li>
+<li>152 6531 退保金 保险专用 Loan Value</li>
+<li>153 6541 分出保费 保险专用 Reinsurance Premium</li>
+<li>154 6542 分保费用 保险专用 Reinsurance Expenses</li>
+<li>155 6601 销售费用  Marketing Costs</li>
+<li>156 6602 管理费用  Managing Costs</li>
+<li>157 6603 财务费用  Financing Costs</li>
+<li>158 6604 勘探费用  Prospecting Costs</li>
+<li>159 6701 资产减值损失  Assets Devaluation</li>
+<li>160 6711 营业外支出  Non-operating expenses</li>
+<li>161 6801 所得税  Income Tax</li>
+<li>162 6901 以前年度损益调整  Prior period profit &amp; loss adjustment</li>
+</ul>
+</li>
+</ul>
+<h2 id="实务"><a href="#实务" class="headerlink" title="实务"></a>实务</h2><ul>
+<li>有发票的进SR CGS<ul>
+<li>注意税</li>
+<li>缴税的（教育费，城建税等），税单即发票</li>
+<li>没银行转账回执的对面是 AP AR（往来）</li>
+</ul>
+</li>
+<li>只有银行转账回执的 银行存款–AP AR</li>
+</ul>
+<h1 id="财务管理"><a href="#财务管理" class="headerlink" title="财务管理"></a><a href="https://fanjingdan012.github.io/2019/05/14/Corporate-Finance/">财务管理</a></h1><h1 id="审计"><a href="#审计" class="headerlink" title="审计"></a>审计</h1><p>审计基本原理、审计测试流程、各类交易和账户余额的审计、对特殊事项的考虑、完成审计工作与出具审计报告、企业内部控制审计、质量控制和职业道德</p>
+<h1 id="税法"><a href="#税法" class="headerlink" title="税法"></a>税法</h1><table>
+<thead>
+<tr>
+<th>税种</th>
+<th>征税范围</th>
+<th>纳税义务人</th>
+<th>税率</th>
+<th>计税依据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>增值税</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>消费税</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>企业所得税</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>个人所得税</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>房产税</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>契税</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>土地增值税</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1.一个房子、一个地、还有商标和专利、营业执照别忘记（5元贴花）。</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>2.一个强有力的（军事设施），带着四个老弱病残（学校、幼儿园、养老院、医院）是免征耕地占用税。</p>
+<p>3.图书出版环节100%先征后退政策：四套班子新华社；工青妇残军事科；老少报刊中课本；民族读物盲书刊。</p>
+<p>4.关税的退还、补正、追征年限，可以用113来记。1退、1补、3追。</p>
+<p>5.关于一般纳税人认定：无资格、新业务——500万标准；无资格、老业务——50万、80万标准；有资格（老业务）、新业务——不需要重新认定；无资格、新老业务——分别计算、分别认定。</p>
+<p>6.资源税：伴生矿——同床同目；伴采矿——同区异目。</p>
+<p>7.各项年所得计算方法：工资不扣生计费，劳务特许不扣税，股票转让盈亏抵。</p>
+<p>8.小型微利企业的税收优惠实质上是要满足四方面的条件：百八十人。（从业人数工业：不超过100人；其他：不超过80人）。</p>
+<p>9.我们大街上的那些做服装、修改衣服长短的那些裁缝，还有修锁配钥匙以及修电冰箱、洗衣机的，他们取得的收入都应该按照提供增值税加工修理修配劳务来缴纳增值税。</p>
+<p>10.我一个大脑指挥这我的两只手，而这两只手呢就是它设有的两个机构，我这两只手控制这我左右两个兜，但是统一核算，一个大脑来指挥。现在呢，我把左边兜里的东西掏出来挪到右边的口袋里，用于销售，相当于这个东西从左边兜卖给右边兜。</p>
+<p>11.进口货物缴纳增值税遵循消费地纳税原则，法国生产货物进口到我国消费，如果在法国纳税，那货物带着税进入我国，世界各国税收负担是不一致的，因此世界各国普遍认同消费地纳税原则。消费地纳税原则带来的就是进口征税，出口退税。</p>
+<p>12.没有在餐厅里面给人家提供餐饮服务，而是在外面设个柜台，把卤的猪蹄、酱的鸡爪子给卖出去了，那么取得的收入缴纳增值税。</p>
+<p>13.非增值税应税项目指的是不交增值税的项目，增值税是一个链条税，在我主导下有增值的东西突然就离开了增值税的链条，用于不交增值税的一些项目上，那么在它离开增值税链条之前，必须在它离开之前，该交的增值税交上。</p>
+<p>14.在零售环节缴纳消费税的消费品的范围，除了金、银、金基、银基合金、金基、银基合金镶嵌首饰、钻石、钻石饰品、铂金之外，还包括了锻压金、铸金和复合金，但是不包括镀金、镀银和包金、包银，因为镀金、镀银和包金、包银都不是以金为基础的。</p>
+<p>15.高管人员执行职务期间不论履职地点是在境内境外，在境内工作职责的所得应在我国纳税。在境外为履行在我国工作职责的所得也应在我国纳税。</p>
+<p>16.税收递延政策的运用<br>企业所得税<br>（1）企业特殊重组中的债务重组（5个纳税年度内）；<br>（2）居民企业间的非货币性资产投资（5个纳税年度内）。<br>个人所得税<br>（1）特殊情况下，经主管税务机关审核，可自其股票期权行权之日起，在不超过6个月的期限内分期缴纳个人所得税<br>（2）个人获奖股权（不超过5个公历年度）<br>（3）个人以非货币性资产投资（不超过5个公历年度）</p>
+<p>17.两处以上取得工资薪金收入的情况——只能扣除一次生计费。即由雇用单位扣除生计费，派遣单位不能对其重复扣除生计费。</p>
+<p>18.取得一次性补偿收入的四者之间的概念差异。<br>内退——内部退养<br>提前退休——未达到法定退休年龄的正式退休<br>解除劳动关系——增效减员脱离关系<br>退职——不具备退休条件，由医院证明，并经劳动鉴定委员会确认，完全丧失劳动能力的工人，应该退职</p>
+<p>19.平均数找税率与平均按月计税<br>平均数找税率但整体计税——照顾性措施<br>（1）全年一次性奖金；年终加薪；实行年薪制和绩效工资的单位，个人取得年终兑现的年薪和绩效工资(按12个月)；<br>（2）单位低于构建成本价对职工售房(按12个月)；<br>（3）对雇员以非上市公司股票期权形式取得的工资薪金所得，一次收入较多的(按12个月)；<br>（4）内部退养取得一次性补助（按距离实际退休的月份数）。<br>平均按月计税——公平性措施<br>（1）企业年金、职业年金的按年领取或因死亡、出境定居一次性领取（按12个月）；<br>（2）特殊行业按月分摊所得汇算全年税额（12个月）；<br>（3）提前退休的一次性补偿收入（按距离实际退休的月份数）；<br>（4）解除劳动关系而取得的一次性补偿收入（按工作年限，满1年按1个月；最长12个月）；<br>（5）退职人员一次取得较高退职费收入（按6个月）；<br>（6）上市公司股权激励行权（最长12个月）。</p>
+<p>20.企业年金和职业年金的计税：计算缴纳有标准，标准之内税递延，超过标准要纳税。</p>
+<p>21.作者将自己的文字作品手稿原件或复印件拍卖取得的所得，按照“特许权使用费所得”项目缴纳个人所得税。个人拍卖别人作品手稿或个人拍卖除文字作品原稿及复印件外的其他财产，都应按照“财产转让所得”项目缴纳个人所得税。</p>
+<p>22.企业改组改制过程中个人取得量化资产征税问题<br>（1）个人在形式上取得企业量化资产（取得的仅作为分红依据，不拥有所有权的企业量化资产）——不征个人所得税；<br>（2）个人在实质上取得企业量化资产（以股份形式取得的拥有所有权的企业量化资产）——缓征个人所得税；<br>（3）个人转让量化资产——按“财产转让所得”项目计征个人所得税；<br>（4）个人取得量化资产的分红（以股份形式取得企业量化资产参与企业分配而获得的股息、红利）——按“利息、股息、红利”项目征收个人所得税。</p>
+<p>23.亏损弥补核心规定：五年延续补亏；不能内补外。</p>
+<p>24.益救济性捐赠，必须符合对象和渠道两个条件：<br>（1）对象条件——公益——列举的公益事业；<br>（2）渠道条件——间接——县级以上（含县级）人民政府及其部门或公益性的社会团体。</p>
+<p>25.税法给定债资比例，金融企业5：1；其他企业2：1</p>
+<p>26.增值税退税比例有30%、50%、70%和100%4个档次。</p>
+<p>27.非初次购买及非列举的设备只抵税，不抵价。</p>
+<p>28.计算抵扣增值税特点：前免后抵；自开自抵。</p>
+<p>29.农机整机适用低税率；农机零件适用基本税率。</p>
+<p>30.视同销售行为的几类典型特点：<br>第一类特点：所有权转移。或服务已对外实施并被接受；<br>第二类特点：脱离增值税链条。所有权没有变化，但是将自产或委托加工的货物，从生产领域转移到增值税链条以外或者转移到消费领域；<br>第三类特点：基于堵塞管理漏洞的需要，而视同销售计征增值税。</p>
+<p>31.假定一个首饰厂外购1000颗经过其他首饰厂加工的珊瑚珠，生产领用600颗穿制成珊瑚项链，出厂销售按10%征收消费税，并可按照领用量抵税；将100颗直接转卖给其他首饰厂，出厂销售按10%征收消费税，并可按照领用量抵税；生产领用300颗加工成18K金镶嵌项链坠，销售给零售商，出厂不纳消费税，也不抵税。</p>
+<h1 id="经济法"><a href="#经济法" class="headerlink" title="经济法"></a>经济法</h1><h1 id="战略"><a href="#战略" class="headerlink" title="战略"></a>战略</h1><h1 id="微观经济学"><a href="#微观经济学" class="headerlink" title="微观经济学"></a>微观经济学</h1><h1 id="宏观经济学"><a href="#宏观经济学" class="headerlink" title="宏观经济学"></a>宏观经济学</h1><h1 id="保险学"><a href="#保险学" class="headerlink" title="保险学"></a>保险学</h1><h1 id="散装知识"><a href="#散装知识" class="headerlink" title="散装知识"></a>散装知识</h1><ul>
+<li>经济周期<ul>
+<li>Hodrick-Prescott filter</li>
+<li>庞加莱－本迪克松定理(Poincaré-Bendixson)</li>
+<li>Wigner–Ville distribution</li>
+<li>高斯函数<ul>
+<li>正态分布的密度函数</li>
+<li>高斯核可以看成是与中心距离负相关的权重，是对连续高斯的离散近似</li>
+<li>高斯滤波（平滑），即用某一尺寸的二维高斯核与图像进行卷积</li>
+<li>𝜎越大，高斯函数越平滑，调大𝜎即提高了远处像素对中心像素的影响程度</li>
+</ul>
+</li>
+<li>Gabor expansion</li>
+<li>ARIMA models</li>
+<li>Autocorrelation, also known as serial correlation<ul>
+<li>is the correlation of a signal with a delayed copy of itself as a function of delay.</li>
+</ul>
+</li>
+<li>Rossler attractor</li>
+</ul>
+</li>
+<li>全要素生产率<ul>
+<li>去掉物料、人工等主要投入后，教育，科技等等因素对生产率的影响，一个经济体的核心竞争力</li>
+</ul>
+</li>
+</ul>
+<h1 id="投资学"><a href="#投资学" class="headerlink" title="投资学"></a>投资学</h1><ul>
+<li>导论<ul>
+<li>概念</li>
+<li>投资过程</li>
+<li>投资环境<ul>
+<li>交易机制<ul>
+<li>交易委托方式<ul>
+<li>远程终端</li>
+<li>电脑自动委托</li>
+<li>电话自动委托</li>
+<li>柜台递单委托</li>
+</ul>
+</li>
+<li>价格形成机制<ul>
+<li>报价驱动的做市商制<br>-</li>
+<li>指令驱动的竞价制<ul>
+<li>连续竞价制</li>
+<li>集合竞价制</li>
+</ul>
+</li>
+<li>混合制</li>
+</ul>
+</li>
+<li>指令匹配原则</li>
+<li>信息披露方式</li>
+<li>市场稳定措施</li>
+<li>其他选择性手段</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>投资目标<ul>
+<li>风险与收益</li>
+<li>理性</li>
+<li>风险偏好</li>
+</ul>
+</li>
+<li>投资策略<ul>
+<li>主动与被动</li>
+<li>知情与非知情</li>
+<li>行为金融</li>
+</ul>
+</li>
+<li>资产价值分析<ul>
+<li>债券</li>
+<li>股票</li>
+<li>衍生品</li>
+</ul>
+</li>
+<li>投资组合构建<ul>
+<li>Tobin</li>
+<li>Markowiz</li>
+<li>CAPM</li>
+<li>APT</li>
+<li>ICAPM</li>
+<li>CCAPM</li>
+<li>BAMP</li>
+</ul>
+</li>
+<li>投资业绩评价<ul>
+<li>单因素</li>
+<li>多因素</li>
+<li>择时能力</li>
+<li>选股能力</li>
+</ul>
+</li>
+</ul>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#会计学"><span class="nav-number">1.</span> <span class="nav-text">会计学</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#B-S"><span class="nav-number">1.1.</span> <span class="nav-text">B/S</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IS"><span class="nav-number">1.2.</span> <span class="nav-text">IS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#会计科目表"><span class="nav-number">1.3.</span> <span class="nav-text">会计科目表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实务"><span class="nav-number">1.4.</span> <span class="nav-text">实务</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#财务管理"><span class="nav-number">2.</span> <span class="nav-text">财务管理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#审计"><span class="nav-number">3.</span> <span class="nav-text">审计</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#税法"><span class="nav-number">4.</span> <span class="nav-text">税法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#经济法"><span class="nav-number">5.</span> <span class="nav-text">经济法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#战略"><span class="nav-number">6.</span> <span class="nav-text">战略</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#微观经济学"><span class="nav-number">7.</span> <span class="nav-text">微观经济学</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#宏观经济学"><span class="nav-number">8.</span> <span class="nav-text">宏观经济学</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#保险学"><span class="nav-number">9.</span> <span class="nav-text">保险学</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#散装知识"><span class="nav-number">10.</span> <span class="nav-text">散装知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#投资学"><span class="nav-number">11.</span> <span class="nav-text">投资学</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FJD</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FJD</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

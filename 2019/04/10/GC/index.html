@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"fanjingdan012.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="分代GC就发生在Heap和Metaspace  XX:SurvivorRatio = Eden/S0(=S1) = 8(default) XX:NewRatio = Old/Young = 2(default)  术语 并行（Parallel）：指多条垃圾收集线程并行工作，但此时用户线程仍然处于等待状态。 并发（Concurrent）：指用户线程与垃圾收集线程同时执行（但不一定是并行的，可能会交替">
+<meta name="keywords" content="JVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GC">
+<meta property="og:url" content="https://fanjingdan012.github.io/2019/04/10/GC/index.html">
+<meta property="og:site_name" content="FJD">
+<meta property="og:description" content="分代GC就发生在Heap和Metaspace  XX:SurvivorRatio = Eden/S0(=S1) = 8(default) XX:NewRatio = Old/Young = 2(default)  术语 并行（Parallel）：指多条垃圾收集线程并行工作，但此时用户线程仍然处于等待状态。 并发（Concurrent）：指用户线程与垃圾收集线程同时执行（但不一定是并行的，可能会交替">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://fanjingdan012.github.io/2019/04/10/GC/Memory.png">
+<meta property="og:image" content="https://fanjingdan012.github.io/2019/04/10/GC/Copying.png">
+<meta property="og:image" content="https://fanjingdan012.github.io/2019/04/10/GC/Serial.jpg">
+<meta property="og:image" content="https://fanjingdan012.github.io/2019/04/10/GC/ParNew.jpg">
+<meta property="og:image" content="https://fanjingdan012.github.io/2019/04/10/GC/ParOld.jpg">
+<meta property="og:image" content="https://fanjingdan012.github.io/2019/04/10/GC/GC.jpg">
+<meta property="og:image" content="https://fanjingdan012.github.io/2019/04/10/GC/CMS.jpg">
+<meta property="og:image" content="https://fanjingdan012.github.io/2019/04/10/GC/G1.jpg">
+<meta property="og:updated_time" content="2020-11-27T05:32:29.369Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GC">
+<meta name="twitter:description" content="分代GC就发生在Heap和Metaspace  XX:SurvivorRatio = Eden/S0(=S1) = 8(default) XX:NewRatio = Old/Young = 2(default)  术语 并行（Parallel）：指多条垃圾收集线程并行工作，但此时用户线程仍然处于等待状态。 并发（Concurrent）：指用户线程与垃圾收集线程同时执行（但不一定是并行的，可能会交替">
+<meta name="twitter:image" content="https://fanjingdan012.github.io/2019/04/10/GC/Memory.png">
+
+<link rel="canonical" href="https://fanjingdan012.github.io/2019/04/10/GC/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>GC | FJD</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FJD</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-计算机知识树">
+
+    <a href="/CSKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>计算机知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-会计学知识树">
+
+    <a href="/AccountingKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>会计学知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-数学知识树">
+
+    <a href="/MathKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>数学知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://fanjingdan012.github.io/2019/04/10/GC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FJD">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FJD">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GC
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-04-10 10:50:55" itemprop="dateCreated datePublished" datetime="2019-04-10T10:50:55+08:00">2019-04-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-27 13:32:29" itemprop="dateModified" datetime="2020-11-27T13:32:29+08:00">2020-11-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="分代"><a href="#分代" class="headerlink" title="分代"></a>分代</h1><p><img src="https://fanjingdan012.github.io/2019/04/10/GC/Memory.png" alt="分代和JMM"><br>GC就发生在Heap和Metaspace</p>
+<ul>
+<li>XX:SurvivorRatio = Eden/S0(=S1) = 8(default)</li>
+<li>XX:NewRatio = Old/Young = 2(default)</li>
+</ul>
+<h1 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h1><ul>
+<li>并行（Parallel）：指多条垃圾收集线程并行工作，但此时用户线程仍然处于等待状态。</li>
+<li>并发（Concurrent）：指用户线程与垃圾收集线程同时执行（但不一定是并行的，可能会交替执行），用户程序在继续运行，而垃圾收集程序运行于另一个CPU上。</li>
+<li>吞吐量：就是CPU用于运行用户代码的时间与CPU总消耗时间的比值，即吞吐量 = 运行用户代码时间 /（运行用户代码时间 + 垃圾收集时间）。虚拟机总共运行了100分钟，其中垃圾收集花掉1分钟，那吞吐量就是99%。停顿时间越短就越适合需要与用户交互的程序，良好的响应速度能提升用户体验，而高吞吐量则可以高效率地利用CPU时间，尽快完成程序的运算任务，主要适合在后台运算而不需要太多交互的任务。</li>
+<li>STW stop-the-world</li>
+</ul>
+<h1 id="java对象存活分析"><a href="#java对象存活分析" class="headerlink" title="java对象存活分析"></a>java对象存活分析</h1><h2 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h2><ul>
+<li>在堆中存储对象时，在对象头处维护一个counter计数器，如果一个对象增加了一个引用与之相连，则将counter++。如果一个引用关系失效则counter–。如果一个对象的counter变为0，则说明该对象已经被废弃，不处于存活状态。</li>
+<li>缺点<ul>
+<li>jdk从1.2开始增加了多种引用方式：软引用、弱引用、虚引用，且在不同引用情况下程序应进行不同的操作。如果我们只采用一个引用计数法来计数无法准确的区分这么多种引用的情况。</li>
+<li>循环引用导致永远无法回收</li>
+</ul>
+</li>
+</ul>
+<h2 id="可达性分析"><a href="#可达性分析" class="headerlink" title="可达性分析"></a>可达性分析</h2><ul>
+<li>通过一系列名为GC Roots的对象作为起始点，从这些节点开始向下搜索，搜索所走过的路径称为引用链(Reference Chain)，当一个对象到GC Roots没有任何引用链相连时，则证明此对象是不可用的</li>
+<li>GC Roots<ul>
+<li>虚拟机栈(栈桢中的本地变量表)中的引用的对象</li>
+<li>方法区中的类静态属性引用的对象</li>
+<li>方法区中的常量引用的对象</li>
+<li>本地方法栈中JNI（Native方法）的引用的对象</li>
+</ul>
+</li>
+<li>HotSpot实现：<ul>
+<li>使用OopMap记录并枚举根节点<br>方法区太大了（几百兆），所以需要OopMap，在类加载完成时，HotSpot就把对象内什么偏移量上是什么类型的数据计算出来，在JIT编译过程中，也会在特定的位置记录下栈和寄存器中哪些位置是引用。</li>
+<li>Safepoint<br>“安全点”简单点说就是程序执行停顿下的这一个点。程序在执行时，并非在所有的地方都能停下来开始GC，只有到达这个“安全点“时才能停顿下来。安全点的选区既不能太少以至于让GC等待时间过长，也不能过于频繁以至于过分增大运行时的负荷。所以，”安全点“的选择基本上是以程序”是否具有让程序长时间执行的特征“为标准来选定的。因为每条执行指令执行的时间都非常地短暂，程序不太可能因为指令流长度太长这个原因而过长时间运行，而程序”长时间的运行“实际上就是指令序列的一个复用。例如方法调用、循环跳转、异常跳转等，所以具有这些功能的指令才会产生”安全点“。而当我们选取好”安全点“之后，我们又是怎样使所有执行线程跑到”安全点“时停顿下来呢？<ul>
+<li>中断方式<ul>
+<li>抢先式中断：在GC发生时，首次会把所有的线程全部中断，如果发现有些线程中断点不是安全点，就恢复该线程直到安全点上停止。</li>
+<li>主动式中断：在GC发生时，不直接操作线程中断，而是简单地设置一个标志，让各个线程执行时主动轮询这个标志，发现中断标志为真时就自己中断挂起。</li>
+</ul>
+</li>
+<li>Safe Region<ul>
+<li>安全区域是指在一段代码片中，引用关系不会发生改变，在这个区域内的任意地方开始 GC 都是安全的（比如Thread.sleep()的时候）。当线程执行到安全区域时，首先标识自己已进入安全区域，那样，当在这段时间里JVM要发起GC时，就不用管标识自己为“安全区域”状态的线程了，等到被唤醒时准备离开 Safe Region 时，先检查能否离开，如果 GC 完成了，那么线程可以离开，否则它必须等待直到收到安全离开的信号为止。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><h2 id="标记-清除算法（mark-sweep）"><a href="#标记-清除算法（mark-sweep）" class="headerlink" title="标记-清除算法（mark-sweep）"></a>标记-清除算法（mark-sweep）</h2><ul>
+<li>标记-&gt;在清除阶段，垃圾收集器会从Java堆中从头到尾进行遍历，如果有对象没有被打上标记，那么这个对象就会被清除。</li>
+<li>遍历过程效率低。</li>
+<li>会产生很多不连续的空间碎片，所以可能会导致程序运行过程中需要分配较大的对象的时候，多触发几次垃圾回收。</li>
+</ul>
+<h2 id="复制算法（copying）"><a href="#复制算法（copying）" class="headerlink" title="复制算法（copying）"></a>复制算法（copying）</h2><ul>
+<li>复制算法是为了解决标记-清除算法的效率问题的。基本新生代垃圾收集器全部是复制算法。</li>
+<li>优点：快，没有碎片。</li>
+<li>缺点：浪费内存。</li>
+<li>现在的商业虚拟机都采用这种收集算法来回收新生代，新生代中的对象98%是“朝生夕死”的，所以并不需要按照1∶1的比例来划分内存空间，而是将内存分为一块较大的Eden空间和两块较小的Survivor空间，每次使用Eden和其中一块Survivor。当回收时，将Eden和Survivor中还存活着的对象一次性地复制到另外一块Survivor空间上，最后清理掉Eden和刚才用过的Survivor空间。HotSpot虚拟机默认Eden和Survivor的大小比例是8∶1，也就是每次新生代中可用内存空间为整个新生代容量的90%，只有10%的内存会被“浪费”。当然，90%的对象可回收只是一般场景下的数据，我们没有办法保证每次回收都只有不多于10%的对象存活，当Survivor空间不够用时（例如，存活的对象需要的空间大于剩余一块Survivor的空间），需要依赖其他内存（这里指老年代）进行分配担保（Handle Promotion）。<br><img src="https://fanjingdan012.github.io/2019/04/10/GC/Copying.png" alt="Copying"></li>
+</ul>
+<h2 id="标记-整理算法（mark-compact）"><a href="#标记-整理算法（mark-compact）" class="headerlink" title="标记-整理算法（mark-compact）"></a>标记-整理算法（mark-compact）</h2><ul>
+<li>复制收集算法在对象存活率较高时就要进行较多的复制操作，效率将会变低。所以在老年代不用复制算法，而用标记-整理算法。</li>
+<li>标记-让所有的存活对象都向一端移动，然后清理掉边界外的内存。</li>
+</ul>
+<h1 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h1><p><img src="https://fanjingdan012.github.io/2019/04/10/GC/Serial.jpg" alt="Serial"><br><img src="https://fanjingdan012.github.io/2019/04/10/GC/ParNew.jpg" alt="ParNew"><br><img src="https://fanjingdan012.github.io/2019/04/10/GC/ParOld.jpg" alt="ParOld"></p>
+<p>| 收集器        | 串并       |  新老      |算法|目标|适用场景|优缺点|JVM参数|推出时间|<br>| ————- | ——-    | ——-|———–|————|————-|————-|<br>| Serial        | 串行      |新生代 |复制算法|响应速度优先|单CPU环境下的Client模式默认收集器Java3前唯一选择|简单高效，单CPU首选|-XX:+UseSerialGC||<br>| Serial Old    | 串行      |老年代 |标记-整理|    响应速度优先|    单CPU环境下的Client模式、CMS的后备预案||默认||<br>| ParNew        | 并行      |新生代 |复制算法    |响应速度优先|    多CPU环境时在Server模式下与CMS配合||-XX:+UseParNewGC||<br>|Parallel Scavenge|    并行    |    新生代|复制算法    |吞吐量优先    |多CPU，大Heap（&gt;10GB）在后台运算而不需要太多交互的任务|GC自适应的调节策略：Parallel Scavenge收集器有一个参数-XX:+UseAdaptiveSizePolicy。当这个参数打开之后，就不需要手工指定新生代的大小、Eden与Survivor区的比例、晋升老年代对象年龄等细节参数了，虚拟机会根据当前系统的运行情况收集性能监控信息，动态调整这些参数以提供最合适的停顿时间或者最大的吞吐量，这种调节方式称为GC自适应的调节策略（GC Ergonomics）是和ParNew的最大区别，配合的老年代收集器只有Serial和Parallel Old|-XX:+UseParallelGC XX:MaxGCPauseMills XX:GCTimeRatio(0-100)这俩参数是矛盾的|JDK 1.4.0|<br>|CMS            |    并发      |    老年代|标记-清除|    缩短GC时用户线程的停顿时间|    集中在互联网站或B/S系统服务端上的Java应用|配合的新生代只有ParNew和Serial|-XX:+UseConcMarkSweepGC|JDK1.5|<br>|Parallel Old   |    并行      |    老年代|标记-整理|    吞吐量优先|    在后台运算而不需要太多交互的任务以及CPU资源敏感的场合||-XX:+UseParallelOldGC|JDK 1.6|<br>|G1                 |并发      |    both|标记-整理+复制算法    |响应速度优先|    面向服务端应用，将来替换CMS||-XX:+UseG1GC|JDK1.8|</p>
+<p><img src="https://fanjingdan012.github.io/2019/04/10/GC/GC.jpg" alt="收集器配合"></p>
+<h2 id="CMS"><a href="#CMS" class="headerlink" title="CMS"></a>CMS</h2><p><img src="https://fanjingdan012.github.io/2019/04/10/GC/CMS.jpg" alt="CMS"></p>
+<ul>
+<li><p>基于“标记—清除”算法，分4步：</p>
+<ol>
+<li>初始标记（CMS initial mark）：仅仅只是标记一下GC Roots能直接关联到的对象，速度很快，要STW。</li>
+<li>并发标记（CMS concurrent mark）：进行GC Roots Tracing的过程。</li>
+<li>重新标记（CMS remark）：为了修正并发标记期间因用户程序继续运作而导致标记产生变动的那一部分对象的标记记录，这个阶段的停顿时间一般会比初始标记阶段稍长一些，但远比并发标记的时间短，要STW。</li>
+<li>并发清除（CMS concurrent sweep）</li>
+</ol>
+</li>
+<li><p>缺点：</p>
+<ul>
+<li>CPU个数太少（&lt;4个）的话，CMS收集器占用CPU导致应用程序变慢，总吞吐量会降低<br>CMS默认启动的回收线程数是（CPU数量+3）/ 4，也就是当CPU在4个以上时，并发回收时垃圾收集线程不少于25%的CPU资源，并且随着CPU数量的增加而下降。但是当CPU不足4个（譬如2个）时，CMS对用户程序的影响就可能变得很大。</li>
+<li>CMS收集器无法处理浮动垃圾<br>可能出现“Concurrent Mode Failure”失败而导致另一次Full GC的产生。由于CMS并发清理阶段用户线程还在运行着，伴随程序运行自然就还会有新的垃圾不断产生，这一部分垃圾出现在标记过程之后，CMS无法在当次收集中处理掉它们，只好留待下一次GC时再清理掉。这一部分垃圾就称为“浮动垃圾”。也是由于在垃圾收集阶段用户线程还需要运行，那也就还需要预留有足够的内存空间给用户线程使用，因此CMS收集器不能像其他收集器那样等到老年代几乎完全被填满了再进行收集，需要预留一部分空间提供并发收集时的程序运作使用。要是CMS运行期间预留的内存无法满足程序需要，就会出现一次“Concurrent Mode Failure”失败，这时虚拟机将启动后备预案：临时启用Serial Old收集器来重新进行老年代的垃圾收集，这样停顿时间就很长了。</li>
+<li>会产生大量空间碎片</li>
+</ul>
+</li>
+<li><p>GC 参数</p>
+<ul>
+<li><code>XX:+UseCMSCompactAtFullCollection</code> 是非每次CMS GC以后整理内存</li>
+<li><code>XX:CMSFullGCsBeforeCompaction</code> 几次CMS GC以后整理内存</li>
+<li><code>XX:+CMSClassUnloadingEnabled</code> 允许Class元数据回收</li>
+<li><code>XX:UseCMSInitiatingPermOccupancyFraction</code> 永久区占用率达到多少百分比启动CMS GC</li>
+<li><code>XX:UseCMSInitiatingOccupancyOnly</code> 只有达到阈值才进行CMS GC</li>
+</ul>
+</li>
+</ul>
+<h2 id="G1"><a href="#G1" class="headerlink" title="G1"></a>G1</h2><p><a href="https://www.oracle.com/technetwork/articles/java/g1gc-1984535.html">https://www.oracle.com/technetwork/articles/java/g1gc-1984535.html</a><br><img src="https://fanjingdan012.github.io/2019/04/10/GC/G1.jpg" alt="G1"><br>Young GC + mixed GC（新生代，再加上部分老生代）＋ Full GC for G1 GC算法（应对G1 GC算法某些时候的不赶趟，开销很大）；</p>
+<ul>
+<li>优点<ul>
+<li>可预测的停顿<br>这是G1相对于CMS的另一大优势。使用G1收集器时，Java堆的内存布局就与其他收集器有很大差别，它将整个Java堆划分为多个大小相等的独立区域（Region），虽然还保留有新生代和老年代的概念，但新生代和老年代不再是物理隔离的了，它们都是一部分Region（不需要连续）的集合。G1收集器之所以能建立可预测的停顿时间模型，是因为它可以有计划地避免在整个Java堆中进行全区域的垃圾收集。G1跟踪各个Region里面的垃圾堆积的价值大小（回收所获得的空间大小以及回收所需时间的经验值），在后台维护一个优先列表，每次根据允许的收集时间，优先回收价值最大的Region（这也就是Garbage-First名称的来由）。这种使用Region划分内存空间以及有优先级的区域回收方式，保证了G1收集器在有限的时间内可以获取尽可能高的收集效率。</li>
+<li>空间整合<br>G1从整体来看是基于“标记—整理”算法实现的收集器，从局部（两个Region之间）上来看是基于“复制”算法实现的，收集后能提供规整的可用内存。</li>
+</ul>
+</li>
+<li>执行过程：<ol>
+<li>初始标记（Initial Marking）<br>初始标记阶段仅仅只是标记一下GC Roots能直接关联到的对象，并且修改TAMS（Next Top at Mark Start）的值，让下一阶段用户程序并发运行时，能在正确可用的Region中创建新对象，要STW。</li>
+<li>并发标记（Concurrent Marking）</li>
+<li>最终标记（Final Marking）<br>最终标记阶段是为了修正在并发标记期间因用户程序继续运作而导致标记产生变动的那一部分标记记录，虚拟机将这段时间对象变化记录在线程Remembered Set Logs里面，最终标记阶段需要把Remembered Set Logs的数据合并到Remembered Set中，这阶段需要停顿线程，但是可并行执行。</li>
+<li>筛选回收（Live Data Counting and Evacuation）<br>筛选回收阶段首先对各个Region的回收价值和成本进行排序，根据用户所期望的GC停顿时间来制定回收计划，这个阶段其实也可以做到与用户程序一起并发执行，但是因为只回收一部分Region，时间是用户可控制的，而且停顿用户线程将大幅提高收集效率。</li>
+</ol>
+</li>
+</ul>
+<h2 id="Epsilon：低开销垃圾回收器"><a href="#Epsilon：低开销垃圾回收器" class="headerlink" title="Epsilon：低开销垃圾回收器"></a>Epsilon：低开销垃圾回收器</h2><ul>
+<li>启动： <code>-XX:+UseEpsilonGC</code></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JVM/" rel="tag"># JVM</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/04/10/Economic-History/" rel="prev" title="Econimic History">
+      <i class="fa fa-chevron-left"></i> Econimic History
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/04/16/Spring-Transaction/" rel="next" title="Spring Transaction">
+      Spring Transaction <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#分代"><span class="nav-number">1.</span> <span class="nav-text">分代</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#术语"><span class="nav-number">2.</span> <span class="nav-text">术语</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java对象存活分析"><span class="nav-number">3.</span> <span class="nav-text">java对象存活分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#引用计数法"><span class="nav-number">3.1.</span> <span class="nav-text">引用计数法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可达性分析"><span class="nav-number">3.2.</span> <span class="nav-text">可达性分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法"><span class="nav-number">4.</span> <span class="nav-text">算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标记-清除算法（mark-sweep）"><span class="nav-number">4.1.</span> <span class="nav-text">标记-清除算法（mark-sweep）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复制算法（copying）"><span class="nav-number">4.2.</span> <span class="nav-text">复制算法（copying）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标记-整理算法（mark-compact）"><span class="nav-number">4.3.</span> <span class="nav-text">标记-整理算法（mark-compact）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾收集器"><span class="nav-number">5.</span> <span class="nav-text">垃圾收集器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CMS"><span class="nav-number">5.1.</span> <span class="nav-text">CMS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#G1"><span class="nav-number">5.2.</span> <span class="nav-text">G1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Epsilon：低开销垃圾回收器"><span class="nav-number">5.3.</span> <span class="nav-text">Epsilon：低开销垃圾回收器</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FJD</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FJD</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

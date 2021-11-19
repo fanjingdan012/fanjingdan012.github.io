@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"fanjingdan012.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="2-3-4 Tree也叫2-4 Tree其实是B tree的一个特例，也就是个多路搜索树 CRUDR readfind 47 C insertinsert 30overflow: split，32提上去，两个兄弟分家 D deletedelete 24，27提上去补位 Red Black Tree就是2-4 Tree的Binary Search Tree(BST)表达方法，中间的key提上来做黑色">
+<meta name="keywords" content="data structure">
+<meta property="og:type" content="article">
+<meta property="og:title" content="234 Tree and Red Black Tree">
+<meta property="og:url" content="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/index.html">
+<meta property="og:site_name" content="FJD">
+<meta property="og:description" content="2-3-4 Tree也叫2-4 Tree其实是B tree的一个特例，也就是个多路搜索树 CRUDR readfind 47 C insertinsert 30overflow: split，32提上去，两个兄弟分家 D deletedelete 24，27提上去补位 Red Black Tree就是2-4 Tree的Binary Search Tree(BST)表达方法，中间的key提上来做黑色">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/24tree-read.png">
+<meta property="og:image" content="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/24tree-insert.png">
+<meta property="og:image" content="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/24tree-split.png">
+<meta property="og:image" content="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/24tree-delete.png">
+<meta property="og:image" content="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/24tree-rbtree.png">
+<meta property="og:image" content="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/rbtree-insert-ubpr.png">
+<meta property="og:image" content="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/rbtree-insert-urpr.png">
+<meta property="og:image" content="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/rbtree-delete-1red.png">
+<meta property="og:image" content="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/rbtree-delete-doubleb-1red-nephew.png">
+<meta property="og:image" content="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/rbtree-delete-doubleb-1red-sibling-then-2black-nephew.png">
+<meta property="og:updated_time" content="2020-11-27T05:32:29.415Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="234 Tree and Red Black Tree">
+<meta name="twitter:description" content="2-3-4 Tree也叫2-4 Tree其实是B tree的一个特例，也就是个多路搜索树 CRUDR readfind 47 C insertinsert 30overflow: split，32提上去，两个兄弟分家 D deletedelete 24，27提上去补位 Red Black Tree就是2-4 Tree的Binary Search Tree(BST)表达方法，中间的key提上来做黑色">
+<meta name="twitter:image" content="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/24tree-read.png">
+
+<link rel="canonical" href="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>234 Tree and Red Black Tree | FJD</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FJD</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-计算机知识树">
+
+    <a href="/CSKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>计算机知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-会计学知识树">
+
+    <a href="/AccountingKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>会计学知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-数学知识树">
+
+    <a href="/MathKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>数学知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FJD">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FJD">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          234 Tree and Red Black Tree
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-05-21 18:20:52" itemprop="dateCreated datePublished" datetime="2019-05-21T18:20:52+08:00">2019-05-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-27 13:32:29" itemprop="dateModified" datetime="2020-11-27T13:32:29+08:00">2020-11-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="2-3-4-Tree也叫2-4-Tree"><a href="#2-3-4-Tree也叫2-4-Tree" class="headerlink" title="2-3-4 Tree也叫2-4 Tree"></a>2-3-4 Tree也叫2-4 Tree</h1><p>其实是<a href="https://fanjingdan012.github.io/2019/05/21/B-Tree-B-plus-Tree-and-B-star-Tree/">B tree</a>的一个特例，也就是个多路搜索树</p>
+<h2 id="CRUD"><a href="#CRUD" class="headerlink" title="CRUD"></a>CRUD</h2><h3 id="R-read"><a href="#R-read" class="headerlink" title="R read"></a>R read</h3><p>find 47<br><img src="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/24tree-read.png" alt="24tree-read"></p>
+<h3 id="C-insert"><a href="#C-insert" class="headerlink" title="C insert"></a>C insert</h3><p>insert 30<br><img src="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/24tree-insert.png" alt="24tree-insert"><br>overflow: split，32提上去，两个兄弟分家<br><img src="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/24tree-split.png" alt="24tree-split"></p>
+<h3 id="D-delete"><a href="#D-delete" class="headerlink" title="D delete"></a>D delete</h3><p>delete 24，27提上去补位<br><img src="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/24tree-delete.png" alt="24tree-delete"></p>
+<h1 id="Red-Black-Tree"><a href="#Red-Black-Tree" class="headerlink" title="Red Black Tree"></a>Red Black Tree</h1><p>就是2-4 Tree的Binary Search Tree(BST)表达方法，中间的key提上来做黑色parent，同一个node的其他两个key做红孩子，就变成BST了</p>
+<p><img src="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/24tree-rbtree.png" alt="24tree-rbtree"></p>
+<h2 id="性质4条，前3条就是24树自然推导的，最后一条man-made"><a href="#性质4条，前3条就是24树自然推导的，最后一条man-made" class="headerlink" title="性质4条，前3条就是24树自然推导的，最后一条man made"></a>性质4条，前3条就是24树自然推导的，最后一条man made</h2><ul>
+<li>所以根肯定黑的</li>
+<li>所有叶子的黑色深度是一样的，因为24树本来就平衡的</li>
+<li>红node的孩子是黑的，其实就是偏门key的孩子</li>
+<li>叶子是黑的：强行加个null叶子</li>
+</ul>
+<h2 id="CRUD-1"><a href="#CRUD-1" class="headerlink" title="CRUD"></a>CRUD</h2><p>动画:<a href="https://www.cs.usfca.edu/~galles/visualization/RedBlack.html">https://www.cs.usfca.edu/~galles/visualization/RedBlack.html</a><br><a href="https://fanjingdan012.github.io/2019/05/21/Splay-Tree-and-AVL-Tree/">怎么rotate见Splay和AVL Tree</a></p>
+<h3 id="C"><a href="#C" class="headerlink" title="C"></a>C</h3><ol>
+<li>正常BST插入，涂成红色（也就是默认是偏门的key）</li>
+<li>递归解决双红冲突：<ul>
+<li>parent是个黑的：搞定，（对应没有overflow，直接插个偏门key）</li>
+<li>parent是个红的：<ul>
+<li>叔叔是个黑的：RR LL LR RL rotation<br><img src="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/rbtree-insert-ubpr.png" alt="rbtree-insert-ubpr.png">  </li>
+<li>叔叔是个红的：直接把上一代人涂黑，两个兄弟自立门户，祖父涂成红色，提上去做上一代的偏门key，（对应overflow，split）<br><img src="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/rbtree-insert-urpr.png" alt="rbtree-insert-urpr.png"> </li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="D"><a href="#D" class="headerlink" title="D"></a>D</h3><ol>
+<li>正常BST删除</li>
+<li>递归解决冲突<ul>
+<li>原来（被删的）是个红的，或者，替上来的是个红的，涂成黑色搞定，对应把偏门key提上来做中间key<br><img src="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/rbtree-delete-1red.png" alt="rbtree-delete-1red.png"> </li>
+<li>原来和替上来的全是黑的（双黑）<ul>
+<li>兄弟是黑的，有至少一个个红侄子：rotate<br><img src="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/rbtree-delete-doubleb-1red-nephew.png" alt="rbtree-delete-doubleb-1red-nephew.png"> </li>
+<li>兄弟是黑的，有一双黑侄子：重新上色:兄弟变成红的，parent变成黑的，自立门户，吸收兄弟做偏门key</li>
+<li>兄弟是红的：single rotation，重新涂色<br><img src="https://fanjingdan012.github.io/2019/05/21/234-Tree-and-Red-Black-Tree/rbtree-delete-doubleb-1red-sibling-then-2black-nephew.png" alt="rbtree-delete-doubleb-1red-sibling-then-2black-nephew.png"> </li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="HashMap红黑树源码"><a href="#HashMap红黑树源码" class="headerlink" title="HashMap红黑树源码"></a><a href="https://www.jianshu.com/p/5b157d4be1ad">HashMap红黑树源码</a></h2>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/data-structure/" rel="tag"># data structure</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/05/21/Splay-Tree-and-AVL-Tree/" rel="prev" title="Splay Tree and AVL Tree">
+      <i class="fa fa-chevron-left"></i> Splay Tree and AVL Tree
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/05/21/B-Tree-B-plus-Tree-and-B-star-Tree/" rel="next" title="B Tree B plus Tree and B star Tree">
+      B Tree B plus Tree and B star Tree <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2-3-4-Tree也叫2-4-Tree"><span class="nav-number">1.</span> <span class="nav-text">2-3-4 Tree也叫2-4 Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CRUD"><span class="nav-number">1.1.</span> <span class="nav-text">CRUD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#R-read"><span class="nav-number">1.1.1.</span> <span class="nav-text">R read</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-insert"><span class="nav-number">1.1.2.</span> <span class="nav-text">C insert</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#D-delete"><span class="nav-number">1.1.3.</span> <span class="nav-text">D delete</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Red-Black-Tree"><span class="nav-number">2.</span> <span class="nav-text">Red Black Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#性质4条，前3条就是24树自然推导的，最后一条man-made"><span class="nav-number">2.1.</span> <span class="nav-text">性质4条，前3条就是24树自然推导的，最后一条man made</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CRUD-1"><span class="nav-number">2.2.</span> <span class="nav-text">CRUD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C"><span class="nav-number">2.2.1.</span> <span class="nav-text">C</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#D"><span class="nav-number">2.2.2.</span> <span class="nav-text">D</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap红黑树源码"><span class="nav-number">2.3.</span> <span class="nav-text">HashMap红黑树源码</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FJD</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FJD</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

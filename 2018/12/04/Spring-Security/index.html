@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"fanjingdan012.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="SSO server Callstack 在Spring mvc里call Filter Chain, call到org.springframework.security.web.FilterChainProxy.doFilter （extends GenericFilterBean ） 这里加装了一个HttpFirewall， 提供firewalledRequest和firewalledResp">
+<meta name="keywords" content="Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Security">
+<meta property="og:url" content="https://fanjingdan012.github.io/2018/12/04/Spring-Security/index.html">
+<meta property="og:site_name" content="FJD">
+<meta property="og:description" content="SSO server Callstack 在Spring mvc里call Filter Chain, call到org.springframework.security.web.FilterChainProxy.doFilter （extends GenericFilterBean ） 这里加装了一个HttpFirewall， 提供firewalledRequest和firewalledResp">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-11-27T05:32:29.338Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring Security">
+<meta name="twitter:description" content="SSO server Callstack 在Spring mvc里call Filter Chain, call到org.springframework.security.web.FilterChainProxy.doFilter （extends GenericFilterBean ） 这里加装了一个HttpFirewall， 提供firewalledRequest和firewalledResp">
+
+<link rel="canonical" href="https://fanjingdan012.github.io/2018/12/04/Spring-Security/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Spring Security | FJD</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FJD</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-计算机知识树">
+
+    <a href="/CSKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>计算机知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-会计学知识树">
+
+    <a href="/AccountingKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>会计学知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-数学知识树">
+
+    <a href="/MathKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>数学知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://fanjingdan012.github.io/2018/12/04/Spring-Security/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FJD">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FJD">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring Security
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-12-04 16:43:57" itemprop="dateCreated datePublished" datetime="2018-12-04T16:43:57+08:00">2018-12-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-27 13:32:29" itemprop="dateModified" datetime="2020-11-27T13:32:29+08:00">2020-11-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="SSO-server-Callstack"><a href="#SSO-server-Callstack" class="headerlink" title="SSO server Callstack"></a>SSO server Callstack</h1><ul>
+<li>在Spring mvc里call Filter Chain, call到org.springframework.security.web.FilterChainProxy.doFilter （extends GenericFilterBean ）<ul>
+<li>这里加装了一个HttpFirewall， 提供firewalledRequest和firewalledResponse，去掉一些危险的请求</li>
+</ul>
+</li>
+<li>然后Filter到熟悉的OncePerRequestFilter，有一个WebAsyncManagerIntegrationFilter继承自它<ul>
+<li>就是添加了一个SecurityContextCallableProcessingInterceptor，在处理请求的前后包了一层securityContext，preProcess设置它，postProcess clear它</li>
+</ul>
+</li>
+<li>SecurityContextPersistenceFilter 强制的session管理</li>
+<li>HeaderWriterFilter， 写了一些security相关的header</li>
+<li>CsrfFilter<ul>
+<li>从csrf token repository里load这个request的csrf token， 如果没有csrf token的话，那就generate一个，存csrf token repository。 跟request里带的csrf token比对，不对的话就拦截。</li>
+<li>当然，可以设置不需要csrf保护，RequestMatcher requireCsrfProtectionMatcher来决定要不要</li>
+<li>example:<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&#x27;hidden&#x27;</span> <span class="attr">name</span>=<span class="string">&#x27;$&#123;_csrf.parameterName&#125;&#x27;</span> <span class="attr">value</span>=<span class="string">&#x27;$&#123;_csrf.token&#125;&#x27;</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>LogoutFilter<ul>
+<li>Logout是专门用这个来做的</li>
+</ul>
+</li>
+<li>AbstractAuthenticationProcessingFilter<ul>
+<li>！核心部分，就是这里验证用户名、密码。</li>
+<li>call UsernamePasswordAuthenticationFilter</li>
+<li>call ProviderManager.authenticate</li>
+<li>call AbstractUserDetailsAuthenticationProvider.authenticate</li>
+<li>call DaoAuthenticationProvider.retrieveUser</li>
+<li>call this.getUserDetailsService().loadUserByUsername(username)<ul>
+<li>这里我们要自己写一个XXXUserDetailsService implements UserDetailsService，实现loadUserByUsername方法就可以。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>oauth/confirm_access<br>前面是一样的，后面又call了：</p>
+<ul>
+<li>AbstractAuthenticationProcessingFilter<ul>
+<li>可以设置需不需要authentication保护</li>
+<li>用了strategy模式，自己实现sessionSrategy.onAuthentication, 一般来说会检查session，保证不被fix session攻击</li>
+</ul>
+</li>
+<li>DefaultLoginPageGeneratingFilter<ul>
+<li>返回login成功以后的page的</li>
+</ul>
+</li>
+<li>RequestCacheAwareFilter<ul>
+<li>加cache</li>
+</ul>
+</li>
+<li>SecurityContextHolderAwareRequestFilter <ul>
+<li>把request替换掉了， 用来处理servlet2.5和servlet3不同的request</li>
+<li>可以设置以下<ul>
+<li>rolePrefix</li>
+<li>AuthenticationEntryPoint</li>
+<li>AuthenticationManager</li>
+<li>LogoutHandler</li>
+<li>updateFactory</li>
+<li>TrustResolver</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>AnonymousAuthenticationFilter<ul>
+<li>检查securityContext有没有authentication，没有就创建</li>
+</ul>
+</li>
+<li>SessionManagementFilter<ul>
+<li>检查authentication，如果有且不是匿名，就触发sessionAuthenticationStrategy.onAuthentication(authentication,request, response)</li>
+</ul>
+</li>
+<li>ExceptionTranslationFilter<ul>
+<li>翻译authentication的exception</li>
+</ul>
+</li>
+<li>FilterSecurityInterceptor</li>
+<li>WsFilter <ul>
+<li>可忽略，only needs to handle WebSocket upgrade requests</li>
+</ul>
+</li>
+<li>然后就回到了正常spring web的FilterChain，经过doDispatch到Controller这里</li>
+</ul>
+<h1 id="通过-session-cookie-维护-authentication"><a href="#通过-session-cookie-维护-authentication" class="headerlink" title="通过 session/cookie 维护 authentication"></a>通过 session/cookie 维护 authentication</h1><p>请求 <a href="http://127.0.0.1:8060/client2/index.html">http://127.0.0.1:8060/client2/index.html</a> 需要Cookie: </p>
+<ul>
+<li>JSESSIONID=90AEBC55CFDCDFD9277A00E654C6A4B4; </li>
+<li>PGADMIN_LANGUAGE=en; </li>
+<li>PGADMIN_KEY=13d9a244-76c6-46aa-9c66-e32ab9c9e447; </li>
+<li>pga4_session=”7e6549b3-743a-4992-9b04-d423caa34fcc!51GhrQLaPDsFNZMsyrY0nD2Lx/g=”</li>
+</ul>
+<h1 id="SSO-Client"><a href="#SSO-Client" class="headerlink" title="SSO Client"></a>SSO Client</h1><p>@EnableOAuth2Sso<br>marks your service as an OAuth 2.0 Client. This means that it will be responsible for redirecting Resource Owner (end user) to the Authorization Server where the user has to enter their credentials. After it’s done the user is redirected back to the Client with Authorization Code (don’t confuse with Access Code). Then the Client takes the Authorization Code and exchanges it for an Access Token by calling Authorization Server. Only after that, the Client can make a call to a Resource Server with Access Token.</p>
+<p>Also, if you take a look into the source code of @EnableOAuth2Sso annotation you will see two interesting things:</p>
+<p>@EnableOAuth2Client. This is where your service becomes OAuth 2.0 Client. It makes it possible to forward access token (after it has been exchanged for Authorization Code) to downstream services in case you are calling those services via OAuth2RestTemplate.</p>
+<p>@EnableConfigurationProperties(OAuth2SsoProperties.class). OAuth2SsoProperties has only one property String loginPath which is /login by default. This will intercept browser requests to the /login by OAuth2ClientAuthenticationProcessingFilter and will redirect the user to the Authorization Server.</p>
+<p><code>application.properties</code><br>security.oauth2.client.client-id=client2<br>security.oauth2.client.client-secret=client2<br>security.oauth2.client.user-authorization-uri=<a href="http://127.0.0.1:9999/server/oauth/authorize">http://127.0.0.1:9999/server/oauth/authorize</a><br>security.oauth2.client.access-token-uri=<a href="http://127.0.0.1:9999/server/oauth/token">http://127.0.0.1:9999/server/oauth/token</a><br>security.oauth2.resource.jwt.key-uri=<a href="http://127.0.0.1:9999/server/oauth/token_key">http://127.0.0.1:9999/server/oauth/token_key</a></p>
+<h2 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h2><ul>
+<li>client2/index.html<ul>
+<li>Cookie: JSESSIONID=F9D6E6701C3446256BBDD3536B4C37A2</li>
+<li>response: 302 </li>
+</ul>
+</li>
+<li>client2/login <ul>
+<li>Cookie: JSESSIONID=F9D6E6701C3446256BBDD3536B4C37A2</li>
+<li>response: 302</li>
+</ul>
+</li>
+<li>server/oauth/authorize?client_id=client2&amp;redirect_uri=<a href="http://127.0.0.1:8060/client2/login&amp;response_type=code&amp;state=FDAZ6f">http://127.0.0.1:8060/client2/login&amp;response_type=code&amp;state=FDAZ6f</a><ul>
+<li>Cookie: JSESSIONID=3E6CBEFE193913C53AC3AAA1C7687C89</li>
+<li>response: 302</li>
+</ul>
+</li>
+<li>server/login<ul>
+<li>Cookie: JSESSIONID=3E6CBEFE193913C53AC3AAA1C7687C89</li>
+<li>response: 200 + login 页面</li>
+</ul>
+</li>
+</ul>
+<p>@EnableResourceServer</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Spring/" rel="tag"># Spring</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/08/17/Refactor/" rel="prev" title="Refactor">
+      <i class="fa fa-chevron-left"></i> Refactor
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/04/10/Economic-History/" rel="next" title="Econimic History">
+      Econimic History <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SSO-server-Callstack"><span class="nav-number">1.</span> <span class="nav-text">SSO server Callstack</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通过-session-cookie-维护-authentication"><span class="nav-number">2.</span> <span class="nav-text">通过 session/cookie 维护 authentication</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SSO-Client"><span class="nav-number">3.</span> <span class="nav-text">SSO Client</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#请求"><span class="nav-number">3.1.</span> <span class="nav-text">请求</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FJD</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FJD</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"fanjingdan012.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Structure see https://hashcat.net/forum/thread-7968.html $zip2$*Ty*Mo*Ma*Sa*Va*Le*DF*Au*$/zip2$ Ty = type (0) and ignored. Mo = mode (1 2 3 for 128/192/256 bit) Ma = magic (file magic).  This is reser">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows Zip Hash">
+<meta property="og:url" content="https://fanjingdan012.github.io/2020/09/18/Windows-Zip-Hash/index.html">
+<meta property="og:site_name" content="FJD">
+<meta property="og:description" content="Structure see https://hashcat.net/forum/thread-7968.html $zip2$*Ty*Mo*Ma*Sa*Va*Le*DF*Au*$/zip2$ Ty = type (0) and ignored. Mo = mode (1 2 3 for 128/192/256 bit) Ma = magic (file magic).  This is reser">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-11-27T05:32:29.322Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Windows Zip Hash">
+<meta name="twitter:description" content="Structure see https://hashcat.net/forum/thread-7968.html $zip2$*Ty*Mo*Ma*Sa*Va*Le*DF*Au*$/zip2$ Ty = type (0) and ignored. Mo = mode (1 2 3 for 128/192/256 bit) Ma = magic (file magic).  This is reser">
+
+<link rel="canonical" href="https://fanjingdan012.github.io/2020/09/18/Windows-Zip-Hash/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Windows Zip Hash | FJD</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FJD</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-计算机知识树">
+
+    <a href="/CSKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>计算机知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-会计学知识树">
+
+    <a href="/AccountingKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>会计学知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-数学知识树">
+
+    <a href="/MathKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>数学知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://fanjingdan012.github.io/2020/09/18/Windows-Zip-Hash/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FJD">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FJD">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Windows Zip Hash
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-18 10:49:09" itemprop="dateCreated datePublished" datetime="2020-09-18T10:49:09+08:00">2020-09-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-27 13:32:29" itemprop="dateModified" datetime="2020-11-27T13:32:29+08:00">2020-11-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Structure"><a href="#Structure" class="headerlink" title="Structure"></a>Structure</h1><ul>
+<li>see <a href="https://hashcat.net/forum/thread-7968.html">https://hashcat.net/forum/thread-7968.html</a></li>
+<li><code>$zip2$*Ty*Mo*Ma*Sa*Va*Le*DF*Au*$/zip2$</code></li>
+<li>Ty = type (0) and ignored.</li>
+<li>Mo = mode (1 2 3 for 128/192/256 bit)</li>
+<li>Ma = magic (file magic).  This is reservered for now.  See pkzip_fmt_plug.c or zip2john.c for information. For now, this must be a ‘0’</li>
+<li>Sa = salt(hex).   8, 12 or 16 bytes of salt (depends on mode)</li>
+<li>Va = Verification bytes(hex) (2 byte quick checker)</li>
+<li>Le = real compr len (hex) length of compressed/encrypted data (field DF)</li>
+<li>DF = compressed data DF can be Le*2 hex bytes, and if so, then it is the ENTIRE file blob written ‘inline’. However, if the data blob is too long, then a .zip ZIPDATA_FILE_PTR_RECORD structure will be the ‘contents’ of DF</li>
+<li>Au = Authentication code (hex) a 10 byte hex value that is the hmac-sha1 of data over DF. This is the binary() value</li>
+<li>ZIPDATA_FILE_PTR_RECORD  (this can be the ‘DF’ of this above hash line).</li>
+<li><em>ZFILE</em>Fn<em>Oh</em>Ob*  (Note, the leading and trailing * are the * that ‘wrap’ the DF object.</li>
+<li>ZFILE This is the literal string ZFILE</li>
+<li>Fn    This is the name of the .zip file.  NOTE the user will need to keep the .zip file in proper locations (same as  was seen when running zip2john. If the file is removed, this hash line will no longer be valid.</li>
+<li>Oh    Offset to the zip central header record for this blob.</li>
+<li>Ob    Offset to the start of the blob data</li>
+</ul>
+<h1 id="example"><a href="#example" class="headerlink" title="example"></a>example</h1><ul>
+<li>a CTF challenge, need to split the zip hash with <code>*</code>: <code>$zip2$030f2424d6c3a08245a148c62c9f64544c102a1f34f6bbca756cdaed98435148cd041c3f57d220f2c008cc4da2b5c7dc329ed667e093bda9d6f2dbdba96a096e05a63b2823c47bbafc741ea70f839c1c6d1f8f3563027c172a48db9805988e198adb58775c90d4ae7ccf985758e1c4caf866d143ef6ce38257de0abaf0e106d5c3c41db0e5c9c5d79837836136e53bb460095b86b4fbbc1c4a7dbcbef14837d48a3b0b1ae23eb6dd39889a2d9abc92fbe01a068c2ba4f1fd2b0d0f80e233dfc13c9436ca6bc8b1363229d49c10f8a43c7378b0849e8024c37d041e87db47aa88194e9e414e6b3a868d188d9af3e97d0d727640d547553a09341caa92de2d3ada1f5adabe21ea8aab379c66835c6f4a3e1dd*$/zip2$</code></li>
+<li>result: <code>$zip2$*0*3*0*f2424d6c3a08245a148c62c9f64544c1*02a1*f3*4f6bbca756cdaed98435148cd041c3f57d220f2c008cc4da2b5c7dc329ed667e093bda9d6f2dbdba96a096e05a63b2823c47bbafc741ea70f839c1c6d1f8f3563027c172a48db9805988e198adb58775c90d4ae7ccf985758e1c4caf866d143ef6ce38257de0abaf0e106d5c3c41db0e5c9c5d79837836136e53bb460095b86b4fbbc1c4a7dbcbef14837d48a3b0b1ae23eb6dd39889a2d9abc92fbe01a068c2ba4f1fd2b0d0f80e233dfc13c9436ca6bc8b1363229d49c10f8a43c7378b0849e8024c37d041e87db47aa88194e9e414e6b3a868d188d9af3e97d0d727640d547553a09341caa92de2d3ada1f5adabe21ea8aa*b379c66835c6f4a3e1dd*$/zip2$</code></li>
+<li>official example: <code>$zip2$*0*3*0*b5d2b7bf57ad5e86a55c400509c672bd*d218*0**ca3d736d03a34165cfa9*$/zip2$</code></li>
+</ul>
+<h1 id="cracking-with-hashcat"><a href="#cracking-with-hashcat" class="headerlink" title="cracking with hashcat"></a>cracking with hashcat</h1><ul>
+<li><code>hashcat.exe -a 0 -m 13600 a.hash   all.dict  --force</code></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/05/DB-impl/" rel="prev" title="DB impl">
+      <i class="fa fa-chevron-left"></i> DB impl
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/25/Hashcat/" rel="next" title="Hashcat">
+      Hashcat <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Structure"><span class="nav-number">1.</span> <span class="nav-text">Structure</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#example"><span class="nav-number">2.</span> <span class="nav-text">example</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cracking-with-hashcat"><span class="nav-number">3.</span> <span class="nav-text">cracking with hashcat</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FJD</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FJD</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

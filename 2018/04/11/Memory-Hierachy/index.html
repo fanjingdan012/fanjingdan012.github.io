@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"fanjingdan012.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="存储技术(书6) RAM(Random Access Memory)  SRAM(Static RAM)  快，10倍速度DRAM 贵，100倍价格DRAM 做Cache   DRAM(Dynamic RAM)  主存 frame buffer 增强版DRAM SDRAM(Synchronous DRAM) Double Data-Rate SDRAM(DDR SDRAM) DDR(2bit p">
+<meta name="keywords" content="csapp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Memory Hierachy">
+<meta property="og:url" content="https://fanjingdan012.github.io/2018/04/11/Memory-Hierachy/index.html">
+<meta property="og:site_name" content="FJD">
+<meta property="og:description" content="存储技术(书6) RAM(Random Access Memory)  SRAM(Static RAM)  快，10倍速度DRAM 贵，100倍价格DRAM 做Cache   DRAM(Dynamic RAM)  主存 frame buffer 增强版DRAM SDRAM(Synchronous DRAM) Double Data-Rate SDRAM(DDR SDRAM) DDR(2bit p">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://fanjingdan012.github.io/2018/04/11/Memory-Hierachy/memory.png">
+<meta property="og:image" content="https://fanjingdan012.github.io/2018/04/11/Memory-Hierachy/memory-hierarchy.png">
+<meta property="og:updated_time" content="2020-11-27T05:32:29.302Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Memory Hierachy">
+<meta name="twitter:description" content="存储技术(书6) RAM(Random Access Memory)  SRAM(Static RAM)  快，10倍速度DRAM 贵，100倍价格DRAM 做Cache   DRAM(Dynamic RAM)  主存 frame buffer 增强版DRAM SDRAM(Synchronous DRAM) Double Data-Rate SDRAM(DDR SDRAM) DDR(2bit p">
+<meta name="twitter:image" content="https://fanjingdan012.github.io/2018/04/11/Memory-Hierachy/memory.png">
+
+<link rel="canonical" href="https://fanjingdan012.github.io/2018/04/11/Memory-Hierachy/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Memory Hierachy | FJD</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FJD</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-计算机知识树">
+
+    <a href="/CSKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>计算机知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-会计学知识树">
+
+    <a href="/AccountingKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>会计学知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-数学知识树">
+
+    <a href="/MathKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>数学知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://fanjingdan012.github.io/2018/04/11/Memory-Hierachy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FJD">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FJD">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Memory Hierachy
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-04-11 09:39:10" itemprop="dateCreated datePublished" datetime="2018-04-11T09:39:10+08:00">2018-04-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-27 13:32:29" itemprop="dateModified" datetime="2020-11-27T13:32:29+08:00">2020-11-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://fanjingdan012.github.io/2018/04/11/Memory-Hierachy/memory.png" alt="memory.png"></p>
+<h1 id="存储技术-书6"><a href="#存储技术-书6" class="headerlink" title="存储技术(书6)"></a>存储技术(书6)</h1><ul>
+<li><p>RAM(Random Access Memory)</p>
+<ul>
+<li><p>SRAM(Static RAM)</p>
+<ul>
+<li>快，10倍速度DRAM</li>
+<li>贵，100倍价格DRAM</li>
+<li>做Cache</li>
+</ul>
+</li>
+<li><p>DRAM(Dynamic RAM)</p>
+<ul>
+<li>主存</li>
+<li>frame buffer</li>
+<li>增强版DRAM<ul>
+<li>SDRAM(Synchronous DRAM)</li>
+<li>Double Data-Rate SDRAM(DDR SDRAM)<ul>
+<li>DDR(2bit prefetch buffer) </li>
+<li>DDR2(4bit …) </li>
+<li>DDR3(8bit …)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>访问主存</p>
+<ul>
+<li><p>读<br><code>movq A, %rax</code></p>
+<ol>
+<li>CPU通过总线接口发起读事务，把地址A放到系统总线上</li>
+<li>A走过I/O桥接器，走到存储器总线</li>
+<li>主存感觉并获取A，读取A的内容，写到存储器总线</li>
+<li>I/O桥接器翻译转换成系统总线信号</li>
+<li>CPU感觉并获取数据，copy给%rax</li>
+</ol>
+</li>
+<li><p>写<br><code>movq %rax A</code></p>
+<ol>
+<li>CPU把A放在总线上</li>
+<li>主存从总线获取A，并等待数据到达</li>
+<li>CPU把%rax的数据copy到总线</li>
+<li>主存拿到数据存入A</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>断电可以存储的</p>
+<ul>
+<li>ROM(Read-only memory)</li>
+<li>PROM(Programmable ROM) 可以烧制一次程序</li>
+<li>EPROM(Eraseable PROM) 可以重复烧制</li>
+<li>EEPROM(Electrically Eraseable PROM) 比如Flash memory</li>
+<li>磁盘<br>见图</li>
+</ul>
+</li>
+</ul>
+<h1 id="Locality局部性"><a href="#Locality局部性" class="headerlink" title="Locality局部性"></a>Locality局部性</h1><ul>
+<li>时间局部性：一个变量在集中的时间里一直访问就会一直cache hit</li>
+<li>空间局部性：相关数据放在一起（一个 block）就会一起进缓存</li>
+</ul>
+<h1 id="Hierarchy"><a href="#Hierarchy" class="headerlink" title="Hierarchy"></a>Hierarchy</h1><p><img src="https://fanjingdan012.github.io/2018/04/11/Memory-Hierachy/memory-hierarchy.png" alt="memory-hierarchy.png"></p>
+<h2 id="Disk"><a href="#Disk" class="headerlink" title="Disk"></a>Disk</h2><p>见上图</p>
+<h2 id="Cache"><a href="#Cache" class="headerlink" title="Cache"></a>Cache</h2><p>见上图</p>
+<ul>
+<li>上层是下层的子集</li>
+<li>数据以块传输</li>
+<li>下层更大，慢，便宜</li>
+<li>读：hit的话直接返回，miss的话replace<ul>
+<li>cache hit</li>
+<li>cache miss<ul>
+<li>cold miss、compulsory miss（强制性不命中）</li>
+<li>conflict miss，e.g.用了下一层的块i放在上一层的块（i mod 4）中的放置策略，然后访问块0,块4,块0,块4。。。就会一直miss </li>
+<li>capacity miss：缓存太小了</li>
+</ul>
+</li>
+<li>replacing、evicting victim block，只要发生了不命中就会执行某替换策略<ul>
+<li>策略<ul>
+<li>换掉谁？e.g.Least Recent Used（LRU）, Frequently(LFU)</li>
+<li>新的放哪? e.g. 随机， 下一层的块i放在上一层的块（i mod 4）中</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>写：<ul>
+<li>write hit<ul>
+<li>write-through：直接更新主存</li>
+<li>write-back（真的用的）：推迟更新主存,减少bus的使用，需要额外维护一个dirty bit，标记是不是改过</li>
+</ul>
+</li>
+<li>write miss<ul>
+<li>write-allocate（真的用的）:先加载到cache，再更新+write-back</li>
+<li>not-write-allocate：直接更新主存+write-through</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>保存啥的<ul>
+<li>i-cache：存指令</li>
+<li>d-cache：存数据</li>
+<li>unified cache：两个都存，e.g. L2</li>
+</ul>
+</li>
+<li>KPI<ul>
+<li>miss rate = 1- hit rate</li>
+<li>hit time(命中花多久)、 miss penalty（不命中花多久）</li>
+</ul>
+</li>
+</ul>
+<h1 id="Virtual-Memory-书10-1-10-8"><a href="#Virtual-Memory-书10-1-10-8" class="headerlink" title="Virtual Memory(书10.1-10.8)"></a>Virtual Memory(书10.1-10.8)</h1><h2 id="Why-Virtual-Memory"><a href="#Why-Virtual-Memory" class="headerlink" title="Why Virtual Memory"></a>Why Virtual Memory</h2><ul>
+<li>4k/4m/…一个page，搞cache</li>
+<li>memory管理，每个进程有自己的<b>地址空间</b>, 2G的物理内存虚拟出4G没问题</li>
+<li>memory保护，可以做权限管理，在PTE上加权限位，MMU负责检查<h2 id="How"><a href="#How" class="headerlink" title="How"></a>How</h2>见上图<h2 id="Memory-mapping"><a href="#Memory-mapping" class="headerlink" title="Memory mapping"></a>Memory mapping</h2></li>
+</ul>
+<h1 id="Heap-amp-Malloc-书10-9"><a href="#Heap-amp-Malloc-书10-9" class="headerlink" title="Heap &amp; Malloc(书10.9)"></a>Heap &amp; Malloc(书10.9)</h1>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/csapp/" rel="tag"># csapp</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2018/07/26/hexo/" rel="next" title="hexo">
+      hexo <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#存储技术-书6"><span class="nav-number">1.</span> <span class="nav-text">存储技术(书6)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Locality局部性"><span class="nav-number">2.</span> <span class="nav-text">Locality局部性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hierarchy"><span class="nav-number">3.</span> <span class="nav-text">Hierarchy</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Disk"><span class="nav-number">3.1.</span> <span class="nav-text">Disk</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache"><span class="nav-number">3.2.</span> <span class="nav-text">Cache</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Virtual-Memory-书10-1-10-8"><span class="nav-number">4.</span> <span class="nav-text">Virtual Memory(书10.1-10.8)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-Virtual-Memory"><span class="nav-number">4.1.</span> <span class="nav-text">Why Virtual Memory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How"><span class="nav-number">4.2.</span> <span class="nav-text">How</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Memory-mapping"><span class="nav-number">4.3.</span> <span class="nav-text">Memory mapping</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Heap-amp-Malloc-书10-9"><span class="nav-number">5.</span> <span class="nav-text">Heap &amp; Malloc(书10.9)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FJD</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FJD</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

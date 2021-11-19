@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"fanjingdan012.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="为了做隔离性比较好的multi-tenant app，决定做schema based multi-tenant，这就需要  Runtime切换DataSource 为了使添加新tenant不用重启，最好还能实现Runtime添加DataSource    所以分2步实现这两个功能。   代码：https://github.com/fanjingdan012/ssm目前有3个branch  mast">
+<meta name="keywords" content="Spring,Mybatis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring + Mybatis Dynamic DataSource">
+<meta property="og:url" content="https://fanjingdan012.github.io/2018/07/27/Spring-Mybatis-Dynamic-DataSource/index.html">
+<meta property="og:site_name" content="FJD">
+<meta property="og:description" content="为了做隔离性比较好的multi-tenant app，决定做schema based multi-tenant，这就需要  Runtime切换DataSource 为了使添加新tenant不用重启，最好还能实现Runtime添加DataSource    所以分2步实现这两个功能。   代码：https://github.com/fanjingdan012/ssm目前有3个branch  mast">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img-blog.csdn.net/201807231521545?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZhbmppbmdkYW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180723152505201?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZhbmppbmdkYW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180723152120781?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZhbmppbmdkYW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:updated_time" content="2020-11-27T05:32:29.377Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring + Mybatis Dynamic DataSource">
+<meta name="twitter:description" content="为了做隔离性比较好的multi-tenant app，决定做schema based multi-tenant，这就需要  Runtime切换DataSource 为了使添加新tenant不用重启，最好还能实现Runtime添加DataSource    所以分2步实现这两个功能。   代码：https://github.com/fanjingdan012/ssm目前有3个branch  mast">
+<meta name="twitter:image" content="https://img-blog.csdn.net/201807231521545?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZhbmppbmdkYW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+
+<link rel="canonical" href="https://fanjingdan012.github.io/2018/07/27/Spring-Mybatis-Dynamic-DataSource/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Spring + Mybatis Dynamic DataSource | FJD</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FJD</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-计算机知识树">
+
+    <a href="/CSKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>计算机知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-会计学知识树">
+
+    <a href="/AccountingKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>会计学知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-数学知识树">
+
+    <a href="/MathKT/" rel="section"><i class="fa fa-sitemap fa-fw"></i>数学知识树</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://fanjingdan012.github.io/2018/07/27/Spring-Mybatis-Dynamic-DataSource/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FJD">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FJD">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring + Mybatis Dynamic DataSource
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-07-27 13:36:33" itemprop="dateCreated datePublished" datetime="2018-07-27T13:36:33+08:00">2018-07-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-27 13:32:29" itemprop="dateModified" datetime="2020-11-27T13:32:29+08:00">2020-11-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>为了做隔离性比较好的multi-tenant app，决定做schema based multi-tenant，这就需要</p>
+<ul>
+<li>Runtime切换DataSource</li>
+<li>为了使添加新tenant不用重启，最好还能实现Runtime添加DataSource  </li>
+</ul>
+<p>所以分2步实现这两个功能。  </p>
+<p>代码：<a href="https://github.com/fanjingdan012/ssm">https://github.com/fanjingdan012/ssm</a><br>目前有3个branch</p>
+<ul>
+<li>master是基础版Spring+Mybatis+Mariadb，能Read一个DataSource</li>
+<li>multi-data-source是实现Runtime切换DataSource的</li>
+<li>multi-tenant是实现现Runtime添加DataSource的  </li>
+</ul>
+<h1 id="预先定义DataSource，Runtime切换"><a href="#预先定义DataSource，Runtime切换" class="headerlink" title="预先定义DataSource，Runtime切换"></a>预先定义DataSource，Runtime切换</h1><h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><ul>
+<li>数据库准备，这里用了mariadb，用了两个schema， test和test2，里面是同样的一张member表，插入一点不同的数据<br><img src="https://img-blog.csdn.net/201807231521545?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZhbmppbmdkYW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></li>
+<li>用header控制Tenant-ID，从而访问不同的DataSource<br><img src="https://img-blog.csdn.net/20180723152505201?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZhbmppbmdkYW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2>写一个MultitenantDataSource.java, <code>MultitenantDataSource extends AbstractRoutingDataSource</code>  </li>
+</ul>
+<p>看一下<code>AbstractRoutingDataSource</code>的源代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> DataSource <span class="title">determineTargetDataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Assert.notNull(<span class="keyword">this</span>.resolvedDataSources, <span class="string">&quot;DataSource router not initialized&quot;</span>);</span><br><span class="line">	Object lookupKey = determineCurrentLookupKey();</span><br><span class="line">	DataSource dataSource = <span class="keyword">this</span>.resolvedDataSources.get(lookupKey);</span><br><span class="line">	<span class="keyword">if</span> (dataSource == <span class="keyword">null</span> &amp;&amp; (<span class="keyword">this</span>.lenientFallback || lookupKey == <span class="keyword">null</span>)) &#123;</span><br><span class="line">		dataSource = <span class="keyword">this</span>.resolvedDefaultDataSource;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (dataSource == <span class="keyword">null</span>) &#123;</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">&quot;Cannot determine target DataSource for lookup key [&quot;</span> + lookupKey + <span class="string">&quot;]&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> dataSource;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>里面有一个<code>resolvedDataSources</code>的Map，存储了多个DataSource，会调用<code>determineCurrentLookupKey()</code>来Runtime决定使用哪个DataSource，如果没有指定的那个Key，那么就会使用DefaultDataSource<br>所以使用它就是需要</p>
+<ul>
+<li>Override <code>determineCurrentLookupKey()</code>方法，定义tenantId作为key<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MultitenantDataSource</span> <span class="keyword">extends</span> <span class="title">AbstractRoutingDataSource</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> Object <span class="title">determineCurrentLookupKey</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> TenantContext.getCurrentTenant();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>调用<code>setTargetDataSources</code>方法去把Map填进去</li>
+<li>调用<code>setDefaultTargetDataSource</code> 方法把DefaultDataSource设置好，最好是将DefaultDataSource设置成tenant管理数据库，保存tenant相关信息，但是作为一个demo，本项目就比较简单，直接把它设为一个tenant数据库<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MultitenantConfiguration</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> MultitenantDataSource <span class="title">multitenantDataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Map&lt;Object,Object&gt; resolvedDataSources = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="comment">//db1</span></span><br><span class="line">        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create()</span><br><span class="line">                .url(<span class="string">&quot;jdbc:mysql://localhost/test&quot;</span>)</span><br><span class="line">                .username(<span class="string">&quot;root&quot;</span>)</span><br><span class="line">                .password(<span class="string">&quot;******&quot;</span>);</span><br><span class="line">        resolvedDataSources.put(<span class="string">&quot;tenant1&quot;</span>,dataSourceBuilder.build());</span><br><span class="line">        resolvedDataSources.put(<span class="string">&quot;Default&quot;</span>,dataSourceBuilder.build());</span><br><span class="line"></span><br><span class="line">        <span class="comment">//db2</span></span><br><span class="line">        DataSourceBuilder dataSourceBuilder2 = DataSourceBuilder.create()</span><br><span class="line">                .url(<span class="string">&quot;jdbc:mysql://localhost/test2&quot;</span>)</span><br><span class="line">                .username(<span class="string">&quot;root&quot;</span>)</span><br><span class="line">                .password(<span class="string">&quot;******&quot;</span>);</span><br><span class="line">        resolvedDataSources.put(<span class="string">&quot;tenant2&quot;</span>,dataSourceBuilder2.build());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        MultitenantDataSource dataSource = <span class="keyword">new</span> MultitenantDataSource();</span><br><span class="line">        dataSource.setDefaultTargetDataSource(resolvedDataSources.get(<span class="string">&quot;Default&quot;</span>));</span><br><span class="line">        dataSource.setTargetDataSources(resolvedDataSources);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        dataSource.afterPropertiesSet();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> dataSource;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>在Controller里添加从header读取tenantId的逻辑<br><code>XXController.java</code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Member <span class="title">member</span><span class="params">(<span class="meta">@PathVariable(&quot;name&quot;)</span> String name, <span class="meta">@RequestHeader(&quot;X-TenantID&quot;)</span> String tenantName)</span></span>&#123;</span><br><span class="line">	TenantContext.setCurrentTenant(tenantName);</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<h1 id="Runtime-添加DataSource"><a href="#Runtime-添加DataSource" class="headerlink" title="Runtime 添加DataSource"></a>Runtime 添加DataSource</h1><h2 id="效果-1"><a href="#效果-1" class="headerlink" title="效果"></a>效果</h2><ul>
+<li>注册新的tenant，直接把jdbc url，username， password通过request parameter传入，返回success</li>
+<li>通过header控制tenantId，访问新的tenant（DataSource）的数据<br><img src="https://img-blog.csdn.net/20180723152120781?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZhbmppbmdkYW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2></li>
+<li>写一个<code>MultitenantDataSourceRegister.java </code> (<code>implements ImportBeanDefinitionRegistrar</code>), 就要实现 <code> registerBeanDefinitions</code>方法 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerBeanDefinitions</span><span class="params">(AnnotationMetadata annotaion, BeanDefinitionRegistry registry)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;registerBeanDefinitions&quot;</span>);</span><br><span class="line">    GenericBeanDefinition beanDefinition = <span class="keyword">new</span> GenericBeanDefinition();</span><br><span class="line">    beanDefinition.setBeanClass(MultitenantDataSource.class);</span><br><span class="line">    beanDefinition.setSynthetic(<span class="keyword">true</span>);</span><br><span class="line">    MutablePropertyValues mpv = beanDefinition.getPropertyValues();</span><br><span class="line"></span><br><span class="line">    mpv.addPropertyValue(<span class="string">&quot;defaultTargetDataSource&quot;</span>, getDefaultDataSources().get(<span class="string">&quot;Default&quot;</span>));</span><br><span class="line">    mpv.addPropertyValue(<span class="string">&quot;targetDataSources&quot;</span>,getDefaultDataSources());</span><br><span class="line">    registry.registerBeanDefinition(<span class="string">&quot;dataSource&quot;</span>, beanDefinition);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>在 <code>MultitenantConfiguration</code>上添加<code>@Import(MultitenantDataSourceRegister.class)</code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@Import(MultitenantDataSourceRegister.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MultitenantConfiguration</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> MultitenantDataSource multitenantDataSource;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>在<code>MultitenantDataSource</code>里维护一个Map用来管理DataSources<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MultitenantDataSource</span> <span class="keyword">extends</span> <span class="title">AbstractRoutingDataSource</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> Object <span class="title">determineCurrentLookupKey</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> TenantContext.getCurrentTenant();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> ConcurrentHashMap&lt;String, DataSource&gt; backupTargetDataSources = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addDataSourceToTargetDataSource</span><span class="params">(String key ,DataSource ds)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.backupTargetDataSources.put(key, ds);</span><br><span class="line">        <span class="keyword">this</span>.setTargetDataSource(<span class="keyword">this</span>.backupTargetDataSources);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTargetDataSource</span><span class="params">(Map targetDataSource)</span></span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.setTargetDataSources(targetDataSource);</span><br><span class="line">        <span class="keyword">this</span>.afterPropertiesSet();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>在<code>XXController</code>里添加注册DataSource的API<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/api/tenant/register&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">tenantRegister</span><span class="params">(<span class="meta">@RequestParam</span> String username, <span class="meta">@RequestParam</span> String password, <span class="meta">@RequestParam</span> String url, <span class="meta">@RequestParam</span> String tenantName)</span> </span>&#123;</span><br><span class="line">	MultitenantDataSource multitenantDataSource = ctx.getBean(MultitenantDataSource.class);</span><br><span class="line">	DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create()</span><br><span class="line">			.url(url)</span><br><span class="line">			.username(username)</span><br><span class="line">			.password(password);</span><br><span class="line">	multitenantDataSource.addDataSourceToTargetDataSource(tenantName, dataSourceBuilder.build());</span><br><span class="line">	<span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Spring/" rel="tag"># Spring</a>
+              <a href="/tags/Mybatis/" rel="tag"># Mybatis</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/07/26/hexo/" rel="prev" title="hexo">
+      <i class="fa fa-chevron-left"></i> hexo
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/07/30/Spring-Import-Source-code/" rel="next" title="Spring Source Code: ImportBeanDefinitionRegistrar">
+      Spring Source Code: ImportBeanDefinitionRegistrar <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#预先定义DataSource，Runtime切换"><span class="nav-number">1.</span> <span class="nav-text">预先定义DataSource，Runtime切换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#效果"><span class="nav-number">1.1.</span> <span class="nav-text">效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">1.2.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Runtime-添加DataSource"><span class="nav-number">2.</span> <span class="nav-text">Runtime 添加DataSource</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#效果-1"><span class="nav-number">2.1.</span> <span class="nav-text">效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码-1"><span class="nav-number">2.2.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FJD</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FJD</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
